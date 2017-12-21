@@ -1,1 +1,3 @@
-SESSION
+**/target/
+**/*.rs.bk
+**/SESSION
