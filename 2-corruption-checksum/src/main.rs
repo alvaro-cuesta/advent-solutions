@@ -11,18 +11,10 @@ fn main() {
         .collect::<Vec<_>>();
 
     let step1 = lines.iter()
-        .map(|line| {
-            let (min, max) = line.iter()
-                .fold(None, |a, x| match a {
-                    Some((min, max)) => Some((
-                        if x < min { x } else { min },
-                        if x > max { x } else { max },
-                    )),
-                    None => Some((x, x)),
-                })
-                .expect("Unexpected empty line");
-
-            max - min
+        .map(|line| match advent::min_and_max(line.iter()) {
+            Some((min, Some(max))) => max - min,
+            Some((_, None)) => 0,
+            _ => panic!("Unexpected empty line"),
         })
         .sum::<u32>();
 
