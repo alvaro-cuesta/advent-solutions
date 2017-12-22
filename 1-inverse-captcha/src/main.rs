@@ -1,20 +1,21 @@
 extern crate advent;
 
+fn day1(input: &str, offset: usize) -> u32 {
+    input.chars()
+        .zip(input.chars().cycle().skip(offset))
+        .filter_map(|(a, b)| if a == b {
+                Some(a.to_digit(10).expect("Unexpected non-digit in string"))
+            } else {
+                None
+            }
+        )
+        .sum::<u32>()
+}
+
 fn main() {
     let mut input = advent::download_input(2017, 1);
     input.pop();
 
-    let step1 = input.chars()
-        .zip(input.chars().cycle().skip(1))
-        .filter_map(|(a, b)| if a == b { Some(a.to_digit(10).unwrap()) } else { None })
-        .sum::<u32>();
-
-    println!("Step 1: {}", step1);
-
-    let step2 = input.chars()
-        .zip(input.chars().cycle().skip(input.len() / 2))
-        .filter_map(|(a, b)| if a == b { Some(a.to_digit(10).unwrap()) } else { None })
-        .sum::<u32>();
-
-    println!("Step 2: {}", step2);
+    println!("Step 1: {}", day1(&input, 1));
+    println!("Step 2: {}", day1(&input, input.len() / 2));
 }
