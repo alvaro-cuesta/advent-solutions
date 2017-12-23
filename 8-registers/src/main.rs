@@ -11,9 +11,11 @@ impl<'a> FromStr for Action {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        use Action::*;
+
         match s {
-            "inc" => Ok(Action::Inc),
-            "dec" => Ok(Action::Dec),
+            "inc" => Ok(Inc),
+            "dec" => Ok(Dec),
             _ => Err(()),
         }
     }
@@ -22,17 +24,34 @@ impl<'a> FromStr for Action {
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
 enum Cmp { LT, LTE, EQ, NE, GTE, GT }
 
+impl Cmp {
+    fn compare<T: Ord + PartialOrd>(&self, a: T, b: T) -> bool {
+        use Cmp::*;
+
+        match *self {
+            LT => a < b,
+            LTE => a <= b,
+            EQ => a == b,
+            NE => a != b,
+            GTE => a >= b,
+            GT => a > b,
+        }
+    }
+}
+
 impl FromStr for Cmp {
     type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
+        use Cmp::*;
+
         match s {
-            "<" => Ok(Cmp::LT),
-            "<=" => Ok(Cmp::LTE),
-            "==" => Ok(Cmp::EQ),
-            "!=" => Ok(Cmp::NE),
-            ">=" => Ok(Cmp::GTE),
-            ">" => Ok(Cmp::GT),
+            "<" => Ok(LT),
+            "<=" => Ok(LTE),
+            "==" => Ok(EQ),
+            "!=" => Ok(NE),
+            ">=" => Ok(GTE),
+            ">" => Ok(GT),
             _ => Err(()),
         }
     }
@@ -48,9 +67,11 @@ struct Instruction<'a> {
     condition_amt: isize,
 }
 
-named!(parse_register<&[u8], &str>, map_res!(alpha, std::str::from_utf8));
+named!{ parse_register (&[u8]) -> &str,
+    map_res!(alpha, std::str::from_utf8)
+}
 
-named!(parse_amount<&[u8], isize>,
+named!{ parse_amount (&[u8]) -> isize,
     do_parse!(
         negative: opt!(char!('-')) >>
         digits: map_res!(digit, std::str::from_utf8) >>
@@ -58,53 +79,53 @@ named!(parse_amount<&[u8], isize>,
         (digits.parse::<isize>().unwrap()
             * if negative.is_some() { -1 } else { 1 })
     )
-);
+}
 
-static CMP_CHARS: [u8; 4] = [b'<', b'=', b'>', b'!'];
+named!{ parse_instruction (&[u8]) -> Instruction,
+    do_parse!(
+        register: parse_register >>
 
-named!(parse_instruction<&[u8], Instruction>,
-  do_parse!(
-    register: parse_register >>
+        tag!(" ") >>
 
-    tag!(" ") >>
+        action: map_res!(
+            map_res!(
+                alt!(tag!("inc") | tag!("dec")),
+                std::str::from_utf8
+            ),
+            FromStr::from_str
+        ) >>
 
-    action: map_res!(
-        map_res!(
-            alt!(tag!("inc") | tag!("dec")),
-            std::str::from_utf8
-        ),
-        FromStr::from_str
-    ) >>
+        tag!(" ") >>
 
-    tag!(" ") >>
+        amount: parse_amount >>
 
-    amount: parse_amount >>
+        tag!(" if ") >>
 
-    tag!(" if ") >>
+        condition_reg: parse_register >>
 
-    condition_reg: parse_register >>
+        tag!(" ") >>
 
-    tag!(" ") >>
+        condition_cmp: map_res!(
+            map_res!(
+                is_a!(&[b'<', b'=', b'>', b'!'][..]),
+                std::str::from_utf8
+            ),
+            FromStr::from_str
+        ) >>
 
-    condition_cmp: map_res!(
-        map_res!(
-            is_a!(&CMP_CHARS[..]),
-            std::str::from_utf8
-        ),
-        FromStr::from_str
-    ) >>
+        tag!(" ") >>
 
-    tag!(" ") >>
+        condition_amt: parse_amount >>
 
-    condition_amt: parse_amount >>
+        tag!("\n") >>
 
-    tag!("\n") >>
+        (Instruction { register, action, amount, condition_reg, condition_cmp, condition_amt })
+    )
+}
 
-    (Instruction { register, action, amount, condition_reg, condition_cmp, condition_amt })
-  )
-);
-
-named!(parse_instructions<&[u8], Vec<Instruction>>, many0!(parse_instruction));
+named!{ parse_instructions (&[u8]) -> Vec<Instruction>,
+    many0!(parse_instruction)
+}
 
 fn main() {
     let input = advent::download_input(2017, 8);
@@ -122,25 +143,16 @@ fn main() {
     for &Instruction { register, action, amount, condition_reg, condition_cmp, condition_amt }
         in &instructions
     {
-        let reg_value = registers.get(condition_reg).unwrap_or(&0).clone();
+        let reg_value = *registers.get(condition_reg).unwrap_or(&0);
 
-        let condition = match condition_cmp {
-            Cmp::LT => reg_value < condition_amt,
-            Cmp::LTE => reg_value <= condition_amt,
-            Cmp::EQ => reg_value == condition_amt,
-            Cmp::NE => reg_value != condition_amt,
-            Cmp::GTE => reg_value >= condition_amt,
-            Cmp::GT => reg_value > condition_amt,
-        };
-
-        if condition {
+        if condition_cmp.compare(reg_value, condition_amt) {
             match action {
                 Action::Inc => *registers.entry(register).or_insert(0) += amount,
                 Action::Dec => *registers.entry(register).or_insert(0) -= amount,
             }
         }
 
-        let new_reg_value = registers.get(register).unwrap_or(&0).clone();
+        let new_reg_value = *registers.get(register).unwrap_or(&0);
 
         if new_reg_value > max_reg_value {
             max_reg_value = new_reg_value;
