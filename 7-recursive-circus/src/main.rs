@@ -113,7 +113,7 @@ fn main() {
     if let Some((
         &(min_node, min_weight),
         Some(&(max_node, max_weight))
-    )) = advent::min_and_max_by_key(imbalanced_children.iter(), |x| x.1)
+    )) = advent::min_and_max_by_key(&imbalanced_children, |x| x.1)
     {
         let min_children = imbalanced_children.iter()
             .filter(|&&(_, weight)| weight == min_weight)
