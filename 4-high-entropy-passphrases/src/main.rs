@@ -1,36 +1,39 @@
 extern crate advent;
 
-fn main() {
-    let input = advent::download_input(2017, 4);
-
-    let step1 = input.lines()
+fn step1(input: &str) -> usize {
+    input.lines()
         .filter(|line| line.split(' ')
             .all(|word| line.split(' ')
                 .filter(|w| &word == w)
                 .count() == 1
             )
         )
-        .count();
+        .count()
+}
 
-    println!("Step 1: {}", step1);
-
-    let step2 = input.lines()
+fn step2(input: &str) -> usize {
+    input.lines()
         .filter(|line| line.split(' ')
-            .all(|word| {
-                let mut word_chars = word.chars().collect::<Vec<_>>();
-                word_chars.sort();
+            .all(|a| {
+                let mut a_chars = a.chars().collect::<Vec<_>>();
+                a_chars.sort();
 
                 line.split(' ')
-                    .filter(|w| {
-                        let mut w_chars = w.chars().collect::<Vec<_>>();
-                        w_chars.sort();
+                    .filter(|b| {
+                        let mut b_chars = b.chars().collect::<Vec<_>>();
+                        b_chars.sort();
 
-                        word_chars == w_chars
+                        a_chars == b_chars
                     })
                     .count() == 1
             })
         )
-        .count();
+        .count()
+}
 
-    println!("Step 2: {:?}", step2);
+fn main() {
+    let input = advent::download_input(2017, 4);
+
+    println!("Step 1: {}", step1(&input));
+    println!("Step 2: {:?}", step2(&input));
 }
