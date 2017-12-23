@@ -13,34 +13,28 @@ static NEIGHBORS: [(isize, isize); 8] = [
 ];
 
 fn spiral() -> impl Iterator<Item=&'static (isize, isize)> {
-    std::iter::once(&(0isize, 0isize))
-    .chain(
-        (1..).interleave(1..)
-        .zip(DIRECTIONS.iter().cycle())
-        .flat_map(|(len, dir)| std::iter::repeat(dir).take(len))
-    )
+    (1..).interleave(1..)
+    .zip(DIRECTIONS.iter().cycle())
+    .flat_map(|(len, dir)| std::iter::repeat(dir).take(len))
 }
 
-use std::collections::HashMap;
-
-fn main() {
-    let mut input = advent::download_single_input(2017, 3);
-
-    let index = input.parse::<usize>()
-        .expect("Unexpected non-integer");
-
+fn step1(index: usize) -> usize {
     let (x, y) = spiral()
         .take(index - 1)
         .fold((0, 0), |(x, y), &(dx, dy)| {
             (x + dx, y + dy)
         });
 
-    println!("Step 1: {}", x.abs() + y.abs());
+    (x.abs() + y.abs()) as usize
+}
+
+fn step2(index: usize) -> usize {
+    use std::collections::HashMap;
 
     let mut cache = HashMap::new();
     cache.insert((0, 0), 1);
 
-    let step2 = spiral()
+    spiral()
         .scan(((0, 0), cache), |state, &(dx, dy)| {
             (state.0).0 += dx;
             (state.0).1 += dy;
@@ -61,7 +55,14 @@ fn main() {
         })
         .skip_while(|&x| x < index)
         .next()
-        .expect("Found no solution for step 2");
+        .expect("Found no solution for step 2")
+}
 
-    println!("Step 2: {}", step2);
+fn main() {
+    let index = advent::download_single_input(2017, 3)
+        .parse::<usize>()
+        .expect("Unexpected non-integer");
+
+    println!("Step 1: {}", step1(index));
+    println!("Step 2: {}", step2(index));
 }
