@@ -1,0 +1,11 @@
+[package]
+name = "stream_processing"
+version = "0.1.0"
+authors = ["alvaro-cuesta <alvaro-cuesta@GitHub>"]
+
+[dependencies]
+advent = { path = "../advent" }
+
+[dependencies.nom]
+version = "^3.2"
+features = ["std", "nightly"]
