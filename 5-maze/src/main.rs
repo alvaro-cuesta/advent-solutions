@@ -18,9 +18,8 @@ fn count_steps<F: Fn(isize) -> isize>(mut memory: Vec<isize>, mut_fn: F) -> usiz
 }
 
 fn main() {
-    let input = advent::download_input(2017, 5);
-
-    let jumps = input.split_terminator('\n')
+    let jumps = advent::download_input(2017, 5)
+        .split_terminator('\n')
         .map(|x| x.parse::<isize>().expect("Unexpected non-integer jump"))
         .collect::<Vec<_>>();
 

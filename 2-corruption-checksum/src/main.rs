@@ -37,9 +37,8 @@ fn step2<'a, I, J>(lines: I) -> u32
 }
 
 fn main() {
-    let input = advent::download_input(2017, 2);
-
-    let lines = input.lines()
+    let lines = advent::download_input(2017, 2)
+        .lines()
         .map(|line| line.split('\t')
             .map(|x| x.parse::<u32>().expect("Unexpected non-integer in spreadsheet"))
             .collect::<Vec<_>>()
