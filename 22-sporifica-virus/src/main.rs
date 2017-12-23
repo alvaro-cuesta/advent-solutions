@@ -8,22 +8,19 @@ use std::convert::TryFrom;
 use std::collections::VecDeque;
 
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
-enum Node {
-    Clean,
-    Weakened,
-    Infected,
-    Flagged,
-}
+enum Node { Clean, Weakened, Infected, Flagged }
 
 impl TryFrom<char> for Node {
     type Error = &'static str;
 
     fn try_from(c: char) -> Result<Self, Self::Error> {
+        use Node::*;
+
         match c {
-            '.' => Ok(Node::Clean),
-            'W' => Ok(Node::Weakened),
-            '#' => Ok(Node::Infected),
-            'F' => Ok(Node::Flagged),
+            '.' => Ok(Clean),
+            'W' => Ok(Weakened),
+            '#' => Ok(Infected),
+            'F' => Ok(Flagged),
             _ => Err("Invalid node character"),
         }
     }
@@ -31,22 +28,26 @@ impl TryFrom<char> for Node {
 
 impl Into<char> for Node {
     fn into(self) -> char {
+        use Node::*;
+
         match self {
-            Node::Clean => '.',
-            Node::Weakened => 'W',
-            Node::Infected => '#',
-            Node::Flagged => 'F',
+            Clean => '.',
+            Weakened => 'W',
+            Infected => '#',
+            Flagged => 'F',
         }
     }
 }
 
 impl<'a> Into<char> for &'a Node {
     fn into(self) -> char {
+        use Node::*;
+
         match *self {
-            Node::Clean => '.',
-            Node::Weakened => 'W',
-            Node::Infected => '#',
-            Node::Flagged => 'F',
+            Clean => '.',
+            Weakened => 'W',
+            Infected => '#',
+            Flagged => 'F',
         }
     }
 }
@@ -58,12 +59,7 @@ impl fmt::Display for Node {
 }
 
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
-enum Facing {
-    Up,
-    Down,
-    Left,
-    Right,
-}
+enum Facing { Up, Down, Left, Right }
 
 impl Facing {
     fn ccw(&self) -> Facing {
@@ -102,18 +98,37 @@ impl Facing {
 
 impl Into<(isize, isize)> for Facing {
     fn into(self) -> (isize, isize) {
+        use Facing::*;
+
         match self {
-            Facing::Up => (0, -1),
-            Facing::Down => (0, 1),
-            Facing::Left => (-1, 0),
-            Facing::Right => (1, 0),
+            Up => (0, -1),
+            Down => (0, 1),
+            Left => (-1, 0),
+            Right => (1, 0),
         }
     }
 }
 
-fn step((x, y): (isize, isize), facing: Facing) -> (isize, isize) {
-    let (dx, dy) = facing.into();
-    (x + dx, y + dy)
+impl std::ops::Add<(isize, isize)> for Facing {
+    type Output = (isize, isize);
+
+    fn add(self, (x, y): (isize, isize)) -> Self::Output {
+        let (dx, dy) = self.into();
+        (x + dx, y + dy)
+    }
+}
+
+impl std::ops::Add<Facing> for (isize, isize) {
+    type Output = (isize, isize);
+
+    fn add(self, facing: Facing) -> Self::Output {
+        facing + self
+    }
+}
+impl std::ops::AddAssign<Facing> for (isize, isize) {
+    fn add_assign(&mut self, other: Facing) {
+        *self = *self + other
+    }
 }
 
 #[derive(Clone, PartialEq, Eq, Debug)]
@@ -239,60 +254,92 @@ impl fmt::Display for Memory {
     }
 }
 
-fn main() {
-    let input = advent::download_input(2017, 22);
+#[derive(Clone, PartialEq, Eq, Debug)]
+struct Carrier {
+    position: (isize, isize),
+    facing: Facing,
+    infected: usize,
+}
 
-    let mut memory = Memory::parse(&input);
-    let mut position = (0, 0);
-    let mut facing = Facing::Up;
-    let mut infected = 0;
+impl Carrier {
+    fn new() -> Carrier {
+        Carrier {
+            position: (0, 0),
+            facing: Facing::Up,
+            infected: 0,
+        }
+    }
 
-    for _ in 0..10000 {
-        match memory[position] {
-            Node::Clean => {
-                facing = facing.ccw();
-                memory[position] = Node::Infected;
-                infected += 1;
+    fn step1(&mut self, memory: &mut Memory) {
+        use Node::*;
+
+        match memory[self.position] {
+            Clean => {
+                self.facing = self.facing.ccw();
+                memory[self.position] = Infected;
+                self.infected += 1;
             },
-            Node::Infected => {
-                facing = facing.cw();
-                memory[position] = Node::Clean;
+            Infected => {
+                self.facing = self.facing.cw();
+                memory[self.position] = Clean;
             },
             _ => panic!("Step 1 should not have weakened or flagged nodes"),
         };
 
-        position = step(position, facing);
+        self.position += self.facing;
     }
 
-    println!("Step 1: {}", infected);
+    fn step2(&mut self, memory: &mut Memory) {
+        use Node::*;
 
-    let mut memory = Memory::parse(&input);
-    let mut position = (0, 0);
-    let mut facing = Facing::Up;
-    let mut infected = 0;
-
-    for _ in 0..10000000 {
-        match memory[position] {
-            Node::Clean => {
-                facing = facing.ccw();
-                memory[position] = Node::Weakened;
+        match memory[self.position] {
+            Clean => {
+                self.facing = self.facing.ccw();
+                memory[self.position] = Weakened;
             },
-            Node::Weakened => {
-                memory[position] = Node::Infected;
-                infected += 1;
+            Weakened => {
+                memory[self.position] = Infected;
+                self.infected += 1;
             },
-            Node::Infected => {
-                facing = facing.cw();
-                memory[position] = Node::Flagged;
+            Infected => {
+                self.facing = self.facing.cw();
+                memory[self.position] = Flagged;
             },
-            Node::Flagged => {
-                facing = facing.reverse();
-                memory[position] = Node::Clean;
+            Flagged => {
+                self.facing = self.facing.reverse();
+                memory[self.position] = Clean;
             },
         };
 
-        position = step(position, facing);
+        self.position += self.facing;
+    }
+}
+
+fn step1(input: &str) -> usize {
+    let mut memory = Memory::parse(input);
+    let mut carrier = Carrier::new();
+
+    for _ in 0..10000 {
+        carrier.step1(&mut memory);
     }
 
-    println!("Step 2: {}", infected);
+    carrier.infected
+}
+
+fn step2(input: &str) -> usize {
+    let mut memory = Memory::parse(&input);
+    let mut carrier = Carrier::new();
+
+    for _ in 0..10000000 {
+        carrier.step2(&mut memory);
+    }
+
+    carrier.infected
+}
+
+fn main() {
+    let input = advent::download_input(2017, 22);
+
+    println!("Step 1: {}", step1(&input));
+    println!("Step 2: {}", step2(&input));
 }
