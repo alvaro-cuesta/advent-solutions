@@ -1,8 +1,7 @@
 extern crate advent;
 
 fn main() {
-    let mut input = advent::download_input(2017, 6);
-    input.pop();
+    let mut input = advent::download_single_input(2017, 6);
 
     let mut banks = input.split('\t')
         .map(|x| x.parse::<usize>().expect("Unexpected non-integer number of block"))

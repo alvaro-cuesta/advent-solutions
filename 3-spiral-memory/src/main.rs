@@ -24,8 +24,7 @@ fn spiral() -> impl Iterator<Item=&'static (isize, isize)> {
 use std::collections::HashMap;
 
 fn main() {
-    let mut input = advent::download_input(2017, 3);
-    input.pop();
+    let mut input = advent::download_single_input(2017, 3);
 
     let index = input.parse::<usize>()
         .expect("Unexpected non-integer");

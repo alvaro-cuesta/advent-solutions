@@ -52,6 +52,13 @@ pub fn download_input(year: usize, day: usize) -> String {
     res.text().expect("Error reading input")
 }
 
+pub fn download_single_input(year: usize, day: usize) -> String {
+    let mut input = download_input(year, day);
+    input.pop();
+
+    input
+}
+
 pub fn min_and_max<T, I>(e: I) -> Option<(T, Option<T>)>
     where T: std::cmp::PartialOrd,
           I: Iterator<Item=T>,

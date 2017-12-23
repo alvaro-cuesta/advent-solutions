@@ -13,8 +13,7 @@ fn day1(input: &str, offset: usize) -> u32 {
 }
 
 fn main() {
-    let mut input = advent::download_input(2017, 1);
-    input.pop();
+    let mut input = advent::download_single_input(2017, 1);
 
     println!("Step 1: {}", day1(&input, 1));
     println!("Step 2: {}", day1(&input, input.len() / 2));
