@@ -1,5 +1,15 @@
 extern crate advent;
 
+fn new_nums() -> Vec<u8> {
+    let mut nums = vec![];
+
+    for i in 0..256 {
+        nums.push(i as u8);
+    }
+
+    nums
+}
+
 fn hash(nums: &mut [u8], lengths: &[u8], rounds: usize) {
     let mut current_pos = 0;
     let mut skip_size = 0;
@@ -28,12 +38,7 @@ fn step1(input: &str) -> u16 {
         .map(|l| l.parse::<u8>().expect("Unexpected non-u8 length"))
         .collect::<Vec<_>>();
 
-    let mut nums = vec![];
-
-    for i in 0..256 {
-        nums.push(i as u8);
-    }
-
+    let mut nums = new_nums();
     hash(&mut nums, &lengths, 1);
 
     (nums[0] as u16) * (nums[1] as u16)
@@ -41,30 +46,17 @@ fn step1(input: &str) -> u16 {
 
 fn step2(input: &str) -> String {
     let mut lengths = input.as_bytes().to_vec();
+    lengths.extend([17, 31, 73, 47, 23].iter());
 
-    lengths.push(17);
-    lengths.push(31);
-    lengths.push(73);
-    lengths.push(47);
-    lengths.push(23);
-
-    let mut nums = vec![];
-
-    for i in 0..256 {
-        nums.push(i as u8);
-    }
-
+    let mut nums = new_nums();
     hash(&mut nums, &lengths, 64);
 
-    let mut string = String::new();
-
-    string.extend(nums.chunks(16)
+    nums.chunks(16)
         .map(|chunk| {
             let x = chunk.iter().fold(0, |state, x| state ^ x);
             format!("{:02x}", x)
-        }));
-
-    string
+        })
+        .collect::<String>()
 }
 
 fn main() {
