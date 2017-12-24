@@ -34,17 +34,17 @@ fn hash(nums: &mut [u8], lengths: &[u8], rounds: usize) {
 
 pub fn hash_lengths(lengths: &[u8], rounds: usize) -> Vec<u8> {
     let mut nums = new_nums();
-    hash(&mut nums, &lengths, 1);
+    hash(&mut nums, &lengths, rounds);
 
     nums
 }
 
-pub fn hash_str(input: &str) -> Vec<u8> {
+pub fn hash_str(input: &str, rounds: usize) -> Vec<u8> {
     let mut lengths = input.as_bytes().to_vec();
     lengths.extend([17, 31, 73, 47, 23].iter());
 
     let mut nums = new_nums();
-    hash(&mut nums, &lengths, 64);
+    hash(&mut nums, &lengths, rounds);
 
     nums.chunks(16)
         .map(|chunk| chunk.iter().fold(0, |state, x| state ^ x))

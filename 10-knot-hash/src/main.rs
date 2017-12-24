@@ -14,7 +14,7 @@ fn step1(input: &str) -> u16 {
 }
 
 fn step2(input: &str) -> String {
-    knot_hash::hash_str(input).iter()
+    knot_hash::hash_str(input, 64).iter()
         .map(|x| format!("{:02x}", x))
         .collect::<String>()
 }

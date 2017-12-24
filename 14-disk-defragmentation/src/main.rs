@@ -55,7 +55,7 @@ fn make_hashes(input: &str) -> Vec<Vec<u8>> {
     (0..128)
         .map(|i| {
             let i_str = format!("{}-{}", input, i);
-            knot_hash::hash_str(&i_str)
+            knot_hash::hash_str(&i_str, 64)
         })
         .collect::<Vec<_>>()
 }
