@@ -2,7 +2,7 @@ extern crate advent;
 
 use std::str::FromStr;
 
-#[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
 struct Layer {
     range: usize,
     position: usize,
@@ -41,7 +41,7 @@ impl FromStr for Layer {
     }
 }
 
-#[derive(Clone, PartialEq, Eq, Debug)]
+#[derive(Clone, PartialEq, Eq, Debug, Hash)]
 struct Firewall(Vec<Option<Layer>>);
 
 impl Firewall {
@@ -104,8 +104,42 @@ fn step1(input: &str) -> usize {
     severity
 }
 
+fn step2(input: &str) -> usize {
+    let firewall = Firewall::new(&input);
+
+    for delay in 0.. {
+        let caught = firewall.0.iter()
+            .enumerate()
+            .any(|(i, layer)| match *layer {
+                Some(Layer { range, .. }) => (delay + i) % (range * 2 - 2) == 0,
+                None => false,
+            });
+
+        if !caught {
+            return delay;
+        }
+    }
+
+    unreachable!();
+}
+
 fn main() {
     let input = advent::download_input(2017, 13);
 
     println!("Step 1: {}", step1(&input));
+    println!("Step 2: {}", step2(&input));
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn example() {
+        let sol = ::step2("0: 3
+1: 2
+4: 4
+6: 4
+");
+
+        assert_eq!(sol, 10);
+    }
 }
