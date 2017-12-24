@@ -70,8 +70,6 @@ fn main() {
             .to_full_result()
             .expect("Error parsing stream");
 
-    println!("{:?}", group);
-
     println!("Step 1: {}", group.score(1));
-    println!("Step 1: {}", group.garbage());
+    println!("Step 2: {}", group.garbage());
 }
