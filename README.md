@@ -27,3 +27,4 @@ Solutions for [Advent of Code 2017](http://adventofcode.com/2017).
 - 10-knot-hash no advent on library?
 - Add my answers to test (i.e. no main())
 - Add panics to docs
+- Document advent lib

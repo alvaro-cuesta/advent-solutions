@@ -1,15 +1,18 @@
 extern crate reqwest;
 
+#[macro_use] pub mod parse;
+
+use std::{ env, io, fs, ops, cmp };
+use std::io::Read;
+
 fn new_cookie() -> reqwest::header::Cookie {
-    let session = std::env::var("SESSION")
+    let session = env::var("SESSION")
         .map(|s| {
             println!("Reading session cookie from SESSION environment variable");
             s
         })
-        .or_else::<(std::env::VarError, std::io::Error, std::io::Error), _>(|e1| {
-            use std::io::Read;
-
-            std::fs::File::open("SESSION")
+        .or_else::<(env::VarError, io::Error, io::Error), _>(|e1| {
+            fs::File::open("SESSION")
                 .and_then(|mut f| {
                     let mut contents = String::new();
                     f.read_to_string(&mut contents)?;
@@ -19,7 +22,7 @@ fn new_cookie() -> reqwest::header::Cookie {
                 })
                 .map_err(|e2| (e1, e2))
                 .or_else(|(e1, e2)| {
-                    std::fs::File::open("../SESSION")
+                    fs::File::open("../SESSION")
                         .and_then(|mut f| {
                             let mut contents = String::new();
                             f.read_to_string(&mut contents)?;
@@ -60,7 +63,7 @@ pub fn download_single_input(year: usize, day: usize) -> String {
 }
 
 pub fn min_and_max<T, I>(e: I) -> Option<(T, Option<T>)>
-    where T: std::cmp::PartialOrd,
+    where T: cmp::PartialOrd,
           I: IntoIterator<Item=T>,
 {
     e.into_iter()
@@ -83,7 +86,7 @@ pub fn min_and_max<T, I>(e: I) -> Option<(T, Option<T>)>
 
 pub fn min_and_max_by_key<T, I, U, F>(e: I, k: F) -> Option<(T, Option<T>)>
     where I: IntoIterator<Item=T>,
-          U: std::cmp::PartialOrd,
+          U: cmp::PartialOrd,
           F: Fn(&T) -> U,
 {
     e.into_iter()
@@ -109,7 +112,7 @@ pub enum Facing { Up, Down, Left, Right }
 
 impl Facing {
     pub fn ccw(&self) -> Facing {
-        use Facing::*;
+        use self::Facing::*;
 
         match *self {
             Up => Left,
@@ -120,7 +123,7 @@ impl Facing {
     }
 
     pub fn cw(&self) -> Facing {
-        use Facing::*;
+        use self::Facing::*;
 
         match *self {
             Up => Right,
@@ -131,7 +134,7 @@ impl Facing {
     }
 
     pub fn reverse(&self) -> Facing {
-        use Facing::*;
+        use self::Facing::*;
 
         match *self {
             Up => Down,
@@ -144,7 +147,7 @@ impl Facing {
 
 impl Into<(isize, isize)> for Facing {
     fn into(self) -> (isize, isize) {
-        use Facing::*;
+        use self::Facing::*;
 
         match self {
             Up => (0, -1),
@@ -157,7 +160,7 @@ impl Into<(isize, isize)> for Facing {
 
 impl<'a> Into<(isize, isize)> for &'a Facing {
     fn into(self) -> (isize, isize) {
-        use Facing::*;
+        use self::Facing::*;
 
         match *self {
             Up => (0, -1),
@@ -168,7 +171,7 @@ impl<'a> Into<(isize, isize)> for &'a Facing {
     }
 }
 
-impl std::ops::Add<(isize, isize)> for Facing {
+impl ops::Add<(isize, isize)> for Facing {
     type Output = (isize, isize);
 
     fn add(self, (x, y): (isize, isize)) -> Self::Output {
@@ -177,7 +180,7 @@ impl std::ops::Add<(isize, isize)> for Facing {
     }
 }
 
-impl<'a> std::ops::Add<(isize, isize)> for &'a Facing {
+impl<'a> ops::Add<(isize, isize)> for &'a Facing {
     type Output = (isize, isize);
 
     fn add(self, o: (isize, isize)) -> Self::Output {
@@ -185,7 +188,7 @@ impl<'a> std::ops::Add<(isize, isize)> for &'a Facing {
     }
 }
 
-impl std::ops::Add<(usize, usize)> for Facing {
+impl ops::Add<(usize, usize)> for Facing {
     type Output = (usize, usize);
 
     fn add(self, (x, y): (usize, usize)) -> Self::Output {
@@ -197,7 +200,7 @@ impl std::ops::Add<(usize, usize)> for Facing {
     }
 }
 
-impl<'a> std::ops::Add<(usize, usize)> for &'a Facing {
+impl<'a> ops::Add<(usize, usize)> for &'a Facing {
     type Output = (usize, usize);
 
     fn add(self, o: (usize, usize)) -> Self::Output {
@@ -205,7 +208,7 @@ impl<'a> std::ops::Add<(usize, usize)> for &'a Facing {
     }
 }
 
-impl std::ops::Add<Facing> for (isize, isize) {
+impl ops::Add<Facing> for (isize, isize) {
     type Output = (isize, isize);
 
     fn add(self, facing: Facing) -> Self::Output {
@@ -213,7 +216,7 @@ impl std::ops::Add<Facing> for (isize, isize) {
     }
 }
 
-impl<'a> std::ops::Add<&'a Facing> for (isize, isize) {
+impl<'a> ops::Add<&'a Facing> for (isize, isize) {
     type Output = (isize, isize);
 
     fn add(self, facing: &'a Facing) -> Self::Output {
@@ -221,7 +224,7 @@ impl<'a> std::ops::Add<&'a Facing> for (isize, isize) {
     }
 }
 
-impl std::ops::Add<Facing> for (usize, usize) {
+impl ops::Add<Facing> for (usize, usize) {
     type Output = (usize, usize);
 
     fn add(self, facing: Facing) -> Self::Output {
@@ -229,7 +232,7 @@ impl std::ops::Add<Facing> for (usize, usize) {
     }
 }
 
-impl<'a> std::ops::Add<&'a Facing> for (usize, usize) {
+impl<'a> ops::Add<&'a Facing> for (usize, usize) {
     type Output = (usize, usize);
 
     fn add(self, facing: &'a Facing) -> Self::Output {
@@ -237,25 +240,25 @@ impl<'a> std::ops::Add<&'a Facing> for (usize, usize) {
     }
 }
 
-impl std::ops::AddAssign<Facing> for (isize, isize) {
+impl ops::AddAssign<Facing> for (isize, isize) {
     fn add_assign(&mut self, other: Facing) {
         *self = *self + other
     }
 }
 
-impl<'a> std::ops::AddAssign<&'a Facing> for (isize, isize) {
+impl<'a> ops::AddAssign<&'a Facing> for (isize, isize) {
     fn add_assign(&mut self, other: &'a Facing) {
         *self = *self + other
     }
 }
 
-impl std::ops::AddAssign<Facing> for (usize, usize) {
+impl ops::AddAssign<Facing> for (usize, usize) {
     fn add_assign(&mut self, other: Facing) {
         *self = *self + other
     }
 }
 
-impl<'a> std::ops::AddAssign<&'a Facing> for (usize, usize) {
+impl<'a> ops::AddAssign<&'a Facing> for (usize, usize) {
     fn add_assign(&mut self, other: &'a Facing) {
         *self = *self + other
     }
