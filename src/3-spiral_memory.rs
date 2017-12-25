@@ -84,35 +84,6 @@ pub fn part1(index: usize) -> usize {
     (x.abs() + y.abs()) as usize
 }
 
-/// Generator of values for stress test (see [part2](fn.part2.html)).
-pub fn stress_test() -> impl Iterator<Item=usize> {
-    use std::collections::HashMap;
-
-    let mut cache = HashMap::new();
-    cache.insert((0, 0), 1);
-
-    ::std::iter::once(1)
-        .chain(spiral()
-            .scan(((0, 0), cache), |state, &facing| {
-                (state.0) += facing;
-
-                let val = ::std::cmp::max(
-                    1,
-                    NEIGHBORS.iter()
-                        .map(|&(x, y)| state.1
-                            .get(&((state.0).0 + x, (state.0).1 + y))
-                            .unwrap_or(&0)
-                        )
-                        .sum::<usize>(),
-                );
-
-                state.1.insert(state.0, val);
-
-                Some(val)
-            })
-        )
-}
-
 /// As a stress test on the system, the programs here clear the grid and
 /// then store the value `1` in square `1`. Then, in the same allocation
 /// order as shown above, they store the sum of the values in all adjacent
@@ -151,7 +122,34 @@ pub fn stress_test() -> impl Iterator<Item=usize> {
 ///
 /// assert!(stress_test().take(23).eq(solution.iter().cloned()));
 /// ```
-///
+pub fn stress_test() -> impl Iterator<Item=usize> {
+    use std::collections::HashMap;
+
+    let mut cache = HashMap::new();
+    cache.insert((0, 0), 1);
+
+    ::std::iter::once(1)
+        .chain(spiral()
+            .scan(((0, 0), cache), |state, &facing| {
+                (state.0) += facing;
+
+                let val = ::std::cmp::max(
+                    1,
+                    NEIGHBORS.iter()
+                        .map(|&(x, y)| state.1
+                            .get(&((state.0).0 + x, (state.0).1 + y))
+                            .unwrap_or(&0)
+                        )
+                        .sum::<usize>(),
+                );
+
+                state.1.insert(state.0, val);
+
+                Some(val)
+            })
+        )
+}
+
 /// What is the *first value written* that is *larger* than your puzzle
 /// input?
 pub fn part2(index: usize) -> usize {
