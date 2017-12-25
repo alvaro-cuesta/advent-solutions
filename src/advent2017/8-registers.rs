@@ -9,7 +9,7 @@
 
 use std::collections::HashMap;
 use std::str::FromStr;
-use ::advent::parse::{ name as parse_name, signed_number as parse_signed_number };
+use ::parse::{ name as parse_name, signed_number as parse_signed_number };
 
 #[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
 enum Action { Inc, Dec }
@@ -148,7 +148,7 @@ impl<'a> Instruction<'a> {
 /// After this process, the largest value in any register is `1`.
 ///
 /// ```
-/// # use advent_solutions::day8::{ Instruction, part1 };
+/// # use advent_solutions::advent2017::day8::{ Instruction, part1 };
 /// # let input = b"b inc 5 if a > 1
 /// # a inc 1 if b < 5
 /// # c dec -10 if a >= 1
@@ -177,7 +177,7 @@ pub fn part1(instructions: &[Instruction]) -> isize {
 /// instruction was evaluated).
 ///
 /// ```
-/// # use advent_solutions::day8::{ Instruction, part2 };
+/// # use advent_solutions::advent2017::day8::{ Instruction, part2 };
 /// let input = b"b inc 5 if a > 1
 /// a inc 1 if b < 5
 /// c dec -10 if a >= 1
@@ -209,7 +209,7 @@ pub fn part2(instructions: &[Instruction]) -> isize {
 }
 
 pub fn main() {
-    let input = ::advent::download_input(2017, 8);
+    let input = ::download::input(2017, 8);
 
     let instructions = Instruction::list_from_bytes(input.as_bytes())
         .to_full_result()

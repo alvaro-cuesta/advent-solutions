@@ -28,7 +28,7 @@
 /// In this example, the spreadsheet's checksum would be `8 + 4 + 6 = 18`.
 ///
 /// ```
-/// # use advent_solutions::day2::{ parse_input, part1 };
+/// # use advent_solutions::advent2017::day2::{ parse_input, part1 };
 /// # let input = "5\t1\t9\t5
 /// # 7\t5\t3
 /// # 2\t4\t6\t8
@@ -42,7 +42,7 @@ pub fn part1<'a, I, J>(lines: I) -> usize
           J: IntoIterator<Item=&'a usize>,
 {
     lines.into_iter()
-        .map(|line| match ::advent::min_and_max(line) {
+        .map(|line| match ::iter::min_and_max(line) {
             Some((min, Some(max))) => max - min,
             Some((_, None)) => 0,
             _ => panic!("Unexpected empty line"),
@@ -81,7 +81,7 @@ pub fn part1<'a, I, J>(lines: I) -> usize
 /// In this example, the sum of the results would be `4 + 3 + 2 = 9`.
 ///
 /// ```
-/// # use advent_solutions::day2::{ parse_input, part2 };
+/// # use advent_solutions::advent2017::day2::{ parse_input, part2 };
 /// # let input = "5\t9\t2\t8
 /// # 9\t4\t7\t3
 /// # 3\t8\t6\t5
@@ -124,7 +124,7 @@ pub fn parse_input(input: &str) -> Vec<Vec<usize>> {
 }
 
 pub fn main() {
-    let lines = parse_input(&::advent::download_input(2017, 2));
+    let lines = parse_input(&::download::input(2017, 2));
 
     println!("Part 1: {}", part1(&lines));
     println!("Part 2: {}", part2(&lines));

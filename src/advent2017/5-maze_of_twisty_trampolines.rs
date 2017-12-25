@@ -51,7 +51,7 @@ pub fn parse_input(input: &str) -> Vec<isize> {
 /// In this example, the exit is reached in `5` steps.
 ///
 /// ```
-/// # use advent_solutions::day5::{ parse_input, part1 };
+/// # use advent_solutions::advent2017::day5::{ parse_input, part1 };
 /// # let input = parse_input("0
 /// # 3
 /// # 0
@@ -75,7 +75,7 @@ pub fn part1(jumps: Vec<isize>) -> usize {
 /// `2 3 2 3 -1`.
 ///
 /// ```
-/// # use advent_solutions::day5::{ parse_input, part2 };
+/// # use advent_solutions::advent2017::day5::{ parse_input, part2 };
 /// # let input = parse_input("0
 /// # 3
 /// # 0
@@ -109,7 +109,7 @@ pub fn count_steps<F: Fn(isize) -> isize>(mut memory: Vec<isize>, mut_fn: F) -> 
 }
 
 pub fn main() {
-    let jumps = parse_input(&::advent::download_input(2017, 5));
+    let jumps = parse_input(&::download::input(2017, 5));
 
     println!("Part 1: {}", part1(jumps.clone()));
     println!("Part 2: {}", part2(jumps.clone()));

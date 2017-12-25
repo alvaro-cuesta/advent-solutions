@@ -15,7 +15,7 @@
 
 use ::std::collections::HashMap;
 use ::nom::digit;
-use ::advent::parse::{ name as parse_name };
+use ::parse::{ name as parse_name };
 
 /// You offer to help, but first you need to understand the structure of
 /// these towers. You ask each program to yell out their *name*, their
@@ -125,7 +125,7 @@ impl<'a> Node<'a> {
 /// is correct. *What is the name of the bottom program?*
 ///
 /// ```
-/// # use advent_solutions::day7::{ Node, part1 };
+/// # use advent_solutions::advent2017::day7::{ Node, part1 };
 /// let input = b"pbga (66)
 /// xhth (57)
 /// ebii (61)
@@ -196,7 +196,7 @@ pub fn part1<'a, 'b>(nodes: &'a [Node<'b>]) -> &'b str {
 /// made, its weight would be `60`.
 ///
 /// ```
-/// # use advent_solutions::day7::{ Node, part2 };
+/// # use advent_solutions::advent2017::day7::{ Node, part2 };
 /// let input = b"pbga (66)
 /// xhth (57)
 /// ebii (61)
@@ -249,7 +249,7 @@ pub fn part2(nodes: &[Node]) -> usize {
     if let Some((
         &(min_node, min_weight),
         Some(&(max_node, max_weight))
-    )) = ::advent::min_and_max_by_key(&imbalanced_children, |x| x.1)
+    )) = ::iter::min_and_max_by_key(&imbalanced_children, |x| x.1)
     {
         let min_children = imbalanced_children.iter()
             .filter(|&&(_, weight)| weight == min_weight)
@@ -272,7 +272,7 @@ pub fn part2(nodes: &[Node]) -> usize {
 }
 
 pub fn main() {
-    let input = ::advent::download_input(2017, 7);
+    let input = ::download::input(2017, 7);
 
     let nodes = Node::list_from_bytes(input.as_bytes())
         .to_full_result()

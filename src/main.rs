@@ -1,6 +1,6 @@
 extern crate advent_solutions;
 
-use advent_solutions::*;
+use advent_solutions::advent2017::*;
 
 fn main() {
     day1::main();

@@ -52,7 +52,7 @@ pub fn parse_input(input: &str) -> Vec<usize> {
 /// redistribution cycle, and so the answer in this example is `5`.
 ///
 /// ```
-/// # use advent_solutions::day6::{ parse_input, part1 };
+/// # use advent_solutions::advent2017::day6::{ parse_input, part1 };
 /// # let input = parse_input("0\t2\t7\t0");
 /// assert_eq!(part1(&input), 5);
 /// ```
@@ -105,7 +105,7 @@ pub fn part1(banks: &Vec<usize>) -> usize {
 /// the answer in that example would be `4`.
 ///
 /// ```
-/// # use advent_solutions::day6::{ parse_input, part2 };
+/// # use advent_solutions::advent2017::day6::{ parse_input, part2 };
 /// # let input = parse_input("0\t2\t7\t0");
 /// assert_eq!(part2(&input), 4);
 /// ```
@@ -148,7 +148,7 @@ pub fn part2(banks: &Vec<usize>) -> usize {
 }
 
 pub fn main() {
-    let banks = parse_input(&::advent::download_single_input(2017, 6));
+    let banks = parse_input(&::download::single_input(2017, 6));
 
     println!("Part 1: {}", part1(&banks));
     println!("Part 2: {}", part2(&banks));
