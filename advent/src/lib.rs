@@ -164,6 +164,18 @@ impl std::ops::Add<(isize, isize)> for Facing {
     }
 }
 
+impl std::ops::Add<(usize, usize)> for Facing {
+    type Output = (usize, usize);
+
+    fn add(self, (x, y): (usize, usize)) -> Self::Output {
+        let (dx, dy) = self.into();
+        (
+            (x as isize + dx) as usize,
+            (y as isize + dy) as usize,
+        )
+    }
+}
+
 impl std::ops::Add<Facing> for (isize, isize) {
     type Output = (isize, isize);
 
@@ -171,7 +183,22 @@ impl std::ops::Add<Facing> for (isize, isize) {
         facing + self
     }
 }
+
+impl std::ops::Add<Facing> for (usize, usize) {
+    type Output = (usize, usize);
+
+    fn add(self, facing: Facing) -> Self::Output {
+        facing + self
+    }
+}
+
 impl std::ops::AddAssign<Facing> for (isize, isize) {
+    fn add_assign(&mut self, other: Facing) {
+        *self = *self + other
+    }
+}
+
+impl std::ops::AddAssign<Facing> for (usize, usize) {
     fn add_assign(&mut self, other: Facing) {
         *self = *self + other
     }
