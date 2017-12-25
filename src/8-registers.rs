@@ -1,4 +1,4 @@
-//! # [Day 8: I Heard You Like Registers](http://adventofcode.com/2017/day/7)
+//! # [Day 8: I Heard You Like Registers](http://adventofcode.com/2017/day/8)
 //!
 //! You receive a <span title="There's that sorcery I told you about.">signal
 //! </span> directly from the CPU. Because of your recent assistance with [jump

@@ -17,3 +17,4 @@ extern crate itertools;
 #[path="6-memory_reallocation.rs"] pub mod day6;
 #[path="7-recursive_circus.rs"] pub mod day7;
 #[path="8-registers.rs"] pub mod day8;
+#[path="9-stream_processing.rs"] pub mod day9;
