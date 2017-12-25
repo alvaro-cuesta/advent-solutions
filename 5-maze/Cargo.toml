@@ -1,8 +1,0 @@
-[package]
-name = "maze"
-version = "0.1.0"
-authors = ["alvaro-cuesta <alvaro-cuesta@GitHub>"]
-
-[dependencies]
-advent = { path = "../advent" }
-itertools = "0.7.4"

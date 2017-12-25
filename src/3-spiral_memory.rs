@@ -42,30 +42,30 @@ fn spiral() -> impl Iterator<Item=&'static ::advent::Facing> {
 ///
 /// For example:
 ///
-/// - Data from square `1` is carried `0` steps, since it's at the access
-///   port.
+/// -   Data from square `1` is carried `0` steps, since it's at the access
+///     port.
 ///
 ///     ```
 ///     # use advent_solutions::day3::part1;
 ///     assert_eq!(part1(1), 0);
 ///     ```
 ///
-/// - Data from square `12` is carried `3` steps, such as: down, left,
-///   left.
+/// -   Data from square `12` is carried `3` steps, such as: down, left,
+///     left.
 ///
 ///     ```
 ///     # use advent_solutions::day3::part1;
 ///     assert_eq!(part1(12), 3);
 ///     ```
 ///
-/// - Data from square `23` is carried only `2` steps: up twice.
+/// -   Data from square `23` is carried only `2` steps: up twice.
 ///
 ///     ```
 ///     # use advent_solutions::day3::part1;
 ///     assert_eq!(part1(23), 2);
 ///     ```
 ///
-/// - Data from square `1024` must be carried `31` steps.
+/// -   Data from square `1024` must be carried `31` steps.
 ///
 ///     ```
 ///     # use advent_solutions::day3::part1;

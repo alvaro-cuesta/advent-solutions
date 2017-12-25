@@ -8,23 +8,23 @@
 ///
 /// For example:
 ///
-/// - `aa bb cc dd ee` is valid.
+/// -   `aa bb cc dd ee` is valid.
 ///
 ///     ```
 ///     # use advent_solutions::day4::is_valid_part1;
 ///     assert_eq!(is_valid_part1("aa bb cc dd ee"), true);
 ///     ```
 ///
-/// - `aa bb cc dd aa` is not valid - the word `aa` appears more than
-///   once.
+/// -   `aa bb cc dd aa` is not valid - the word `aa` appears more than
+///     once.
 ///
 ///     ```
 ///     # use advent_solutions::day4::is_valid_part1;
 ///     assert_eq!(is_valid_part1("aa bb cc dd aa"), false);
 ///     ```
 ///
-/// - `aa bb cc dd aaa` is valid - `aa` and `aaa` count as different
-///   words.
+/// -   `aa bb cc dd aaa` is valid - `aa` and `aaa` count as different
+///     words.
 ///
 ///     ```
 ///     # use advent_solutions::day4::is_valid_part1;
