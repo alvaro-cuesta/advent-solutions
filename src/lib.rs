@@ -11,3 +11,4 @@ extern crate itertools;
 #[path="./2-corruption_checksum.rs"] pub mod day2;
 #[path="./3-spiral_memory.rs"] pub mod day3;
 #[path="./4-high_entropy_passphrases.rs"] pub mod day4;
+#[path="./5-maze_of_twisty_trampolines.rs"] pub mod day5;

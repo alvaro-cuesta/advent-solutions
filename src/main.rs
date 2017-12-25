@@ -1,8 +1,11 @@
 extern crate advent_solutions;
 
+use advent_solutions::*;
+
 fn main() {
-    advent_solutions::day1::main();
-    advent_solutions::day2::main();
-    advent_solutions::day3::main();
-    advent_solutions::day4::main();
+    day1::main();
+    day2::main();
+    day3::main();
+    day4::main();
+    day5::main();
 }
