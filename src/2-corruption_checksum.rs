@@ -5,8 +5,6 @@
 //! repair the corruption in this spreadsheet - if we take another
 //! millisecond, we'll have to display an hourglass cursor!"
 
-use ::advent;
-
 /// The spreadsheet consists of rows of apparently-random numbers. To make
 /// sure the recovery process is on the right track, they need you to
 /// calculate the spreadsheet's *checksum*. For each row, determine the
@@ -44,7 +42,7 @@ pub fn part1<'a, I, J>(lines: I) -> usize
           J: IntoIterator<Item=&'a usize>,
 {
     lines.into_iter()
-        .map(|line| match advent::min_and_max(line) {
+        .map(|line| match ::advent::min_and_max(line) {
             Some((min, Some(max))) => max - min,
             Some((_, None)) => 0,
             _ => panic!("Unexpected empty line"),
@@ -127,8 +125,8 @@ pub fn parse_input(input: &str) -> Vec<Vec<usize>> {
 }
 
 pub fn main() {
-    let lines = parse_input(&advent::download_input(2017, 2));
+    let lines = parse_input(&::advent::download_input(2017, 2));
 
-    println!("Step 1: {}", part1(&lines));
-    println!("Step 2: {}", part2(&lines));
+    println!("Part 1: {}", part1(&lines));
+    println!("Part 2: {}", part2(&lines));
 }

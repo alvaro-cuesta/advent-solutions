@@ -150,6 +150,6 @@ pub fn part2(input: &str) -> u32 {
 pub fn main() {
     let input = ::advent::download_single_input(2017, 1);
 
-    println!("Step 1: {}", part1(&input));
-    println!("Step 2: {}", part2(&input));
+    println!("Part 1: {}", part1(&input));
+    println!("Part 2: {}", part2(&input));
 }

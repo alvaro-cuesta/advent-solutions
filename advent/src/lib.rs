@@ -113,9 +113,9 @@ impl Facing {
 
         match *self {
             Up => Left,
+            Right => Up,
             Down => Right,
             Left => Down,
-            Right => Up,
         }
     }
 
@@ -124,9 +124,9 @@ impl Facing {
 
         match *self {
             Up => Right,
+            Right => Down,
             Down => Left,
             Left => Up,
-            Right => Down,
         }
     }
 
@@ -135,9 +135,9 @@ impl Facing {
 
         match *self {
             Up => Down,
+            Right => Left,
             Down => Up,
             Left => Right,
-            Right => Left,
         }
     }
 }
@@ -148,9 +148,22 @@ impl Into<(isize, isize)> for Facing {
 
         match self {
             Up => (0, -1),
+            Right => (1, 0),
             Down => (0, 1),
             Left => (-1, 0),
+        }
+    }
+}
+
+impl<'a> Into<(isize, isize)> for &'a Facing {
+    fn into(self) -> (isize, isize) {
+        use Facing::*;
+
+        match *self {
+            Up => (0, -1),
             Right => (1, 0),
+            Down => (0, 1),
+            Left => (-1, 0),
         }
     }
 }
@@ -161,6 +174,14 @@ impl std::ops::Add<(isize, isize)> for Facing {
     fn add(self, (x, y): (isize, isize)) -> Self::Output {
         let (dx, dy) = self.into();
         (x + dx, y + dy)
+    }
+}
+
+impl<'a> std::ops::Add<(isize, isize)> for &'a Facing {
+    type Output = (isize, isize);
+
+    fn add(self, o: (isize, isize)) -> Self::Output {
+        *self + o
     }
 }
 
@@ -176,10 +197,26 @@ impl std::ops::Add<(usize, usize)> for Facing {
     }
 }
 
+impl<'a> std::ops::Add<(usize, usize)> for &'a Facing {
+    type Output = (usize, usize);
+
+    fn add(self, o: (usize, usize)) -> Self::Output {
+        *self + o
+    }
+}
+
 impl std::ops::Add<Facing> for (isize, isize) {
     type Output = (isize, isize);
 
     fn add(self, facing: Facing) -> Self::Output {
+        facing + self
+    }
+}
+
+impl<'a> std::ops::Add<&'a Facing> for (isize, isize) {
+    type Output = (isize, isize);
+
+    fn add(self, facing: &'a Facing) -> Self::Output {
         facing + self
     }
 }
@@ -192,14 +229,34 @@ impl std::ops::Add<Facing> for (usize, usize) {
     }
 }
 
+impl<'a> std::ops::Add<&'a Facing> for (usize, usize) {
+    type Output = (usize, usize);
+
+    fn add(self, facing: &'a Facing) -> Self::Output {
+        facing + self
+    }
+}
+
 impl std::ops::AddAssign<Facing> for (isize, isize) {
     fn add_assign(&mut self, other: Facing) {
         *self = *self + other
     }
 }
 
+impl<'a> std::ops::AddAssign<&'a Facing> for (isize, isize) {
+    fn add_assign(&mut self, other: &'a Facing) {
+        *self = *self + other
+    }
+}
+
 impl std::ops::AddAssign<Facing> for (usize, usize) {
     fn add_assign(&mut self, other: Facing) {
+        *self = *self + other
+    }
+}
+
+impl<'a> std::ops::AddAssign<&'a Facing> for (usize, usize) {
+    fn add_assign(&mut self, other: &'a Facing) {
         *self = *self + other
     }
 }
