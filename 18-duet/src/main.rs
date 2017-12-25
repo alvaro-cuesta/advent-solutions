@@ -305,7 +305,7 @@ fn step2(instructions: &[Instruction]) -> usize {
 }
 
 fn main() {
-    let input = advent::download_single_input(2017, 18);
+    let input = advent::download_input(2017, 18);
 
     let instructions = parse_instructions(input.as_bytes())
         .to_full_result()
