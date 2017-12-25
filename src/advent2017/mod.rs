@@ -2,6 +2,8 @@
 //!
 //!  [Advent of Code 2017]: http://adventofcode.com/2017
 
+pub mod knot_hash;
+
 #[path="1-inverse_captcha.rs"] pub mod day1;
 #[path="2-corruption_checksum.rs"] pub mod day2;
 #[path="3-spiral_memory.rs"] pub mod day3;
@@ -11,3 +13,4 @@
 #[path="7-recursive_circus.rs"] pub mod day7;
 #[path="8-registers.rs"] pub mod day8;
 #[path="9-stream_processing.rs"] pub mod day9;
+#[path="10-knot_hash.rs"] pub mod day10;
