@@ -104,6 +104,79 @@ pub fn min_and_max_by_key<T, I, U, F>(e: I, k: F) -> Option<(T, Option<T>)>
         }))
 }
 
+#[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
+pub enum Facing { Up, Down, Left, Right }
+
+impl Facing {
+    pub fn ccw(&self) -> Facing {
+        use Facing::*;
+
+        match *self {
+            Up => Left,
+            Down => Right,
+            Left => Down,
+            Right => Up,
+        }
+    }
+
+    pub fn cw(&self) -> Facing {
+        use Facing::*;
+
+        match *self {
+            Up => Right,
+            Down => Left,
+            Left => Up,
+            Right => Down,
+        }
+    }
+
+    pub fn reverse(&self) -> Facing {
+        use Facing::*;
+
+        match *self {
+            Up => Down,
+            Down => Up,
+            Left => Right,
+            Right => Left,
+        }
+    }
+}
+
+impl Into<(isize, isize)> for Facing {
+    fn into(self) -> (isize, isize) {
+        use Facing::*;
+
+        match self {
+            Up => (0, -1),
+            Down => (0, 1),
+            Left => (-1, 0),
+            Right => (1, 0),
+        }
+    }
+}
+
+impl std::ops::Add<(isize, isize)> for Facing {
+    type Output = (isize, isize);
+
+    fn add(self, (x, y): (isize, isize)) -> Self::Output {
+        let (dx, dy) = self.into();
+        (x + dx, y + dy)
+    }
+}
+
+impl std::ops::Add<Facing> for (isize, isize) {
+    type Output = (isize, isize);
+
+    fn add(self, facing: Facing) -> Self::Output {
+        facing + self
+    }
+}
+impl std::ops::AddAssign<Facing> for (isize, isize) {
+    fn add_assign(&mut self, other: Facing) {
+        *self = *self + other
+    }
+}
+
 #[cfg(test)]
 mod tests {
     #[test]

@@ -58,79 +58,6 @@ impl fmt::Display for Node {
     }
 }
 
-#[derive(Copy, Clone, PartialEq, Eq, Debug)]
-enum Facing { Up, Down, Left, Right }
-
-impl Facing {
-    fn ccw(&self) -> Facing {
-        use Facing::*;
-
-        match *self {
-            Up => Left,
-            Down => Right,
-            Left => Down,
-            Right => Up,
-        }
-    }
-
-    fn cw(&self) -> Facing {
-        use Facing::*;
-
-        match *self {
-            Up => Right,
-            Down => Left,
-            Left => Up,
-            Right => Down,
-        }
-    }
-
-    fn reverse(&self) -> Facing {
-        use Facing::*;
-
-        match *self {
-            Up => Down,
-            Down => Up,
-            Left => Right,
-            Right => Left,
-        }
-    }
-}
-
-impl Into<(isize, isize)> for Facing {
-    fn into(self) -> (isize, isize) {
-        use Facing::*;
-
-        match self {
-            Up => (0, -1),
-            Down => (0, 1),
-            Left => (-1, 0),
-            Right => (1, 0),
-        }
-    }
-}
-
-impl std::ops::Add<(isize, isize)> for Facing {
-    type Output = (isize, isize);
-
-    fn add(self, (x, y): (isize, isize)) -> Self::Output {
-        let (dx, dy) = self.into();
-        (x + dx, y + dy)
-    }
-}
-
-impl std::ops::Add<Facing> for (isize, isize) {
-    type Output = (isize, isize);
-
-    fn add(self, facing: Facing) -> Self::Output {
-        facing + self
-    }
-}
-impl std::ops::AddAssign<Facing> for (isize, isize) {
-    fn add_assign(&mut self, other: Facing) {
-        *self = *self + other
-    }
-}
-
 #[derive(Clone, PartialEq, Eq, Debug)]
 struct Memory {
     memory: VecDeque<VecDeque<Node>>,
@@ -257,7 +184,7 @@ impl fmt::Display for Memory {
 #[derive(Clone, PartialEq, Eq, Debug)]
 struct Carrier {
     position: (isize, isize),
-    facing: Facing,
+    facing: advent::Facing,
     infected: usize,
 }
 
@@ -265,7 +192,7 @@ impl Carrier {
     fn new() -> Carrier {
         Carrier {
             position: (0, 0),
-            facing: Facing::Up,
+            facing: advent::Facing::Up,
             infected: 0,
         }
     }
