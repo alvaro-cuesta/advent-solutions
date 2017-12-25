@@ -1,4 +1,4 @@
-//! # Day 1: Inverse Captcha
+//! # [Day 1: Inverse Captcha](http://adventofcode.com/2017/day/1)
 //!
 //! The night before Christmas, one of Santa's Elves calls you in a panic.
 //! "The printer's broken! We can't print the *Naughty or Nice List*!" By
@@ -59,36 +59,36 @@ pub fn count_matching(input: &str, offset: usize) -> u32 {
 ///   fourth digit.
 ///
 ///     ```
-///     # use advent_solutions::day1::step1;
-///     assert_eq!(step1("1122"), 3);
+///     # use advent_solutions::day1::part1;
+///     assert_eq!(part1("1122"), 3);
 ///     ```
 ///
 /// - `1111` produces `4` because each digit (all `1`) matches the next.
 ///
 ///     ```
-///     # use advent_solutions::day1::step1;
-///     assert_eq!(step1("1111"), 4);
+///     # use advent_solutions::day1::part1;
+///     assert_eq!(part1("1111"), 4);
 ///     ```
 ///
 /// - `1234` produces `0` because no digit matches the next.
 ///
 ///     ```
-///     # use advent_solutions::day1::step1;
-///     assert_eq!(step1("1234"), 0);
+///     # use advent_solutions::day1::part1;
+///     assert_eq!(part1("1234"), 0);
 ///     ```
 ///
 /// - `91212129` produces `9` because the only digit that matches the next
 ///   one is the last digit, `9`.
 ///
 ///     ```
-///     # use advent_solutions::day1::step1;
-///     assert_eq!(step1("91212129"), 9);
+///     # use advent_solutions::day1::part1;
+///     assert_eq!(part1("91212129"), 9);
 ///     ```
 ///
 /// *What is the solution* to your captcha?
 ///
 ///   [captcha]: https://en.wikipedia.org/wiki/CAPTCHA
-pub fn step1(input: &str) -> u32 {
+pub fn part1(input: &str) -> u32 {
     count_matching(input, 1)
 }
 
@@ -108,48 +108,48 @@ pub fn step1(input: &str) -> u32 {
 ///   digits match the digit `2` items ahead.
 ///
 ///     ```
-///     # use advent_solutions::day1::step2;
-///     assert_eq!(step2("1212"), 6);
+///     # use advent_solutions::day1::part2;
+///     assert_eq!(part2("1212"), 6);
 ///     ```
 ///
 /// - `1221` produces `0`, because every comparison is between a `1` and a
 ///   `2`.
 ///
 ///     ```
-///     # use advent_solutions::day1::step2;
-///     assert_eq!(step2("1221"), 0);
+///     # use advent_solutions::day1::part2;
+///     assert_eq!(part2("1221"), 0);
 ///     ```
 ///
 /// - `123425` produces `4`, because both `2`s match each other, but no
 ///   other digit has a match.
 ///
 ///     ```
-///     # use advent_solutions::day1::step2;
-///     assert_eq!(step2("123425"), 4);
+///     # use advent_solutions::day1::part2;
+///     assert_eq!(part2("123425"), 4);
 ///     ```
 ///
 /// - `123123` produces `12`.
 ///
 ///     ```
-///     # use advent_solutions::day1::step2;
-///     assert_eq!(step2("123123"), 12);
+///     # use advent_solutions::day1::part2;
+///     assert_eq!(part2("123123"), 12);
 ///     ```
 ///
 /// - `12131415` produces `4`.
 ///
 ///     ```
-///     # use advent_solutions::day1::step2;
-///     assert_eq!(step2("12131415"), 4);
+///     # use advent_solutions::day1::part2;
+///     assert_eq!(part2("12131415"), 4);
 ///     ```
 ///
 /// *What is the solution* to your new captcha?
-pub fn step2(input: &str) -> u32 {
+pub fn part2(input: &str) -> u32 {
     count_matching(input, input.len() / 2)
 }
 
 pub fn main() {
     let input = ::advent::download_single_input(2017, 1);
 
-    println!("Step 1: {}", step1(&input));
-    println!("Step 2: {}", step2(&input));
+    println!("Step 1: {}", part1(&input));
+    println!("Step 2: {}", part2(&input));
 }
