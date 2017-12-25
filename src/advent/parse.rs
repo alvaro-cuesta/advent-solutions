@@ -1,4 +1,4 @@
-use ::nom::{ alpha };
+use ::nom::{ alpha, digit };
 
 #[macro_export]
 macro_rules! to_str(
@@ -46,4 +46,17 @@ macro_rules! lines(
 
 named!{ pub name(&[u8]) -> &str,
     to_str!(alpha)
+}
+
+named!{ pub unsigned_number(&[u8]) -> usize,
+    from_str_bytes!(digit)
+}
+
+named!{ pub signed_number (&[u8]) -> isize,
+    do_parse!(
+        negative: opt!(char!('-')) >>
+        digits: unsigned_number >>
+
+        (digits as isize * if negative.is_some() { -1 } else { 1 })
+    )
 }

@@ -110,10 +110,10 @@ pub fn min_and_max_by_key<T, I, U, F>(e: I, k: F) -> Option<(T, Option<T>)>
 #[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
 pub enum Facing { Up, Down, Left, Right }
 
+use self::Facing::*;
+
 impl Facing {
     pub fn ccw(&self) -> Facing {
-        use self::Facing::*;
-
         match *self {
             Up => Left,
             Right => Up,
@@ -123,8 +123,6 @@ impl Facing {
     }
 
     pub fn cw(&self) -> Facing {
-        use self::Facing::*;
-
         match *self {
             Up => Right,
             Right => Down,
@@ -134,8 +132,6 @@ impl Facing {
     }
 
     pub fn reverse(&self) -> Facing {
-        use self::Facing::*;
-
         match *self {
             Up => Down,
             Right => Left,
@@ -147,8 +143,6 @@ impl Facing {
 
 impl Into<(isize, isize)> for Facing {
     fn into(self) -> (isize, isize) {
-        use self::Facing::*;
-
         match self {
             Up => (0, -1),
             Right => (1, 0),
@@ -160,8 +154,6 @@ impl Into<(isize, isize)> for Facing {
 
 impl<'a> Into<(isize, isize)> for &'a Facing {
     fn into(self) -> (isize, isize) {
-        use self::Facing::*;
-
         match *self {
             Up => (0, -1),
             Right => (1, 0),
