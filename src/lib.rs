@@ -1,3 +1,7 @@
+//! Solutions for [Advent of Code 2017].
+//!
+//!  [Advent of Code 2017]: http://adventofcode.com/2017
+
 #![feature(conservative_impl_trait)]
 
 extern crate advent;
