@@ -32,4 +32,3 @@ Solutions for [Advent of Code 2017](http://adventofcode.com/2017).
 - Document advent lib
 - Something is broken in run
 - Separate tests in part1 and part2
-- Day 17 my test fails

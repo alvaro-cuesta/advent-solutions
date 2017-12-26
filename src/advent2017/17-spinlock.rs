@@ -75,7 +75,7 @@ pub fn part1(input: usize) -> usize {
 
     for i in 0..2017 {
         position = 1 + (position + input) % buffer.len();
-        buffer.insert(position, i);
+        buffer.insert(position, i + 1);
     }
 
     buffer[(position + 1) % buffer.len()]
