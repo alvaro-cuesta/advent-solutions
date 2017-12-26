@@ -30,5 +30,6 @@ Solutions for [Advent of Code 2017](http://adventofcode.com/2017).
 - Make main() share SESSION
 - Add panics to docs
 - Document advent lib
-- Something is broken in run
 - Separate tests in part1 and part2
+- Refactor 18, 19, 22
+- Solve 20, 21, 23, 24, 25

@@ -114,7 +114,7 @@ impl Node {
     }
 
     named!{ pub from_bytes (&[u8]) -> Node,
-        dbg_dmp!(alt!(call!(Node::group_from_bytes) | call!(Node::garbage_from_bytes)))
+        alt!(call!(Node::group_from_bytes) | call!(Node::garbage_from_bytes))
     }
 }
 
