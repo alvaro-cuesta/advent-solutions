@@ -55,7 +55,7 @@ use nom::anychar;
 /// -   `{{<a>},{<a>},{<a>},{<a>}}`, `5` groups.
 /// -   `{{<!>},{<!>},{<!>},{<a>}}`, `2` groups (since all but the last `>`
 ///     are canceled).
-#[derive(Clone, PartialEq, Eq, Debug)]
+#[derive(Clone, PartialEq, Eq, Debug, Hash)]
 pub enum Node {
     Group(Vec<Node>),
     Garbage(usize),

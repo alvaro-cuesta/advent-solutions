@@ -25,7 +25,7 @@ use std::ops::*;
 ///     sw +--+ se
 ///       / s  \
 /// ```
-#[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
 enum HexDirection { N, NE, SE, S, SW, NW }
 
 use self::HexDirection::*;
@@ -46,7 +46,7 @@ impl<'a> FromStr for HexDirection {
     }
 }
 
-#[derive(Copy, Clone, PartialEq, Eq, Debug)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
 struct HexCoord(isize, isize);
 
 impl HexCoord {
