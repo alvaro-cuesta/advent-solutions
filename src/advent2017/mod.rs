@@ -21,3 +21,4 @@ pub mod knot_hash;
 #[path="15-dueling_generators.rs"] pub mod day15;
 #[path="16-permutation_promenade.rs"] pub mod day16;
 #[path="17-spinlock.rs"] pub mod day17;
+#[path="18-duet.rs"] pub mod day18;

@@ -31,5 +31,5 @@ Solutions for [Advent of Code 2017](http://adventofcode.com/2017).
 - Add panics to docs
 - Document advent lib
 - Separate tests in part1 and part2
-- Refactor 18, 19, 22
+- Refactor 19, 22
 - Solve 20, 21, 23, 24, 25
