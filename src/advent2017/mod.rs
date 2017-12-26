@@ -19,3 +19,4 @@ pub mod knot_hash;
 #[path="13-packet_scanners.rs"] pub mod day13;
 #[path="14-disk_defragmentation.rs"] pub mod day14;
 #[path="15-dueling_generators.rs"] pub mod day15;
+#[path="16-permutation_promenade.rs"] pub mod day16;
