@@ -3,6 +3,7 @@
 //!  [Advent of Code]: http://adventofcode.com/about
 
 #![feature(conservative_impl_trait)]
+#![feature(try_from)]
 
 extern crate itertools;
 extern crate reqwest;
