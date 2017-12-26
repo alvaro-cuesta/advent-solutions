@@ -44,3 +44,32 @@ pub fn min_and_max_by_key<T, I, U, F>(e: I, k: F) -> Option<(T, Option<T>)>
             },
         }))
 }
+
+#[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
+pub struct Bits {
+    v: usize,
+    length: usize,
+    i: usize,
+}
+
+impl Bits {
+    pub fn new(v: usize, length: usize) -> Bits {
+        Bits { v, length, i: 0 }
+    }
+}
+
+impl Iterator for Bits {
+    type Item = bool;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.i == self.length {
+            return None;
+        }
+
+        let bit: usize = 1 << (self.length - self.i - 1);
+
+        self.i += 1;
+
+        return Some((self.v & bit) > 0)
+    }
+}
