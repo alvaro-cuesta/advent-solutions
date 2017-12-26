@@ -22,3 +22,4 @@ pub mod knot_hash;
 #[path="16-permutation_promenade.rs"] pub mod day16;
 #[path="17-spinlock.rs"] pub mod day17;
 #[path="18-duet.rs"] pub mod day18;
+#[path="19-tubes.rs"] pub mod day19;
