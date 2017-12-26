@@ -208,8 +208,8 @@ pub fn part2(instructions: &[Instruction]) -> isize {
     max_reg_value
 }
 
-pub fn main() {
-    let input = ::download::input(2017, 8);
+pub fn main(download: &::Download) {
+    let input = download.input(2017, 8);
 
     let instructions = Instruction::list_from_bytes(input.as_bytes())
         .to_full_result()

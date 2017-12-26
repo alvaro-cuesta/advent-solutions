@@ -271,8 +271,8 @@ pub fn part2(nodes: &[Node]) -> usize {
     }
 }
 
-pub fn main() {
-    let input = ::download::input(2017, 7);
+pub fn main(download: &::Download) {
+    let input = download.input(2017, 7);
 
     let nodes = Node::list_from_bytes(input.as_bytes())
         .to_full_result()

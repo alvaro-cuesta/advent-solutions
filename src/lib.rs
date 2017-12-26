@@ -9,8 +9,11 @@ extern crate itertools;
 extern crate reqwest;
 #[macro_use] extern crate nom;
 
-pub mod download;
+mod download;
+pub use download::Download;
+
 #[macro_use] pub mod parse;
+
 pub mod iter;
 
 mod direction;

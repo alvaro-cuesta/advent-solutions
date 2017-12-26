@@ -159,8 +159,8 @@ pub fn part2(connections: &HashMap<usize, Vec<usize>>) -> usize {
     groups
 }
 
-pub fn main() {
-    let input = ::download::input(2017, 12);
+pub fn main(download: &::Download) {
+    let input = download.input(2017, 12);
 
     let connections = parse_connections(input.as_bytes())
         .to_full_result()

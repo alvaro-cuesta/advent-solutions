@@ -551,8 +551,8 @@ pub fn part2(input: &str, bursts: usize) -> usize {
     carrier.infected
 }
 
-pub fn main() {
-    let input = ::download::input(2017, 22);
+pub fn main(download: &::Download) {
+    let input = download.input(2017, 22);
 
     println!("Part 1: {}", part1(&input, 10000));
     println!("Part 2: {}", part2(&input, 10000000));

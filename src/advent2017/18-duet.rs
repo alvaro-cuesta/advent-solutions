@@ -455,8 +455,8 @@ pub fn part2(instructions: &[Instruction]) -> usize {
     c1_total_sent
 }
 
-pub fn main() {
-    let input = ::download::input(2017, 18);
+pub fn main(download: &::Download) {
+    let input = download.input(2017, 18);
 
     let instructions = Instruction::list_from_bytes(input.as_bytes())
         .to_full_result()

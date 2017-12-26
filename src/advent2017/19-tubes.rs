@@ -202,8 +202,8 @@ pub fn solve(input: &str) -> (String, usize) {
     (collected, steps)
 }
 
-pub fn main() {
-    let (collected, steps) = solve(&::download::input(2017, 19));
+pub fn main(download: &::Download) {
+    let (collected, steps) = solve(&download.input(2017, 19));
 
     println!("Part 1: {}", collected);
     println!("Part 2: {}", steps);

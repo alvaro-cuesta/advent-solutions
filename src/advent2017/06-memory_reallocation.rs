@@ -147,8 +147,8 @@ pub fn part2(banks: &Vec<usize>) -> usize {
     }
 }
 
-pub fn main() {
-    let banks = parse_input(&::download::single_input(2017, 6));
+pub fn main(download: &::Download) {
+    let banks = parse_input(&download.single_input(2017, 6));
 
     println!("Part 1: {}", part1(&banks));
     println!("Part 2: {}", part2(&banks));

@@ -209,8 +209,8 @@ pub fn part2(moves: &[Move]) -> String {
     programs.into_iter().collect()
 }
 
-pub fn main() {
-    let input = ::download::input(2017, 16);
+pub fn main(download: &::Download) {
+    let input = download.input(2017, 16);
 
     let moves = Move::list_from_bytes(input.as_bytes())
             .to_full_result()

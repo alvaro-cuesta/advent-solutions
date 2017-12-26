@@ -159,8 +159,8 @@ pub fn part2(index: usize) -> usize {
         .expect("Found no solution for step 2")
 }
 
-pub fn main() {
-    let index = ::download::single_input(2017, 3)
+pub fn main(download: &::Download) {
+    let index = download.single_input(2017, 3)
         .parse::<usize>()
         .expect("Unexpected non-integer");
 

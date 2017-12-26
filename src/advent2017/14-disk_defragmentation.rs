@@ -186,8 +186,8 @@ pub fn part2<'a, I, J>(hashes: I) -> usize
     groups.len()
 }
 
-pub fn main() {
-    let hashes = make_hashes(&::download::single_input(2017, 14));
+pub fn main(download: &::Download) {
+    let hashes = make_hashes(&download.single_input(2017, 14));
 
     println!("Part 1: {}", part1(&hashes));
     println!("Part 2: {}", part2(&hashes));

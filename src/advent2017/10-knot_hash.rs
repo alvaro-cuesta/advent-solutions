@@ -92,8 +92,8 @@ pub fn part2(input: &str) -> String {
         .collect::<String>()
 }
 
-pub fn main() {
-    let input = ::download::single_input(2017, 10);
+pub fn main(download: &::Download) {
+    let input = download.single_input(2017, 10);
 
     println!("Part 1: {}", part1(&input));
     println!("Part 2: {}", part2(&input));

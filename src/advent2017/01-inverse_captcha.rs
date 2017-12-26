@@ -147,8 +147,8 @@ pub fn part2(input: &str) -> u32 {
     count_matching(input, input.len() / 2)
 }
 
-pub fn main() {
-    let input = ::download::single_input(2017, 1);
+pub fn main(download: &::Download) {
+    let input = download.single_input(2017, 1);
 
     println!("Part 1: {}", part1(&input));
     println!("Part 2: {}", part2(&input));

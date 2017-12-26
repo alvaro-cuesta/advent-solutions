@@ -522,8 +522,8 @@ pub fn part2(input: &str) -> usize {
     unreachable!();
 }
 
-pub fn main() {
-    let input = ::download::input(2017, 13);
+pub fn main(download: &::Download) {
+    let input = download.input(2017, 13);
 
     println!("Part 1: {}", part1(&input));
     println!("Part 2: {}", part2(&input));

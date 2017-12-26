@@ -108,8 +108,8 @@ pub fn count_steps<F: Fn(isize) -> isize>(mut memory: Vec<isize>, mut_fn: F) -> 
     + 1
 }
 
-pub fn main() {
-    let jumps = parse_input(&::download::input(2017, 5));
+pub fn main(download: &::Download) {
+    let jumps = parse_input(&download.input(2017, 5));
 
     println!("Part 1: {}", part1(jumps.clone()));
     println!("Part 2: {}", part2(jumps.clone()));

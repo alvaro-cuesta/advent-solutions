@@ -203,8 +203,8 @@ pub fn part2(a_f: u32, a_s: u32, b_f: u32, b_s: u32) -> usize {
         .count()
 }
 
-pub fn main() {
-    let input = ::download::input(2017, 15);
+pub fn main(download: &::Download) {
+    let input = download.input(2017, 15);
 
     let mut starts = input.lines()
         .map(|line| line[24..].parse::<u32>().expect("Could not parse input"));

@@ -27,7 +27,6 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 ## TODO
 
 - Make main() execute only certain
-- Make main() share SESSION
 - Add panics to docs
 - Document advent lib
 - Separate tests in part1 and part2

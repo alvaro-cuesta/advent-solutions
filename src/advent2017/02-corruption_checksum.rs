@@ -123,8 +123,8 @@ pub fn parse_input(input: &str) -> Vec<Vec<usize>> {
         .collect::<Vec<_>>()
 }
 
-pub fn main() {
-    let lines = parse_input(&::download::input(2017, 2));
+pub fn main(download: &::Download) {
+    let lines = parse_input(&download.input(2017, 2));
 
     println!("Part 1: {}", part1(&lines));
     println!("Part 2: {}", part2(&lines));

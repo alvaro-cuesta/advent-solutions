@@ -132,8 +132,8 @@ pub fn solve(input: &str) -> (usize, usize) {
     (max_distance, final_position.distance(&HexCoord(0, 0)))
 }
 
-pub fn main() {
-    let (max_distance, distance) = solve(&::download::single_input(2017, 11));
+pub fn main(download: &::Download) {
+    let (max_distance, distance) = solve(&download.single_input(2017, 11));
 
     println!("Part 1: {}", distance);
     println!("Part 2: {}", max_distance);

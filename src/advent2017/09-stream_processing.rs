@@ -309,8 +309,8 @@ pub fn part2(root: &Node) -> usize {
     root.count_garbage()
 }
 
-pub fn main() {
-    let input = ::download::input(2017, 9);
+pub fn main(download: &::Download) {
+    let input = download.input(2017, 9);
 
     let root = Node::from_bytes(input.as_bytes())
         .to_full_result()

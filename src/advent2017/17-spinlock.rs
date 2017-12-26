@@ -110,8 +110,8 @@ pub fn part2(input: usize) -> usize {
     last_i
 }
 
-pub fn main() {
-    let input = ::download::single_input(2017, 17)
+pub fn main(download: &::Download) {
+    let input = download.single_input(2017, 17)
         .parse::<usize>().expect("Could not parse input");
 
     println!("Part 1: {}", part1(input));
