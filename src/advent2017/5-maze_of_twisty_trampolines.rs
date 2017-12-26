@@ -114,3 +114,14 @@ pub fn main() {
     println!("Part 1: {}", part1(jumps.clone()));
     println!("Part 2: {}", part2(jumps.clone()));
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let jumps = super::parse_input(include_str!("../../test_inputs/2017/5"));
+
+        assert_eq!(super::part1(jumps.clone()), 360603);
+        assert_eq!(super::part2(jumps.clone()), 25347697);
+    }
+}

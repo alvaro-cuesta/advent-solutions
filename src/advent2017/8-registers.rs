@@ -218,3 +218,18 @@ pub fn main() {
     println!("Part 1: {}", part1(&instructions));
     println!("Part 2: {}", part2(&instructions));
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let input = include_str!("../../test_inputs/2017/8");
+
+        let instructions = super::Instruction::list_from_bytes(input.as_bytes())
+            .to_full_result()
+            .expect("Error parsing instructions");
+
+        assert_eq!(super::part1(&instructions), 4647);
+        assert_eq!(super::part2(&instructions), 5590);
+    }
+}

@@ -153,3 +153,17 @@ pub fn main() {
     println!("Part 1: {}", part1(&banks));
     println!("Part 2: {}", part2(&banks));
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let mut input = include_str!("../../test_inputs/2017/6");
+        input = &input[..input.len() - 1];
+
+        let banks = super::parse_input(input);
+
+        assert_eq!(super::part1(&banks), 11137);
+        assert_eq!(super::part2(&banks), 1037);
+    }
+}

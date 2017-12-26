@@ -169,3 +169,18 @@ pub fn main() {
     println!("Part 1: {}", part1(&connections));
     println!("Part 2: {}", part2(&connections));
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let input = include_str!("../../test_inputs/2017/12");
+
+        let connections = super::parse_connections(input.as_bytes())
+            .to_full_result()
+            .expect("Error parsing connections");
+
+        assert_eq!(super::part1(&connections), 175);
+        assert_eq!(super::part2(&connections), 213);
+    }
+}

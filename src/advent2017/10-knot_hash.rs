@@ -98,3 +98,15 @@ pub fn main() {
     println!("Part 1: {}", part1(&input));
     println!("Part 2: {}", part2(&input));
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let mut input = include_str!("../../test_inputs/2017/10");
+        input = &input[..input.len() - 1];
+
+        assert_eq!(super::part1(&input), 4480);
+        assert_eq!(super::part2(&input), "c500ffe015c83b60fad2e4b7d59dabc4");
+    }
+}

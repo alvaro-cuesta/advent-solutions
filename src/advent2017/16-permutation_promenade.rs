@@ -219,3 +219,19 @@ pub fn main() {
     println!("Part 1: {}", part1(&moves));
     println!("Part 2: {}", part2(&moves));
 }
+
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let input = include_str!("../../test_inputs/2017/16");
+
+        let moves = super::Move::list_from_bytes(input.as_bytes())
+            .to_full_result()
+            .expect("Error parsing moves");
+
+        assert_eq!(super::part1(&moves), "nlciboghjmfdapek");
+        assert_eq!(super::part2(&moves), "nlciboghmkedpfja");
+    }
+}

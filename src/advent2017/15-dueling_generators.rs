@@ -213,6 +213,24 @@ pub fn main() {
     let b_s = starts.next().expect("Could not find b_s");
     assert!(starts.next().is_none(), "More than 2 lines");
 
-    println!("Step 1: {}", part1(16807, a_s, 48271, b_s));
-    println!("Step 2: {}", part2(16807, a_s, 48271, b_s));
+    println!("Part 1: {}", part1(16807, a_s, 48271, b_s));
+    println!("Part 2: {}", part2(16807, a_s, 48271, b_s));
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let input = include_str!("../../test_inputs/2017/15");
+
+        let mut starts = input.lines()
+            .map(|line| line[24..].parse::<u32>().expect("Could not parse input"));
+
+        let a_s = starts.next().expect("Could not find a_s");
+        let b_s = starts.next().expect("Could not find b_s");
+        assert!(starts.next().is_none(), "More than 2 lines");
+
+        assert_eq!(super::part1(16807, a_s, 48271, b_s), 567);
+        assert_eq!(super::part2(16807, a_s, 48271, b_s), 323);
+    }
 }

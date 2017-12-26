@@ -192,3 +192,17 @@ pub fn main() {
     println!("Part 1: {}", part1(&hashes));
     println!("Part 2: {}", part2(&hashes));
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let mut input = include_str!("../../test_inputs/2017/14");
+        input = &input[..input.len() - 1];
+
+        let hashes = super::make_hashes(input);
+
+        assert_eq!(super::part1(&hashes), 8222);
+        assert_eq!(super::part2(&hashes), 1086);
+    }
+}

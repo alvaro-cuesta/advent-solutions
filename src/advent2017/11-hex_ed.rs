@@ -138,3 +138,17 @@ pub fn main() {
     println!("Part 1: {}", distance);
     println!("Part 2: {}", max_distance);
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let mut input = include_str!("../../test_inputs/2017/11");
+        input = &input[..input.len() - 1];
+
+        let (max_distance, distance) = super::solve(input);
+
+        assert_eq!(max_distance, 1501);
+        assert_eq!(distance, 759);
+    }
+}

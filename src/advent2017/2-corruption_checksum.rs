@@ -129,3 +129,14 @@ pub fn main() {
     println!("Part 1: {}", part1(&lines));
     println!("Part 2: {}", part2(&lines));
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let input = super::parse_input(include_str!("../../test_inputs/2017/2"));
+
+        assert_eq!(super::part1(&input), 34925);
+        assert_eq!(super::part2(&input), 221);
+    }
+}

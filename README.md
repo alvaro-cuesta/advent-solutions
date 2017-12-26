@@ -26,7 +26,10 @@ Solutions for [Advent of Code 2017](http://adventofcode.com/2017).
 
 ## TODO
 
-- 10-knot-hash no advent on library?
-- Add my answers to test (i.e. no main())
+- Make main() execute only certain
+- Make main() share SESSION
 - Add panics to docs
 - Document advent lib
+- Something is broken in run
+- Separate tests in part1 and part2
+- Day 17 my test fails

@@ -319,3 +319,18 @@ pub fn main() {
     println!("Part 1: {}", part1(&root));
     println!("Part 2: {}", part2(&root));
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let input = include_str!("../../test_inputs/2017/9");
+
+        let root = super::Node::from_bytes(input.as_bytes())
+            .to_full_result()
+            .expect("Error parsing stream");
+
+        assert_eq!(super::part1(&root), 14204);
+        assert_eq!(super::part2(&root), 6622);
+    }
+}

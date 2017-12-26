@@ -167,3 +167,19 @@ pub fn main() {
     println!("Part 1: {}", part1(index));
     println!("Part 2: {}", part2(index));
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_input() {
+        let mut input = include_str!("../../test_inputs/2017/3");
+        input = &input[..input.len() - 1];
+
+        let val = input
+            .parse::<usize>()
+            .expect("Unexpected non-integer");
+
+        assert_eq!(super::part1(val), 430);
+        assert_eq!(super::part2(val), 312453);
+    }
+}
