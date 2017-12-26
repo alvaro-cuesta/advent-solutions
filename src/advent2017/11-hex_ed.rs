@@ -1,4 +1,4 @@
-//! # Day 11: Hex [Ed](http://adventofcode.com/2017/day/11)
+//! # [Day 11: Hex Ed](http://adventofcode.com/2017/day/11)
 //!
 //! Crossing the bridge, you've barely reached the other side of the stream
 //! when a program comes up to you, clearly in distress. "It's my child
@@ -7,10 +7,6 @@
 //! Fortunately for her, you have plenty of experience with infinite grids.
 //!
 //! Unfortunately for you, it's a [hex grid].
-
-
-
-
 
 use std::str::FromStr;
 use std::cmp;

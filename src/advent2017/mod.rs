@@ -15,3 +15,4 @@ pub mod knot_hash;
 #[path="9-stream_processing.rs"] pub mod day9;
 #[path="10-knot_hash.rs"] pub mod day10;
 #[path="11-hex_ed.rs"] pub mod day11;
+#[path="12-digital_plumber.rs"] pub mod day12;
