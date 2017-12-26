@@ -73,8 +73,8 @@ fn main() {
             "day01", "day02", "day03", "day04", "day05",
             "day06", "day07", "day08", "day09", "day10",
             "day11", "day12", "day13", "day14", "day15",
-            "day16", "day17", "day18", "day19", /*"day20",
-            "day21",*/ "day22", /*"day23", "day24", "day25",*/
+            "day16", "day17", "day18", "day19", "day20",
+            /*"day21",*/ "day22", /*"day23", "day24", "day25",*/
         ]
     };
 
@@ -102,6 +102,7 @@ fn main() {
     run_day!(day17, args, downloader, pool, tx);
     run_day!(day18, args, downloader, pool, tx);
     run_day_both!(day19, args, downloader, pool, tx);
+    run_day!(day20, args, downloader, pool, tx);
     run_day!(day22, args, downloader, pool, tx);
 
     drop(tx);
