@@ -16,3 +16,4 @@ pub mod knot_hash;
 #[path="10-knot_hash.rs"] pub mod day10;
 #[path="11-hex_ed.rs"] pub mod day11;
 #[path="12-digital_plumber.rs"] pub mod day12;
+#[path="13-packet_scanners.rs"] pub mod day13;
