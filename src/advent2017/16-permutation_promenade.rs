@@ -220,7 +220,6 @@ pub fn main() {
     println!("Part 2: {}", part2(&moves));
 }
 
-
 #[cfg(test)]
 mod tests {
     #[test]
