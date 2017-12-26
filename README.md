@@ -1,6 +1,6 @@
-# Advent of Code 2017 Solutions
+# Advent of Code Solutions
 
-Solutions for [Advent of Code 2017](http://adventofcode.com/2017).
+Solutions for [Advent of Code](http://adventofcode.com/about).
 
 ## Running
 
@@ -32,3 +32,7 @@ Solutions for [Advent of Code 2017](http://adventofcode.com/2017).
 - Document advent lib
 - Separate tests in part1 and part2
 - Solve 20, 21, 23, 24, 25
+- Older Advent of Code
+- Use lines! in list_from_bytes (20, 21)
+- Ensure all doccomments are on pub types
+- Move test_inputs to src year?
