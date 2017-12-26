@@ -52,7 +52,7 @@ pub fn parse_input(input: &str) -> Vec<usize> {
 /// redistribution cycle, and so the answer in this example is `5`.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day6::{ parse_input, part1 };
+/// # use advent_solutions::advent2017::day06::{ parse_input, part1 };
 /// # let input = parse_input("0\t2\t7\t0");
 /// assert_eq!(part1(&input), 5);
 /// ```
@@ -105,7 +105,7 @@ pub fn part1(banks: &Vec<usize>) -> usize {
 /// the answer in that example would be `4`.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day6::{ parse_input, part2 };
+/// # use advent_solutions::advent2017::day06::{ parse_input, part2 };
 /// # let input = parse_input("0\t2\t7\t0");
 /// assert_eq!(part2(&input), 4);
 /// ```
@@ -158,7 +158,7 @@ pub fn main() {
 mod tests {
     #[test]
     fn test_input() {
-        let mut input = include_str!("../../test_inputs/2017/6");
+        let mut input = include_str!("../../test_inputs/2017/06");
         input = &input[..input.len() - 1];
 
         let banks = super::parse_input(input);

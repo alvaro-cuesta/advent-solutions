@@ -148,7 +148,7 @@ impl<'a> Instruction<'a> {
 /// After this process, the largest value in any register is `1`.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day8::{ Instruction, part1 };
+/// # use advent_solutions::advent2017::day08::{ Instruction, part1 };
 /// # let input = b"b inc 5 if a > 1
 /// # a inc 1 if b < 5
 /// # c dec -10 if a >= 1
@@ -177,7 +177,7 @@ pub fn part1(instructions: &[Instruction]) -> isize {
 /// instruction was evaluated).
 ///
 /// ```
-/// # use advent_solutions::advent2017::day8::{ Instruction, part2 };
+/// # use advent_solutions::advent2017::day08::{ Instruction, part2 };
 /// let input = b"b inc 5 if a > 1
 /// a inc 1 if b < 5
 /// c dec -10 if a >= 1
@@ -223,7 +223,7 @@ pub fn main() {
 mod tests {
     #[test]
     fn test_input() {
-        let input = include_str!("../../test_inputs/2017/8");
+        let input = include_str!("../../test_inputs/2017/08");
 
         let instructions = super::Instruction::list_from_bytes(input.as_bytes())
             .to_full_result()

@@ -11,7 +11,7 @@
 /// -   `aa bb cc dd ee` is valid.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day4::is_valid_part1;
+///     # use advent_solutions::advent2017::day04::is_valid_part1;
 ///     assert_eq!(is_valid_part1("aa bb cc dd ee"), true);
 ///     ```
 ///
@@ -19,7 +19,7 @@
 ///     once.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day4::is_valid_part1;
+///     # use advent_solutions::advent2017::day04::is_valid_part1;
 ///     assert_eq!(is_valid_part1("aa bb cc dd aa"), false);
 ///     ```
 ///
@@ -27,7 +27,7 @@
 ///     words.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day4::is_valid_part1;
+///     # use advent_solutions::advent2017::day04::is_valid_part1;
 ///     assert_eq!(is_valid_part1("aa bb cc dd aaa"), true);
 ///     ```
 pub fn is_valid_part1(passphrase: &str) -> bool {
@@ -58,7 +58,7 @@ pub fn part1(input: &str) -> usize {
 /// -  `abcde fghij` is a valid passphrase.
 ///
 ///   ```
-///   # use advent_solutions::advent2017::day4::is_valid_part2;
+///   # use advent_solutions::advent2017::day04::is_valid_part2;
 ///   assert_eq!(is_valid_part2("abcde fghij"), true);
 ///   ```
 ///
@@ -66,7 +66,7 @@ pub fn part1(input: &str) -> usize {
 ///   be rearranged to form the first word.
 ///
 ///   ```
-///   # use advent_solutions::advent2017::day4::is_valid_part2;
+///   # use advent_solutions::advent2017::day04::is_valid_part2;
 ///   assert_eq!(is_valid_part2("abcde xyz ecdab"), false);
 ///   ```
 ///
@@ -74,14 +74,14 @@ pub fn part1(input: &str) -> usize {
 ///   need to be used when forming another word.
 ///
 ///   ```
-///   # use advent_solutions::advent2017::day4::is_valid_part2;
+///   # use advent_solutions::advent2017::day04::is_valid_part2;
 ///   assert_eq!(is_valid_part2("a ab abc abd abf abj"), true);
 ///   ```
 ///
 /// - `iiii oiii ooii oooi oooo` is valid.
 ///
 ///   ```
-///   # use advent_solutions::advent2017::day4::is_valid_part2;
+///   # use advent_solutions::advent2017::day04::is_valid_part2;
 ///   assert_eq!(is_valid_part2("iiii oiii ooii oooi oooo"), true);
 ///   ```
 ///
@@ -89,7 +89,7 @@ pub fn part1(input: &str) -> usize {
 ///   rearranged to form any other word.
 ///
 ///   ```
-///   # use advent_solutions::advent2017::day4::is_valid_part2;
+///   # use advent_solutions::advent2017::day04::is_valid_part2;
 ///   assert_eq!(is_valid_part2("oiii ioii iioi iiio"), false);
 ///   ```
 pub fn is_valid_part2(passphrase: &str) -> bool {
@@ -127,7 +127,7 @@ pub fn main() {
 mod tests {
     #[test]
     fn test_input() {
-        let input = include_str!("../../test_inputs/2017/4");
+        let input = include_str!("../../test_inputs/2017/04");
 
         assert_eq!(super::part1(&input), 477);
         assert_eq!(super::part2(&input), 167);

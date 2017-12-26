@@ -19,9 +19,9 @@ Solutions for [Advent of Code 2017](http://adventofcode.com/2017).
 - Or only some:
 
     ```sh
-    $ cargo test dayN::       # N = 1, 2, ..., 25
-    $ cargo test YYYY::       # YYYY = Year
-    $ cargo test YYYY::dayN::
+    $ cargo test dayNN::       # NN = 01, 02, ..., 25
+    $ cargo test YYYY::        # YYYY = Year
+    $ cargo test YYYY::dayNN::
     ```
 
 ## TODO

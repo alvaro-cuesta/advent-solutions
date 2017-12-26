@@ -51,7 +51,7 @@ pub fn parse_input(input: &str) -> Vec<isize> {
 /// In this example, the exit is reached in `5` steps.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day5::{ parse_input, part1 };
+/// # use advent_solutions::advent2017::day05::{ parse_input, part1 };
 /// # let input = parse_input("0
 /// # 3
 /// # 0
@@ -75,7 +75,7 @@ pub fn part1(jumps: Vec<isize>) -> usize {
 /// `2 3 2 3 -1`.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day5::{ parse_input, part2 };
+/// # use advent_solutions::advent2017::day05::{ parse_input, part2 };
 /// # let input = parse_input("0
 /// # 3
 /// # 0
@@ -119,7 +119,7 @@ pub fn main() {
 mod tests {
     #[test]
     fn test_input() {
-        let jumps = super::parse_input(include_str!("../../test_inputs/2017/5"));
+        let jumps = super::parse_input(include_str!("../../test_inputs/2017/05"));
 
         assert_eq!(super::part1(jumps.clone()), 360603);
         assert_eq!(super::part2(jumps.clone()), 25347697);

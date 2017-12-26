@@ -125,7 +125,7 @@ impl<'a> Node<'a> {
 /// is correct. *What is the name of the bottom program?*
 ///
 /// ```
-/// # use advent_solutions::advent2017::day7::{ Node, part1 };
+/// # use advent_solutions::advent2017::day07::{ Node, part1 };
 /// let input = b"pbga (66)
 /// xhth (57)
 /// ebii (61)
@@ -196,7 +196,7 @@ pub fn part1<'a, 'b>(nodes: &'a [Node<'b>]) -> &'b str {
 /// made, its weight would be `60`.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day7::{ Node, part2 };
+/// # use advent_solutions::advent2017::day07::{ Node, part2 };
 /// let input = b"pbga (66)
 /// xhth (57)
 /// ebii (61)
@@ -286,7 +286,7 @@ pub fn main() {
 mod tests {
     #[test]
     fn test_input() {
-        let input = include_str!("../../test_inputs/2017/7");
+        let input = include_str!("../../test_inputs/2017/07");
 
         let nodes = super::Node::list_from_bytes(input.as_bytes())
             .to_full_result()

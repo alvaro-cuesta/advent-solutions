@@ -28,7 +28,7 @@
 /// In this example, the spreadsheet's checksum would be `8 + 4 + 6 = 18`.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day2::{ parse_input, part1 };
+/// # use advent_solutions::advent2017::day02::{ parse_input, part1 };
 /// # let input = "5\t1\t9\t5
 /// # 7\t5\t3
 /// # 2\t4\t6\t8
@@ -81,7 +81,7 @@ pub fn part1<'a, I, J>(lines: I) -> usize
 /// In this example, the sum of the results would be `4 + 3 + 2 = 9`.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day2::{ parse_input, part2 };
+/// # use advent_solutions::advent2017::day02::{ parse_input, part2 };
 /// # let input = "5\t9\t2\t8
 /// # 9\t4\t7\t3
 /// # 3\t8\t6\t5
@@ -134,7 +134,7 @@ pub fn main() {
 mod tests {
     #[test]
     fn test_input() {
-        let input = super::parse_input(include_str!("../../test_inputs/2017/2"));
+        let input = super::parse_input(include_str!("../../test_inputs/2017/02"));
 
         assert_eq!(super::part1(&input), 34925);
         assert_eq!(super::part2(&input), 221);

@@ -126,7 +126,7 @@ impl Node {
 /// -   `{}`, score of `1`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part1 };
+///     # use advent_solutions::advent2017::day09::{ Node, part1 };
 ///     let root = Node::from_bytes(b"{}")
 ///         .to_result()
 ///         .unwrap();
@@ -137,7 +137,7 @@ impl Node {
 /// -   `{{{}}}`, score of `1 + 2 + 3 = 6`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part1 };
+///     # use advent_solutions::advent2017::day09::{ Node, part1 };
 ///     let root = Node::from_bytes(b"{{{}}}")
 ///         .to_result()
 ///         .unwrap();
@@ -148,7 +148,7 @@ impl Node {
 /// -   `{{},{}}`, score of `1 + 2 + 2 = 5`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part1 };
+///     # use advent_solutions::advent2017::day09::{ Node, part1 };
 ///     let root = Node::from_bytes(b"{{},{}}")
 ///         .to_result()
 ///         .unwrap();
@@ -159,7 +159,7 @@ impl Node {
 /// -   `{{{},{},{{}}}}`, score of `1 + 2 + 3 + 3 + 3 + 4 = 16`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part1 };
+///     # use advent_solutions::advent2017::day09::{ Node, part1 };
 ///     let root = Node::from_bytes(b"{{{},{},{{}}}}")
 ///         .to_result()
 ///         .unwrap();
@@ -170,7 +170,7 @@ impl Node {
 /// -   `{<a>,<a>,<a>,<a>}`, score of `1`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part1 };
+///     # use advent_solutions::advent2017::day09::{ Node, part1 };
 ///     let root = Node::from_bytes(b"{<a>,<a>,<a>,<a>}")
 ///         .to_result()
 ///         .unwrap();
@@ -181,7 +181,7 @@ impl Node {
 /// -   `{{<ab>},{<ab>},{<ab>},{<ab>}}`, score of `1 + 2 + 2 + 2 + 2 = 9`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part1 };
+///     # use advent_solutions::advent2017::day09::{ Node, part1 };
 ///     let root = Node::from_bytes(b"{{<ab>},{<ab>},{<ab>},{<ab>}}")
 ///         .to_result()
 ///         .unwrap();
@@ -192,7 +192,7 @@ impl Node {
 /// -   `{{<!!>},{<!!>},{<!!>},{<!!>}}`, score of `1 + 2 + 2 + 2 + 2 = 9`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part1 };
+///     # use advent_solutions::advent2017::day09::{ Node, part1 };
 ///     let root = Node::from_bytes(b"{{<!!>},{<!!>},{<!!>},{<!!>}}")
 ///         .to_result()
 ///         .unwrap();
@@ -203,7 +203,7 @@ impl Node {
 /// -   `{{<a!>},{<a!>},{<a!>},{<ab>}}`, score of `1 + 2 = 3`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part1 };
+///     # use advent_solutions::advent2017::day09::{ Node, part1 };
 ///     let root = Node::from_bytes(b"{{<a!>},{<a!>},{<a!>},{<ab>}}")
 ///         .to_result()
 ///         .unwrap();
@@ -229,7 +229,7 @@ pub fn part1(root: &Node) -> usize {
 /// -   `<>`, `0` characters.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part2 };
+///     # use advent_solutions::advent2017::day09::{ Node, part2 };
 ///     let root = Node::from_bytes(b"<>")
 ///         .to_result()
 ///         .unwrap();
@@ -240,7 +240,7 @@ pub fn part1(root: &Node) -> usize {
 /// -   `<random characters>`, `17` characters.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part2 };
+///     # use advent_solutions::advent2017::day09::{ Node, part2 };
 ///     let root = Node::from_bytes(b"<random characters>")
 ///         .to_result()
 ///         .unwrap();
@@ -251,7 +251,7 @@ pub fn part1(root: &Node) -> usize {
 /// -   `<<<<>`, `3` characters.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part2 };
+///     # use advent_solutions::advent2017::day09::{ Node, part2 };
 ///     let root = Node::from_bytes(b"<<<<>")
 ///         .to_result()
 ///         .unwrap();
@@ -262,7 +262,7 @@ pub fn part1(root: &Node) -> usize {
 /// -   `<{!>}>`, `2` characters.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part2 };
+///     # use advent_solutions::advent2017::day09::{ Node, part2 };
 ///     let root = Node::from_bytes(b"<{!>}>")
 ///         .to_result()
 ///         .unwrap();
@@ -273,7 +273,7 @@ pub fn part1(root: &Node) -> usize {
 /// -   `<!!>`, `0` characters.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part2 };
+///     # use advent_solutions::advent2017::day09::{ Node, part2 };
 ///     let root = Node::from_bytes(b"<!!>")
 ///         .to_result()
 ///         .unwrap();
@@ -284,7 +284,7 @@ pub fn part1(root: &Node) -> usize {
 /// -   `<!!!>>`, `0` characters.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part2 };
+///     # use advent_solutions::advent2017::day09::{ Node, part2 };
 ///     let root = Node::from_bytes(b"<!!!>>")
 ///         .to_result()
 ///         .unwrap();
@@ -295,7 +295,7 @@ pub fn part1(root: &Node) -> usize {
 /// -   `<{o"i!a,<{i<a>`, `10` characters.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day9::{ Node, part2 };
+///     # use advent_solutions::advent2017::day09::{ Node, part2 };
 ///     let root = Node::from_bytes(b"<{o\"i!a,<{i<a>")
 ///         .to_result()
 ///         .unwrap();
@@ -324,7 +324,7 @@ pub fn main() {
 mod tests {
     #[test]
     fn test_input() {
-        let input = include_str!("../../test_inputs/2017/9");
+        let input = include_str!("../../test_inputs/2017/09");
 
         let root = super::Node::from_bytes(input.as_bytes())
             .to_full_result()

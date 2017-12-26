@@ -59,21 +59,21 @@ pub fn count_matching(input: &str, offset: usize) -> u32 {
 ///     fourth digit.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day1::part1;
+///     # use advent_solutions::advent2017::day01::part1;
 ///     assert_eq!(part1("1122"), 3);
 ///     ```
 ///
 /// -   `1111` produces `4` because each digit (all `1`) matches the next.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day1::part1;
+///     # use advent_solutions::advent2017::day01::part1;
 ///     assert_eq!(part1("1111"), 4);
 ///     ```
 ///
 /// -   `1234` produces `0` because no digit matches the next.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day1::part1;
+///     # use advent_solutions::advent2017::day01::part1;
 ///     assert_eq!(part1("1234"), 0);
 ///     ```
 ///
@@ -81,7 +81,7 @@ pub fn count_matching(input: &str, offset: usize) -> u32 {
 ///     one is the last digit, `9`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day1::part1;
+///     # use advent_solutions::advent2017::day01::part1;
 ///     assert_eq!(part1("91212129"), 9);
 ///     ```
 ///
@@ -108,7 +108,7 @@ pub fn part1(input: &str) -> u32 {
 ///     digits match the digit `2` items ahead.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day1::part2;
+///     # use advent_solutions::advent2017::day01::part2;
 ///     assert_eq!(part2("1212"), 6);
 ///     ```
 ///
@@ -116,7 +116,7 @@ pub fn part1(input: &str) -> u32 {
 ///     `2`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day1::part2;
+///     # use advent_solutions::advent2017::day01::part2;
 ///     assert_eq!(part2("1221"), 0);
 ///     ```
 ///
@@ -124,21 +124,21 @@ pub fn part1(input: &str) -> u32 {
 ///     other digit has a match.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day1::part2;
+///     # use advent_solutions::advent2017::day01::part2;
 ///     assert_eq!(part2("123425"), 4);
 ///     ```
 ///
 /// -   `123123` produces `12`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day1::part2;
+///     # use advent_solutions::advent2017::day01::part2;
 ///     assert_eq!(part2("123123"), 12);
 ///     ```
 ///
 /// -   `12131415` produces `4`.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day1::part2;
+///     # use advent_solutions::advent2017::day01::part2;
 ///     assert_eq!(part2("12131415"), 4);
 ///     ```
 ///
@@ -158,7 +158,7 @@ pub fn main() {
 mod tests {
     #[test]
     fn test_input() {
-        let mut input = include_str!("../../test_inputs/2017/1");
+        let mut input = include_str!("../../test_inputs/2017/01");
         input = &input[..input.len() - 1];
 
         assert_eq!(super::part1(&input), 1341);

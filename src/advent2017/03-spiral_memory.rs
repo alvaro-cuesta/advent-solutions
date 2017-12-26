@@ -46,7 +46,7 @@ fn spiral() -> impl Iterator<Item=&'static ::Direction> {
 ///     port.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day3::part1;
+///     # use advent_solutions::advent2017::day03::part1;
 ///     assert_eq!(part1(1), 0);
 ///     ```
 ///
@@ -54,21 +54,21 @@ fn spiral() -> impl Iterator<Item=&'static ::Direction> {
 ///     left.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day3::part1;
+///     # use advent_solutions::advent2017::day03::part1;
 ///     assert_eq!(part1(12), 3);
 ///     ```
 ///
 /// -   Data from square `23` is carried only `2` steps: up twice.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day3::part1;
+///     # use advent_solutions::advent2017::day03::part1;
 ///     assert_eq!(part1(23), 2);
 ///     ```
 ///
 /// -   Data from square `1024` must be carried `31` steps.
 ///
 ///     ```
-///     # use advent_solutions::advent2017::day3::part1;
+///     # use advent_solutions::advent2017::day03::part1;
 ///     assert_eq!(part1(1024), 31);
 ///     ```
 ///
@@ -113,7 +113,7 @@ pub fn part1(index: usize) -> usize {
 /// ```
 ///
 /// ```
-/// # use advent_solutions::advent2017::day3::stress_test;
+/// # use advent_solutions::advent2017::day03::stress_test;
 /// let solution = [
 ///     1usize, 1, 2, 4, 5, 10, 11, 23,
 ///     25, 26, 54, 57, 59, 122, 133, 142,
@@ -172,7 +172,7 @@ pub fn main() {
 mod tests {
     #[test]
     fn test_input() {
-        let mut input = include_str!("../../test_inputs/2017/3");
+        let mut input = include_str!("../../test_inputs/2017/03");
         input = &input[..input.len() - 1];
 
         let val = input
