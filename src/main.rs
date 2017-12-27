@@ -104,6 +104,8 @@ fn main() {
     run_day_both!(day19, args, download, pool, tx);
     run_day!(day22, args, download, pool, tx);
 
+    drop(tx);
+
     let mut results = vec![];
 
     for string in rx.iter().take(args.len() * 2) {
