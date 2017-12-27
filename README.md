@@ -41,6 +41,5 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 - Move test_inputs to src year?
 - Thread each part separately
 - Async download (limit # to avoid many requests)
-- Reuse client in download (keep-alive?)
 - Do not return result strings, but a result type
 - If any job panics, it's not handled properly (should be like cargo test)

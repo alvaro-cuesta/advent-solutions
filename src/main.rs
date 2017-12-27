@@ -4,7 +4,7 @@ extern crate advent_solutions;
 use advent_solutions::advent2017::*;
 
 macro_rules! run_day {
-    ($day:ident, $args:expr, $download:expr, $pool:expr, $tx:expr) => (
+    ($day:ident, $args:expr, $downloader:expr, $pool:expr, $tx:expr) => (
         {
             let day_string = stringify!($day);
 
@@ -16,7 +16,7 @@ macro_rules! run_day {
 
                 let tx = $tx.clone();
 
-                let input = $download.input(2017, day_num);
+                let input = $downloader.input(2017, day_num);
 
                 $pool.execute(move || {
                     let parsed = $day::parse_input(&input);
@@ -32,7 +32,7 @@ macro_rules! run_day {
 }
 
 macro_rules! run_day_both {
-    ($day:ident, $args:expr, $download:expr, $pool:expr, $tx:expr) => (
+    ($day:ident, $args:expr, $downloader:expr, $pool:expr, $tx:expr) => (
         {
             let day_string = stringify!($day);
 
@@ -44,7 +44,7 @@ macro_rules! run_day_both {
 
                 let tx = $tx.clone();
 
-                let input = $download.input(2017, day_num);
+                let input = $downloader.input(2017, day_num);
 
                 $pool.execute(move || {
                     let parsed = $day::parse_input(&input);
@@ -78,31 +78,31 @@ fn main() {
         ]
     };
 
-    let download = advent_solutions::Download::new();
+    let downloader = advent_solutions::Downloader::new();
 
     let pool = threadpool::Builder::new().build();
     let (tx, rx) = ::std::sync::mpsc::channel();
 
-    run_day!(day01, args, download, pool, tx);
-    run_day!(day02, args, download, pool, tx);
-    run_day!(day03, args, download, pool, tx);
-    run_day!(day04, args, download, pool, tx);
-    run_day!(day05, args, download, pool, tx);
-    run_day!(day06, args, download, pool, tx);
-    run_day!(day07, args, download, pool, tx);
-    run_day!(day08, args, download, pool, tx);
-    run_day!(day09, args, download, pool, tx);
-    run_day!(day10, args, download, pool, tx);
-    run_day_both!(day11, args, download, pool, tx);
-    run_day!(day12, args, download, pool, tx);
-    run_day!(day13, args, download, pool, tx);
-    run_day!(day14, args, download, pool, tx);
-    run_day!(day15, args, download, pool, tx);
-    run_day!(day16, args, download, pool, tx);
-    run_day!(day17, args, download, pool, tx);
-    run_day!(day18, args, download, pool, tx);
-    run_day_both!(day19, args, download, pool, tx);
-    run_day!(day22, args, download, pool, tx);
+    run_day!(day01, args, downloader, pool, tx);
+    run_day!(day02, args, downloader, pool, tx);
+    run_day!(day03, args, downloader, pool, tx);
+    run_day!(day04, args, downloader, pool, tx);
+    run_day!(day05, args, downloader, pool, tx);
+    run_day!(day06, args, downloader, pool, tx);
+    run_day!(day07, args, downloader, pool, tx);
+    run_day!(day08, args, downloader, pool, tx);
+    run_day!(day09, args, downloader, pool, tx);
+    run_day!(day10, args, downloader, pool, tx);
+    run_day_both!(day11, args, downloader, pool, tx);
+    run_day!(day12, args, downloader, pool, tx);
+    run_day!(day13, args, downloader, pool, tx);
+    run_day!(day14, args, downloader, pool, tx);
+    run_day!(day15, args, downloader, pool, tx);
+    run_day!(day16, args, downloader, pool, tx);
+    run_day!(day17, args, downloader, pool, tx);
+    run_day!(day18, args, downloader, pool, tx);
+    run_day_both!(day19, args, downloader, pool, tx);
+    run_day!(day22, args, downloader, pool, tx);
 
     drop(tx);
 

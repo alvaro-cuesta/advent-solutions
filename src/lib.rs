@@ -10,7 +10,7 @@ extern crate reqwest;
 #[macro_use] extern crate nom;
 
 mod download;
-pub use download::Download;
+pub use download::Downloader;
 
 #[macro_use] pub mod parse;
 

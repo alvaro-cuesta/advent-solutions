@@ -1,11 +1,15 @@
 use std::{ env, io, fs };
 use std::io::Read;
-use reqwest;
+use reqwest::Client;
+use reqwest::header::Cookie;
 
-pub struct Download(reqwest::header::Cookie);
+pub struct Downloader {
+    client: Client,
+    cookie: Cookie,
+}
 
-impl Download {
-    pub fn new() -> Download {
+impl Downloader {
+    pub fn new() -> Downloader {
         let session = env::var("SESSION")
             .map(|s| {
                 println!("Reading session cookie from SESSION environment variable");
@@ -24,18 +28,18 @@ impl Download {
             })
             .expect("SESSION environment variable or file is required (your session cookie)");
 
-        let mut cookie = reqwest::header::Cookie::new();
+        let mut cookie = Cookie::new();
         cookie.append("session", session);
 
-        Download(cookie)
+        Downloader { client: Client::new(), cookie }
     }
 
     pub fn input(&self, year: usize, day: usize) -> String {
-        let url = format!("http://adventofcode.com/{}/day/{}/input", year, day);
+        let url = format!("https://adventofcode.com/{}/day/{}/input", year, day);
 
-        let client = reqwest::Client::new();
-        let mut res = client.get(&url)
-            .header(self.0.clone())
+        let mut res = self.client
+            .get(&url)
+            .header(self.cookie.clone())
             .send()
             .expect("Error requesting input");
 
