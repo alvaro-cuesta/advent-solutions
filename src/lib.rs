@@ -24,12 +24,27 @@ macro_rules! test_day {
         #[cfg(test)]
         mod tests {
             #[test]
-            fn test_input() {
+            fn parse() {
+                super::parse_input(
+                    include_str!(concat!("../../test_inputs/2017/", $day))
+                );
+            }
+
+            #[test]
+            fn part1() {
                 let input = super::parse_input(
                     include_str!(concat!("../../test_inputs/2017/", $day))
                 );
 
                 assert_eq!(super::part1(&input), $part1);
+            }
+
+            #[test]
+            fn part2() {
+                let input = super::parse_input(
+                    include_str!(concat!("../../test_inputs/2017/", $day))
+                );
+
                 assert_eq!(super::part2(&input), $part2);
             }
         }
@@ -41,7 +56,14 @@ macro_rules! test_day_both {
         #[cfg(test)]
         mod tests {
             #[test]
-            fn test_input() {
+            fn parse() {
+                super::parse_input(
+                    include_str!(concat!("../../test_inputs/2017/", $day))
+                );
+            }
+
+            #[test]
+            fn solve() {
                 let input = super::parse_input(
                     include_str!(concat!("../../test_inputs/2017/", $day))
                 );

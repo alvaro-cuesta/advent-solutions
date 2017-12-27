@@ -28,7 +28,6 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 
 - Add panics to docs
 - Document advent lib
-- Separate tests in part1 and part2
 - Solve 20, 21, 23, 24, 25
 - Older Advent of Code
 - Use lines! in list_from_bytes (20, 21)
