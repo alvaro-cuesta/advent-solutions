@@ -39,17 +39,18 @@ named!{ parse_particles (&[u8]) -> Vec<Particle>,
     separated_list_complete!(tag!("\n"), parse_particle)
 }
 
-pub fn part1(particles: &Vec<Particle>) -> usize{
-    let mut by_accel = particles.into_iter()
+pub fn part1(particles: &Vec<Particle>) -> usize {
+    let mut by_accel = particles.iter()
         .enumerate()
         .collect::<Vec<_>>();
 
-    by_accel.sort_by_key(|&(_, p)| p.a.0 * p.a.0
-        + p.a.1 * p.a.1 + p.a.2 * p.a.2);
+    by_accel.sort_by_key(|&(_, p)|
+          p.a.0 * p.a.0
+        + p.a.1 * p.a.1
+        + p.a.2 * p.a.2
+    );
 
-    println!("{:?}", by_accel.pop());
-
-    unimplemented!()
+    by_accel[0].0
 }
 
 pub fn part2(particles: &Vec<Particle>) -> usize {
@@ -62,4 +63,4 @@ pub fn parse_input(input: &str) -> Vec<Particle> {
         .expect("Error parsing particles")
 }
 
-test_day_both!("20", (), ());
+test_day!("20", 300, 0);
