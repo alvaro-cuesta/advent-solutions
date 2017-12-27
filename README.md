@@ -10,6 +10,12 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
     $ cargo run
     ```
 
+- Filtering by days:
+
+    ```sh
+    $ cargo run dayNN dayMM ...
+    ```
+
 - Run all tests:
 
     ```sh
@@ -19,9 +25,9 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 - Or only some:
 
     ```sh
-    $ cargo test dayNN::       # NN = 01, 02, ..., 25
-    $ cargo test YYYY::        # YYYY = Year
-    $ cargo test YYYY::dayNN::
+    $ cargo test dayNN       # NN = 01, 02, ..., 25
+    $ cargo test YYYY        # YYYY = Year
+    $ cargo test YYYY::dayNN
     ```
 
 ## TODO
