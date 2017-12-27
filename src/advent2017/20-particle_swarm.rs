@@ -10,14 +10,14 @@
 
 use ::parse::signed_number;
 
-#[derive(Copy, Clone, PartialEq, Eq, Debug, Hash)]
+#[derive(Copy, Clone, PartialEq, Debug)]
 pub struct Particle {
-    p: (isize, isize, isize),
-    v: (isize, isize, isize),
-    a: (isize, isize, isize),
+    p: (f32, f32, f32),
+    v: (f32, f32, f32),
+    a: (f32, f32, f32),
 }
 
-named!{ parse_vector (&[u8]) -> (isize, isize, isize),
+named!{ parse_vector (&[u8]) -> (f32, f32, f32),
     do_parse!(
         char!('<') >>
         x: ws!(signed_number) >>
@@ -27,7 +27,7 @@ named!{ parse_vector (&[u8]) -> (isize, isize, isize),
         z: ws!(signed_number) >>
         char!('>') >>
 
-        ((x, y, z))
+        ((x as f32, y as f32, z as f32))
     )
 }
 
@@ -108,9 +108,9 @@ pub fn part1(particles: &Vec<Particle>) -> usize {
         .collect::<Vec<_>>();
 
     by_accel.sort_by_key(|&(_, p)|
-          p.a.0 * p.a.0
+          (p.a.0 * p.a.0
         + p.a.1 * p.a.1
-        + p.a.2 * p.a.2
+        + p.a.2 * p.a.2) as u32
     );
 
     by_accel[0].0
@@ -161,7 +161,75 @@ pub fn part1(particles: &Vec<Particle>) -> usize {
 ///
 /// *How many particles are left* after all collisions are resolved?
 pub fn part2(particles: &Vec<Particle>) -> usize {
-    unimplemented!()
+    use itertools::Itertools;
+    use std::collections::HashSet;
+
+    let mut w = particles.iter()
+        .enumerate()
+        .combinations(2)
+        .filter_map(|particles| {
+            let (n0, p0) = particles[0];
+            let (n1, p1) = particles[1];
+
+            let fx = p1.v.0 - p0.v.0 + (p1.a.0 * p1.a.0 - p0.a.0 * p0.a.0) / 2.0;
+            let fy = p1.v.1 - p0.v.1 + (p1.a.1 * p1.a.1 - p0.a.1 * p0.a.1) / 2.0;
+            let fz = p1.v.2 - p0.v.2 + (p1.a.2 * p1.a.2 - p0.a.2 * p0.a.2) / 2.0;
+
+            let tx = if fx == 0.0 {
+                None
+            } else {
+                Some((p0.p.0 - p1.p.0) / fx)
+            };
+
+            let ty = if fy == 0.0 {
+                None
+            } else {
+                Some((p0.p.1 - p1.p.1) / fy)
+            };
+
+            let tz = if fz == 0.0 {
+                None
+            } else {
+                Some((p0.p.2 - p1.p.2) / fz)
+            };
+
+            match (tx, ty, tz) {
+                (Some(tx), Some(ty), Some(tz)) if tx == ty && ty == tz => Some((tx, n0, n1)),
+                (Some(tx), Some(ty), None) if tx == ty => Some((tx, n0, n1)),
+                (Some(tx), None, Some(tz)) if tx == tz => Some((tx, n0, n1)),
+                (None, Some(ty), Some(tz)) if ty == tz => Some((ty, n0, n1)),
+                (Some(tx), None, None) => Some((tx, n0, n1)),
+                (None, Some(ty), None) => Some((ty, n0, n1)),
+                (None, None, Some(tz)) => Some((tz, n0, n1)),
+                _ => None,
+            }
+        })
+        .filter(|&(t, _, _)| t >= 0.0)
+        .collect::<Vec<_>>();
+
+    w.sort_by(|&(t0, _, _), &(t1, _, _)| t0.partial_cmp(&t1).unwrap());
+
+    println!("{:?}", w);
+
+    let mut alive_particles = (0..particles.len())
+        .collect::<HashSet<_>>();
+
+    for (k, group) in &w.into_iter().group_by(|elt| elt.0) {
+        let alive_particles_copy = alive_particles.clone();
+
+        println!("{:?}", k);
+
+        for (_, n0, n1) in group {
+            if alive_particles_copy.contains(&n0) && alive_particles_copy.contains(&n1) {
+                println!("{} {} crashed", n0, n1);
+
+                alive_particles.remove(&n0);
+                alive_particles.remove(&n1);
+            }
+        }
+    }
+
+    alive_particles.len()
 }
 
 /// It transmits to you a buffer (your puzzle input) listing each particle
