@@ -198,7 +198,6 @@ fn find_cycle(moves: &[Move]) -> usize {
 /// *In what order are the programs standing* after their billion dances?
 pub fn part2(moves: &[Move]) -> String {
     let dance_times = 1_000_000_000 % find_cycle(moves);
-    println!("{}", dance_times);
 
     let mut programs = initial_programs();
 
