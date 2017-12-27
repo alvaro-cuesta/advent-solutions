@@ -39,3 +39,9 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 - Use lines! in list_from_bytes (20, 21)
 - Ensure all doccomments are on pub types
 - Move test_inputs to src year?
+- Spurious println on run
+- Thread each part separately
+- Async download (limit # to avoid many requests)
+- Reuse client in download (keep-alive?)
+- Do not return result strings, but a result type
+- If any job panics, it waits indefinitely
