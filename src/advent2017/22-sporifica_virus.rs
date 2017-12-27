@@ -228,7 +228,7 @@ impl Carrier {
     ///     facing.
     ///
     ///   [moves]: https://www.youtube.com/watch?v=2vj37yeQQHg
-    fn part1(&mut self, memory: &mut Memory) {
+    fn part1_with_bursts(&mut self, memory: &mut Memory) {
         match memory[self.position] {
             Clean => {
                 self.facing = self.facing.ccw();
@@ -272,7 +272,7 @@ impl Carrier {
     /// -   Modify the state of the *current node*, as described above.
     /// -   The virus carrier moves *forward* one node in the direction it is
     ///     facing.
-    pub fn part2(&mut self, memory: &mut Memory) {
+    pub fn part2_with_bursts(&mut self, memory: &mut Memory) {
         match memory[self.position] {
             Clean => {
                 self.facing = self.facing.ccw();
@@ -397,40 +397,43 @@ impl Carrier {
 /// of those nodes have since been cleaned).
 ///
 /// ```
-/// # use advent_solutions::advent2017::day22::part1;
+/// # use advent_solutions::advent2017::day22::part1_with_bursts;
 /// # let input = "..#
 /// # #..
 /// # ...
 /// # ";
-/// assert_eq!(part1(input, 70), 41);
+/// assert_eq!(part1_with_bursts(input, 70), 41);
 /// ```
 ///
 /// After a total of `10000` bursts of activity, `5587` bursts will have
 /// caused an infection.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day22::part1;
+/// # use advent_solutions::advent2017::day22::part1_with_bursts;
 /// # let input = "..#
 /// # #..
 /// # ...
 /// # ";
-/// assert_eq!(part1(input, 10000), 5587);
+/// assert_eq!(part1_with_bursts(input, 10000), 5587);
 /// ```
 ///
 /// Given your actual map, after `10000` bursts of activity, *how many
 /// bursts cause a node to become infected*? (Do not count nodes that begin
 /// infected.)
-pub fn part1(input: &str, bursts: usize) -> usize {
+pub fn part1_with_bursts(input: &str, bursts: usize) -> usize {
     let mut memory = Memory::parse(input);
     let mut carrier = Carrier::new();
 
     for _ in 0..bursts {
-        carrier.part1(&mut memory);
+        carrier.part1_with_bursts(&mut memory);
     }
 
     carrier.infected
 }
 
+pub fn part1(input: &str) -> usize {
+    part1_with_bursts(input, 10000)
+}
 
 /// Start with the same map (still using `.` for *clean* and `#` for
 /// infected) and still with the virus carrier starting in the middle and
@@ -527,44 +530,36 @@ pub fn part1(input: &str, bursts: usize) -> usize {
 /// first `10000000` bursts, `2511944` will result in *infection*.
 ///
 /// ```
-/// # use advent_solutions::advent2017::day22::part2;
+/// # use advent_solutions::advent2017::day22::part2_with_bursts;
 /// let input = "..#
 /// #..
 /// ...
 /// ";
 ///
-/// assert_eq!(part2(input, 100), 26);
-/// assert_eq!(part2(input, 10000000), 2511944);
+/// assert_eq!(part2_with_bursts(input, 100), 26);
+/// assert_eq!(part2_with_bursts(input, 10000000), 2511944);
 /// ```
 ///
 /// Given your actual map, after `10000000` bursts of activity, *how many
 /// bursts cause a node to become infected*? (Do not count nodes that begin
 /// infected.)
-pub fn part2(input: &str, bursts: usize) -> usize {
+pub fn part2_with_bursts(input: &str, bursts: usize) -> usize {
     let mut memory = Memory::parse(&input);
     let mut carrier = Carrier::new();
 
     for _ in 0..bursts {
-        carrier.part2(&mut memory);
+        carrier.part2_with_bursts(&mut memory);
     }
 
     carrier.infected
 }
 
-pub fn main(download: &::Download) {
-    let input = download.input(2017, 22);
-
-    println!("Part 1: {}", part1(&input, 10000));
-    println!("Part 2: {}", part2(&input, 10000000));
+pub fn part2(input: &str) -> usize {
+    part2_with_bursts(input, 10000000)
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = include_str!("../../test_inputs/2017/22");
-
-        assert_eq!(super::part1(input, 10000), 5259);
-        assert_eq!(super::part2(input, 10000000), 2511722);
-    }
+pub fn parse_input(input: &str) -> &str {
+    input
 }
+
+test_day!("22", 5259, 2511722);

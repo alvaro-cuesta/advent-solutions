@@ -10,7 +10,8 @@
 /// number of *blocks*. The goal of the reallocation routine is to balance the
 /// blocks between the memory banks.
 pub fn parse_input(input: &str) -> Vec<usize> {
-    input.split('\t')
+    input[..input.len() - 1]
+        .split('\t')
         .map(|x| x.parse::<usize>().expect("Unexpected non-integer number of block"))
         .collect::<Vec<_>>()
 }
@@ -53,7 +54,7 @@ pub fn parse_input(input: &str) -> Vec<usize> {
 ///
 /// ```
 /// # use advent_solutions::advent2017::day06::{ parse_input, part1 };
-/// # let input = parse_input("0\t2\t7\t0");
+/// # let input = parse_input("0\t2\t7\t0\n");
 /// assert_eq!(part1(&input), 5);
 /// ```
 ///
@@ -106,7 +107,7 @@ pub fn part1(banks: &Vec<usize>) -> usize {
 ///
 /// ```
 /// # use advent_solutions::advent2017::day06::{ parse_input, part2 };
-/// # let input = parse_input("0\t2\t7\t0");
+/// # let input = parse_input("0\t2\t7\t0\n");
 /// assert_eq!(part2(&input), 4);
 /// ```
 ///
@@ -147,23 +148,4 @@ pub fn part2(banks: &Vec<usize>) -> usize {
     }
 }
 
-pub fn main(download: &::Download) {
-    let banks = parse_input(&download.single_input(2017, 6));
-
-    println!("Part 1: {}", part1(&banks));
-    println!("Part 2: {}", part2(&banks));
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let mut input = include_str!("../../test_inputs/2017/06");
-        input = &input[..input.len() - 1];
-
-        let banks = super::parse_input(input);
-
-        assert_eq!(super::part1(&banks), 11137);
-        assert_eq!(super::part2(&banks), 1037);
-    }
-}
+test_day!("06", 11137, 1037);

@@ -58,11 +58,13 @@ pub fn parse_input(input: &str) -> Vec<isize> {
 /// # 1
 /// # -3
 /// # ");
-/// assert_eq!(part1(input), 5);
+/// assert_eq!(part1(&input), 5);
 /// ```
 ///
 /// *How many steps* does it take to reach the exit?
-pub fn part1(jumps: Vec<isize>) -> usize {
+pub fn part1(jumps: &Vec<isize>) -> usize {
+    let jumps = jumps.clone();
+
     count_steps(jumps, |ip| ip + 1 )
 }
 
@@ -82,11 +84,13 @@ pub fn part1(jumps: Vec<isize>) -> usize {
 /// # 1
 /// # -3
 /// # ");
-/// assert_eq!(part2(input), 10);
+/// assert_eq!(part2(&input), 10);
 /// ```
 ///
 /// *How many steps* does it now take to reach the exit?
-pub fn part2(jumps: Vec<isize>) -> usize {
+pub fn part2(jumps: &Vec<isize>) -> usize {
+    let jumps = jumps.clone();
+
     count_steps(jumps, |ip| if ip >= 3 { ip - 1 } else { ip + 1 } )
 }
 
@@ -108,20 +112,4 @@ pub fn count_steps<F: Fn(isize) -> isize>(mut memory: Vec<isize>, mut_fn: F) -> 
     + 1
 }
 
-pub fn main(download: &::Download) {
-    let jumps = parse_input(&download.input(2017, 5));
-
-    println!("Part 1: {}", part1(jumps.clone()));
-    println!("Part 2: {}", part2(jumps.clone()));
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let jumps = super::parse_input(include_str!("../../test_inputs/2017/05"));
-
-        assert_eq!(super::part1(jumps.clone()), 360603);
-        assert_eq!(super::part2(jumps.clone()), 25347697);
-    }
-}
+test_day!("05", 360603, 25347697);

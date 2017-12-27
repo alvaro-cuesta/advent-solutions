@@ -123,20 +123,4 @@ pub fn parse_input(input: &str) -> Vec<Vec<usize>> {
         .collect::<Vec<_>>()
 }
 
-pub fn main(download: &::Download) {
-    let lines = parse_input(&download.input(2017, 2));
-
-    println!("Part 1: {}", part1(&lines));
-    println!("Part 2: {}", part2(&lines));
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = super::parse_input(include_str!("../../test_inputs/2017/02"));
-
-        assert_eq!(super::part1(&input), 34925);
-        assert_eq!(super::part2(&input), 221);
-    }
-}
+test_day!("02", 34925, 221);

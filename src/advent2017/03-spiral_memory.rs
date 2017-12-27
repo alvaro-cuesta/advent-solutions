@@ -47,7 +47,7 @@ fn spiral() -> impl Iterator<Item=&'static ::Direction> {
 ///
 ///     ```
 ///     # use advent_solutions::advent2017::day03::part1;
-///     assert_eq!(part1(1), 0);
+///     assert_eq!(part1(&1), 0);
 ///     ```
 ///
 /// -   Data from square `12` is carried `3` steps, such as: down, left,
@@ -55,28 +55,28 @@ fn spiral() -> impl Iterator<Item=&'static ::Direction> {
 ///
 ///     ```
 ///     # use advent_solutions::advent2017::day03::part1;
-///     assert_eq!(part1(12), 3);
+///     assert_eq!(part1(&12), 3);
 ///     ```
 ///
 /// -   Data from square `23` is carried only `2` steps: up twice.
 ///
 ///     ```
 ///     # use advent_solutions::advent2017::day03::part1;
-///     assert_eq!(part1(23), 2);
+///     assert_eq!(part1(&23), 2);
 ///     ```
 ///
 /// -   Data from square `1024` must be carried `31` steps.
 ///
 ///     ```
 ///     # use advent_solutions::advent2017::day03::part1;
-///     assert_eq!(part1(1024), 31);
+///     assert_eq!(part1(&1024), 31);
 ///     ```
 ///
 /// *How many steps* are required to carry the data from the square
 /// identified in your puzzle input all the way to the access port?
 ///
 ///   [Manhattan Distance]: https://en.wikipedia.org/wiki/Taxicab_geometry
-pub fn part1(index: usize) -> usize {
+pub fn part1(index: &usize) -> usize {
     let (x, y) = spiral()
         .take(index - 1)
         .fold((0isize, 0isize), |pos, facing| pos + facing);
@@ -152,34 +152,17 @@ pub fn stress_test() -> impl Iterator<Item=usize> {
 
 /// What is the *first value written* that is *larger* than your puzzle
 /// input?
-pub fn part2(index: usize) -> usize {
+pub fn part2(index: &usize) -> usize {
     stress_test()
-        .skip_while(|&x| x < index)
+        .skip_while(|x| x < index)
         .next()
         .expect("Found no solution for step 2")
 }
 
-pub fn main(download: &::Download) {
-    let index = download.single_input(2017, 3)
+pub fn parse_input(input: &str) -> usize {
+    input[..input.len() - 1]
         .parse::<usize>()
-        .expect("Unexpected non-integer");
-
-    println!("Part 1: {}", part1(index));
-    println!("Part 2: {}", part2(index));
+        .expect("Unexpected non-integer")
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let mut input = include_str!("../../test_inputs/2017/03");
-        input = &input[..input.len() - 1];
-
-        let val = input
-            .parse::<usize>()
-            .expect("Unexpected non-integer");
-
-        assert_eq!(super::part1(val), 430);
-        assert_eq!(super::part2(val), 312453);
-    }
-}
+test_day!("03", 430, 312453);

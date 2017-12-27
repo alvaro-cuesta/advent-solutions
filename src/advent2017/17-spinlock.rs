@@ -65,11 +65,11 @@
 ///
 /// ```
 /// # use advent_solutions::advent2017::day17::part1;
-/// assert_eq!(part1(3), 638)
+/// assert_eq!(part1(&3), 638)
 /// ```
 ///
 /// *What is the value after `2017`* in your completed circular buffer?
-pub fn part1(input: usize) -> usize {
+pub fn part1(input: &usize) -> usize {
     let mut position = 0;
     let mut buffer = vec![0];
 
@@ -95,7 +95,7 @@ pub fn part1(input: usize) -> usize {
 /// just finished inserting its fifty millionth value (`50000000`).
 ///
 /// *What is the value after `0`* the moment `50000000` is inserted?
-pub fn part2(input: usize) -> usize {
+pub fn part2(input: &usize) -> usize {
     let mut position = 0;
     let mut last_i = 0;
 
@@ -110,26 +110,10 @@ pub fn part2(input: usize) -> usize {
     last_i
 }
 
-pub fn main(download: &::Download) {
-    let input = download.single_input(2017, 17)
-        .parse::<usize>().expect("Could not parse input");
-
-    println!("Part 1: {}", part1(input));
-    println!("Part 2: {}", part2(input));
+pub fn parse_input(input: &str) -> usize {
+    input[..input.len() - 1]
+        .parse::<usize>()
+        .expect("Unexpected non-integer")
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let mut input = include_str!("../../test_inputs/2017/17");
-        input = &input[..input.len() - 1];
-
-        let val = input
-            .parse::<usize>()
-            .expect("Unexpected non-integer");
-
-        assert_eq!(super::part1(val), 1561);
-        assert_eq!(super::part2(val), 33454823);
-    }
-}
+test_day!("17", 1561, 33454823);

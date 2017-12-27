@@ -309,28 +309,10 @@ pub fn part2(root: &Node) -> usize {
     root.count_garbage()
 }
 
-pub fn main(download: &::Download) {
-    let input = download.input(2017, 9);
-
-    let root = Node::from_bytes(input.as_bytes())
+pub fn parse_input(input: &str) -> Node {
+    Node::from_bytes(input.as_bytes())
         .to_full_result()
-        .expect("Error parsing stream");
-
-    println!("Part 1: {}", part1(&root));
-    println!("Part 2: {}", part2(&root));
+        .expect("Error parsing stream")
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = include_str!("../../test_inputs/2017/09");
-
-        let root = super::Node::from_bytes(input.as_bytes())
-            .to_full_result()
-            .expect("Error parsing stream");
-
-        assert_eq!(super::part1(&root), 14204);
-        assert_eq!(super::part2(&root), 6622);
-    }
-}
+test_day!("09", 14204, 6622);

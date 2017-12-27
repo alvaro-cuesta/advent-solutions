@@ -95,11 +95,11 @@ impl Iterator for Generator {
 ///
 /// ```
 /// # use advent_solutions::advent2017::day15::part1;
-/// assert_eq!(part1(16807, 65, 48271, 8921), 588);
+/// assert_eq!(part1(&((16807, 65), (48271, 8921))), 588);
 /// ```
 ///
 /// After 40 million pairs, *what is the judge's final count*?
-pub fn part1(a_f: u32, a_s: u32, b_f: u32, b_s: u32) -> usize {
+pub fn part1(&((a_f, a_s), (b_f, b_s)): &((u32, u32), (u32, u32))) -> usize {
     Generator::new(a_f, a_s)
         .zip(Generator::new(b_f, b_s))
         .take(40_000_000)
@@ -187,12 +187,12 @@ pub fn part1(a_f: u32, a_s: u32, b_f: u32, b_s: u32) -> usize {
 ///
 /// ```
 /// # use advent_solutions::advent2017::day15::part2;
-/// assert_eq!(part2(16807, 65, 48271, 8921), 309);
+/// assert_eq!(part2(&((16807, 65), (48271, 8921))), 309);
 /// ```
 ///
 /// After 5 million pairs, but using this new generator logic, *what is the
 /// judge's final count*?
-pub fn part2(a_f: u32, a_s: u32, b_f: u32, b_s: u32) -> usize {
+pub fn part2(&((a_f, a_s), (b_f, b_s)): &((u32, u32), (u32, u32))) -> usize {
     Generator::new(a_f, a_s)
         .filter(|x| x % 4 == 0)
         .zip(Generator::new(b_f, b_s)
@@ -203,9 +203,7 @@ pub fn part2(a_f: u32, a_s: u32, b_f: u32, b_s: u32) -> usize {
         .count()
 }
 
-pub fn main(download: &::Download) {
-    let input = download.input(2017, 15);
-
+pub fn parse_input(input: &str) -> ((u32, u32), (u32, u32)) {
     let mut starts = input.lines()
         .map(|line| line[24..].parse::<u32>().expect("Could not parse input"));
 
@@ -213,24 +211,7 @@ pub fn main(download: &::Download) {
     let b_s = starts.next().expect("Could not find b_s");
     assert!(starts.next().is_none(), "More than 2 lines");
 
-    println!("Part 1: {}", part1(16807, a_s, 48271, b_s));
-    println!("Part 2: {}", part2(16807, a_s, 48271, b_s));
+    ((16807, a_s), (48271, b_s))
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = include_str!("../../test_inputs/2017/15");
-
-        let mut starts = input.lines()
-            .map(|line| line[24..].parse::<u32>().expect("Could not parse input"));
-
-        let a_s = starts.next().expect("Could not find a_s");
-        let b_s = starts.next().expect("Could not find b_s");
-        assert!(starts.next().is_none(), "More than 2 lines");
-
-        assert_eq!(super::part1(16807, a_s, 48271, b_s), 567);
-        assert_eq!(super::part2(16807, a_s, 48271, b_s), 323);
-    }
-}
+test_day!("15", 567, 323);

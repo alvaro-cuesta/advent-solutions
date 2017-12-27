@@ -147,21 +147,8 @@ pub fn part2(input: &str) -> u32 {
     count_matching(input, input.len() / 2)
 }
 
-pub fn main(download: &::Download) {
-    let input = download.single_input(2017, 1);
-
-    println!("Part 1: {}", part1(&input));
-    println!("Part 2: {}", part2(&input));
+pub fn parse_input(input: &str) -> &str {
+    &input[..input.len() - 1]
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let mut input = include_str!("../../test_inputs/2017/01");
-        input = &input[..input.len() - 1];
-
-        assert_eq!(super::part1(&input), 1341);
-        assert_eq!(super::part2(&input), 1348);
-    }
-}
+test_day!("01", 1341, 1348);

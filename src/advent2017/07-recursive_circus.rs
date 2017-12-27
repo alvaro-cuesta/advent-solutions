@@ -271,28 +271,10 @@ pub fn part2(nodes: &[Node]) -> usize {
     }
 }
 
-pub fn main(download: &::Download) {
-    let input = download.input(2017, 7);
-
-    let nodes = Node::list_from_bytes(input.as_bytes())
+pub fn parse_input(input: &str) -> Vec<Node> {
+    Node::list_from_bytes(input.as_bytes())
         .to_full_result()
-        .expect("Error parsing nodes");
-
-    println!("Part 1: {}", part1(&nodes));
-    println!("Part 2: {}", part2(&nodes));
+        .expect("Error parsing nodes")
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = include_str!("../../test_inputs/2017/07");
-
-        let nodes = super::Node::list_from_bytes(input.as_bytes())
-            .to_full_result()
-            .expect("Error parsing nodes");
-
-        assert_eq!(super::part1(&nodes), "mkxke");
-        assert_eq!(super::part2(&nodes), 268);
-    }
-}
+test_day!("07", "mkxke", 268);

@@ -132,23 +132,8 @@ pub fn solve(input: &str) -> (usize, usize) {
     (max_distance, final_position.distance(&HexCoord(0, 0)))
 }
 
-pub fn main(download: &::Download) {
-    let (max_distance, distance) = solve(&download.single_input(2017, 11));
-
-    println!("Part 1: {}", distance);
-    println!("Part 2: {}", max_distance);
+pub fn parse_input(input: &str) -> &str {
+    &input[..input.len() - 1]
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let mut input = include_str!("../../test_inputs/2017/11");
-        input = &input[..input.len() - 1];
-
-        let (max_distance, distance) = super::solve(input);
-
-        assert_eq!(max_distance, 1501);
-        assert_eq!(distance, 759);
-    }
-}
+test_day_both!("11", 1501, 759);

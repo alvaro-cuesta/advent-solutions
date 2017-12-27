@@ -209,28 +209,10 @@ pub fn part2(moves: &[Move]) -> String {
     programs.into_iter().collect()
 }
 
-pub fn main(download: &::Download) {
-    let input = download.input(2017, 16);
-
-    let moves = Move::list_from_bytes(input.as_bytes())
-            .to_full_result()
-            .expect("Error parsing moves");
-
-    println!("Part 1: {}", part1(&moves));
-    println!("Part 2: {}", part2(&moves));
+pub fn parse_input(input: &str) -> Vec<Move> {
+    Move::list_from_bytes(input.as_bytes())
+        .to_full_result()
+        .expect("Error parsing moves")
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = include_str!("../../test_inputs/2017/16");
-
-        let moves = super::Move::list_from_bytes(input.as_bytes())
-            .to_full_result()
-            .expect("Error parsing moves");
-
-        assert_eq!(super::part1(&moves), "nlciboghjmfdapek");
-        assert_eq!(super::part2(&moves), "nlciboghmkedpfja");
-    }
-}
+test_day!("16", "nlciboghjmfdapek", "nlciboghmkedpfja");

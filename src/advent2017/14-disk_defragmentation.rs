@@ -186,23 +186,8 @@ pub fn part2<'a, I, J>(hashes: I) -> usize
     groups.len()
 }
 
-pub fn main(download: &::Download) {
-    let hashes = make_hashes(&download.single_input(2017, 14));
-
-    println!("Part 1: {}", part1(&hashes));
-    println!("Part 2: {}", part2(&hashes));
+pub fn parse_input(input: &str) -> Vec<Vec<u8>> {
+    make_hashes(&input[..input.len() - 1])
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let mut input = include_str!("../../test_inputs/2017/14");
-        input = &input[..input.len() - 1];
-
-        let hashes = super::make_hashes(input);
-
-        assert_eq!(super::part1(&hashes), 8222);
-        assert_eq!(super::part2(&hashes), 1086);
-    }
-}
+test_day!("14", 8222, 1086);

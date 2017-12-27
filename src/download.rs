@@ -43,11 +43,4 @@ impl Download {
 
         res.text().expect("Error reading input")
     }
-
-    pub fn single_input(&self, year: usize, day: usize) -> String {
-        let mut in_str = self.input(year, day);
-        in_str.pop();
-
-        in_str
-    }
 }

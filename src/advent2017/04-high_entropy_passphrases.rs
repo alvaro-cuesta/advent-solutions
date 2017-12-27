@@ -116,20 +116,8 @@ pub fn part2(input: &str) -> usize {
         .count()
 }
 
-pub fn main(download: &::Download) {
-    let input = download.input(2017, 4);
-
-    println!("Part 1: {}", part1(&input));
-    println!("Part 2: {}", part2(&input));
+pub fn parse_input(input: &str) -> &str {
+    input
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = include_str!("../../test_inputs/2017/04");
-
-        assert_eq!(super::part1(&input), 477);
-        assert_eq!(super::part2(&input), 167);
-    }
-}
+test_day!("04", 477, 167);

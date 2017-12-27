@@ -202,22 +202,8 @@ pub fn solve(input: &str) -> (String, usize) {
     (collected, steps)
 }
 
-pub fn main(download: &::Download) {
-    let (collected, steps) = solve(&download.input(2017, 19));
-
-    println!("Part 1: {}", collected);
-    println!("Part 2: {}", steps);
+pub fn parse_input(input: &str) -> &str {
+    input
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = include_str!("../../test_inputs/2017/19");
-
-        let (collected, steps) = super::solve(input);
-
-        assert_eq!(collected, "LXWCKGRAOY");
-        assert_eq!(steps, 17302);
-    }
-}
+test_day_both!("19", "LXWCKGRAOY", 17302);

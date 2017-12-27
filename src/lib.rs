@@ -19,4 +19,39 @@ pub mod iter;
 mod direction;
 pub use direction::Direction;
 
+macro_rules! test_day {
+    ($day:expr, $part1:expr, $part2:expr) => (
+        #[cfg(test)]
+        mod tests {
+            #[test]
+            fn test_input() {
+                let input = super::parse_input(
+                    include_str!(concat!("../../test_inputs/2017/", $day))
+                );
+
+                assert_eq!(super::part1(&input), $part1);
+                assert_eq!(super::part2(&input), $part2);
+            }
+        }
+    )
+}
+
+macro_rules! test_day_both {
+    ($day:expr, $part1:expr, $part2:expr) => (
+        #[cfg(test)]
+        mod tests {
+            #[test]
+            fn test_input() {
+                let input = super::parse_input(
+                    include_str!(concat!("../../test_inputs/2017/", $day))
+                );
+                let (part1, part2) = super::solve(&input);
+
+                assert_eq!(part1, $part1);
+                assert_eq!(part2, $part2);
+            }
+        }
+    )
+}
+
 pub mod advent2017;

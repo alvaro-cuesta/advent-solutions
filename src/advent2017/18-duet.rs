@@ -307,13 +307,13 @@ impl<'a> Computer<'a> {
 ///     .to_full_result()
 ///     .expect("Error parsing instructions");
 ///
-/// assert_eq!(part1(&instructions), Some(4));
+/// assert_eq!(part1(&instructions), 4);
 /// ```
 ///
 /// *What is the value of the recovered frequency* (the value of the most
 /// recently played sound) the *first* time a `rcv` instruction is executed
 /// with a non-zero value?
-pub fn part1(instructions: &[Instruction]) -> Option<isize> {
+pub fn part1(instructions: &[Instruction]) -> isize {
     let mut computer = Computer::new(0, instructions);
     let mut frequency = None;
     let mut dummy_msg_q = VecDeque::new();
@@ -322,12 +322,12 @@ pub fn part1(instructions: &[Instruction]) -> Option<isize> {
         match computer.step(&mut dummy_msg_q) {
             State::Snd(v) => frequency = Some(v),
             State::Rcv(r) => if *computer.registers.entry(r).or_insert(0) != 0 {
-                return frequency;
+                return frequency.expect("Recovered frequency with no sound played");
             } else {
                 computer.ip += 1;
             },
             State::Continue => {},
-            State::Terminate => return None,
+            State::Terminate => panic!("Execution terminated with no recovered frequency"),
         }
     }
 }
@@ -455,28 +455,11 @@ pub fn part2(instructions: &[Instruction]) -> usize {
     c1_total_sent
 }
 
-pub fn main(download: &::Download) {
-    let input = download.input(2017, 18);
 
-    let instructions = Instruction::list_from_bytes(input.as_bytes())
+pub fn parse_input(input: &str) -> Vec<Instruction> {
+    Instruction::list_from_bytes(input.as_bytes())
         .to_full_result()
-        .expect("Error parsing instructions");
-
-    println!("Part 1: {}", part1(&instructions).expect("Could not find frequency"));
-    println!("Part 2: {}", part2(&instructions));
+        .expect("Error parsing instructions")
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = include_str!("../../test_inputs/2017/18");
-
-        let moves = super::Instruction::list_from_bytes(input.as_bytes())
-            .to_full_result()
-            .expect("Error parsing moves");
-
-        assert_eq!(super::part1(&moves), Some(3423));
-        assert_eq!(super::part2(&moves), 7493);
-    }
-}
+test_day!("18", 3423, 7493);

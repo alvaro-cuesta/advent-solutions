@@ -208,28 +208,10 @@ pub fn part2(instructions: &[Instruction]) -> isize {
     max_reg_value
 }
 
-pub fn main(download: &::Download) {
-    let input = download.input(2017, 8);
-
-    let instructions = Instruction::list_from_bytes(input.as_bytes())
+pub fn parse_input(input: &str) -> Vec<Instruction> {
+    Instruction::list_from_bytes(input.as_bytes())
         .to_full_result()
-        .expect("Error parsing instructions");
-
-    println!("Part 1: {}", part1(&instructions));
-    println!("Part 2: {}", part2(&instructions));
+        .expect("Error parsing instructions")
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_input() {
-        let input = include_str!("../../test_inputs/2017/08");
-
-        let instructions = super::Instruction::list_from_bytes(input.as_bytes())
-            .to_full_result()
-            .expect("Error parsing instructions");
-
-        assert_eq!(super::part1(&instructions), 4647);
-        assert_eq!(super::part2(&instructions), 5590);
-    }
-}
+test_day!("08", 4647, 5590);
