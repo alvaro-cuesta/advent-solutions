@@ -21,9 +21,9 @@ macro_rules! run_day {
                 $pool.execute(move || {
                     let parsed = $day::parse_input(&input);
 
-                    tx.send(format!("Day {}/1: {}", day_num_str, $day::part1(&parsed)))
+                    tx.send((day_num_str, 1, format!("{}", $day::part1(&parsed))))
                         .unwrap();
-                    tx.send(format!("Day {}/2: {}", day_num_str, $day::part2(&parsed)))
+                    tx.send((day_num_str, 2, format!("{}", $day::part2(&parsed))))
                         .unwrap();
                 });
             }
@@ -50,9 +50,9 @@ macro_rules! run_day_both {
                     let parsed = $day::parse_input(&input);
                     let (part1, part2) = $day::solve(&parsed);
 
-                    tx.send(format!("Day {}/1: {}", day_num_str, part1))
+                    tx.send((day_num_str, 1, format!("{}", part1)))
                         .unwrap();
-                    tx.send(format!("Day {}/2: {}", day_num_str, part2))
+                    tx.send((day_num_str, 2, format!("{}", part2)))
                         .unwrap();
                 });
             }
@@ -108,13 +108,13 @@ fn main() {
 
     let mut results = vec![];
 
-    for string in rx.iter().take(args.len() * 2) {
-        results.push(string);
+    for result in rx.iter().take(args.len() * 2) {
+        results.push(result);
     }
 
     results.sort();
 
-    for result in results {
-        println!("{}", result);
+    for (day, part, result) in results {
+        println!("Day {}/{}: {}", day, part, result);
     }
 }
