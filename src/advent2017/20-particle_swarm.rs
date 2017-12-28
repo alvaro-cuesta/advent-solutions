@@ -47,7 +47,7 @@ named!{ parse_particle (&[u8]) -> Particle,
 }
 
 named!{ parse_particles (&[u8]) -> Vec<Particle>,
-    separated_list_complete!(tag!("\n"), parse_particle)
+    lines!(parse_particle)
 }
 
 /// Each tick, all particles are updated simultaneously. A particle's

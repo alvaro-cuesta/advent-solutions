@@ -36,7 +36,7 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 - Document advent lib
 - Solve 21, 23, 24, 25
 - Older Advent of Code
-- Use lines! in list_from_bytes (20, 21)
+- Use lines! in separated_list_complete (21)
 - Ensure all doccomments are on pub types
 - Move test_inputs to src year?
 - Thread each part separately
