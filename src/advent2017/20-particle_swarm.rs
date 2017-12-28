@@ -92,7 +92,6 @@ named!{ parse_particles (&[u8]) -> Vec<Particle>,
 /// ```
 /// # use advent_solutions::advent2017::day20::{ parse_input, part1 };
 /// # let input = parse_input("p=< 3,0,0>, v=< 2,0,0>, a=<-1,0,0>
-/// # -4 -3 -2 -1  0  1  2  3  4
 /// # p=< 4,0,0>, v=< 0,0,0>, a=<-2,0,0>
 /// # ");
 /// assert_eq!(part1(&input), 0);
