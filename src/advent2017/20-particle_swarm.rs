@@ -8,16 +8,17 @@
 //! won't be able to finish them all in time to render the next frame at this
 //! rate.
 
+use std::cmp::min;
 use ::parse::signed_number;
 
-#[derive(Copy, Clone, PartialEq, Debug)]
+#[derive(Copy, Clone, Eq, PartialEq, Debug, Hash)]
 pub struct Particle {
-    p: (f32, f32, f32),
-    v: (f32, f32, f32),
-    a: (f32, f32, f32),
+    p: (isize, isize, isize),
+    v: (isize, isize, isize),
+    a: (isize, isize, isize),
 }
 
-named!{ parse_vector (&[u8]) -> (f32, f32, f32),
+named!{ parse_vector (&[u8]) -> (isize, isize, isize),
     do_parse!(
         char!('<') >>
         x: ws!(signed_number) >>
@@ -27,7 +28,7 @@ named!{ parse_vector (&[u8]) -> (f32, f32, f32),
         z: ws!(signed_number) >>
         char!('>') >>
 
-        ((x as f32, y as f32, z as f32))
+        ((x as isize, y as isize, z as isize))
     )
 }
 
@@ -116,6 +117,78 @@ pub fn part1(particles: &Vec<Particle>) -> usize {
     by_accel[0].0
 }
 
+
+#[derive(Copy, Clone, Eq, PartialEq, Debug, Hash)]
+enum Roots {
+    None,
+    One(isize),
+    Two(isize, isize),
+    Any
+}
+
+impl Roots {
+    fn solve_quadratic(a: isize, b: isize, c: isize) -> Roots {
+        match (a, b, c) {
+            (0, 0, 0) => return Roots::Any,
+            (0, 0, _) => return Roots::None,
+            (0, _, _) => if c % b == 0 && -c / b >= 0 {
+                return Roots::One(-c / b);
+            } else {
+                return Roots::None;
+            },
+            _ => {},
+        };
+
+        let determinant = b * b - 4 * a * c;
+        if determinant < 0 {
+            return Roots::None;
+        }
+
+        let sqrt = (determinant as f64).sqrt() as isize;
+        if sqrt * sqrt != determinant {
+            return Roots::None;
+        }
+
+        let r1 = -b + sqrt;
+        let r2 = -b - sqrt;
+
+        match (
+            if r1 * a >= 0 && r1 % (2*a) == 0 { Some(r1 / (2*a)) } else { None },
+            if r2 * a >= 0 && r2 % (2*a) == 0 { Some(r2 / (2*a)) } else { None },
+        ) {
+            (Some(a), Some(b)) if a == b => Roots::One(a),
+            (Some(a), Some(b)) => Roots::Two(a, b),
+            (Some(a), None) | (None, Some(a)) => Roots::One(a),
+            (None, None) => Roots::None,
+        }
+    }
+}
+
+fn combine_roots(x: Roots, y: Roots) -> Roots {
+    match (x, y) {
+        (Roots::Any, x) | (x, Roots::Any) => x,
+
+        (Roots::None, _) | (_, Roots::None) => Roots::None,
+
+        (Roots::One(a), Roots::One(b))
+            if a == b => Roots::One(a),
+
+        (Roots::Two(a, b), Roots::One(c))
+            if c == a || c == b => Roots::One(c),
+        (Roots::One(a), Roots::Two(c, d))
+            if a == c || a == d => Roots::One(a),
+
+        (Roots::Two(a, b), Roots::Two(c, d))
+            if (a == c && b == d) || (a == d && b == c) => Roots::Two(a, b),
+        (Roots::Two(a, _), Roots::Two(c, d))
+            if a == c || a == d => Roots::One(a),
+        (Roots::Two(_, b), Roots::Two(c, d))
+            if b == c || b == d => Roots::One(b),
+
+        _ => Roots::None
+    }
+}
+
 /// To simplify the problem further, the GPU would like to remove any
 /// particles that *collide*. Particles collide if their positions ever
 /// *exactly match*. Because particles are updated simultaneously, *more
@@ -164,65 +237,50 @@ pub fn part2(particles: &Vec<Particle>) -> usize {
     use itertools::Itertools;
     use std::collections::HashSet;
 
-    let mut w = particles.iter()
+    let mut collisions = particles.iter()
         .enumerate()
         .combinations(2)
         .filter_map(|particles| {
             let (n0, p0) = particles[0];
             let (n1, p1) = particles[1];
 
-            let fx = p1.v.0 - p0.v.0 + (p1.a.0 * p1.a.0 - p0.a.0 * p0.a.0) / 2.0;
-            let fy = p1.v.1 - p0.v.1 + (p1.a.1 * p1.a.1 - p0.a.1 * p0.a.1) / 2.0;
-            let fz = p1.v.2 - p0.v.2 + (p1.a.2 * p1.a.2 - p0.a.2 * p0.a.2) / 2.0;
+            let rx = Roots::solve_quadratic(
+                p0.a.0 - p1.a.0,
+                2 * (p0.v.0 - p1.v.0) + (p0.a.0 - p1.a.0),
+                2 * (p0.p.0 - p1.p.0),
+            );
 
-            let tx = if fx == 0.0 {
-                None
-            } else {
-                Some((p0.p.0 - p1.p.0) / fx)
-            };
+            let ry = Roots::solve_quadratic(
+                p0.a.1 - p1.a.1,
+                2 * (p0.v.1 - p1.v.1) + (p0.a.1 - p1.a.1),
+                2 * (p0.p.1 - p1.p.1),
+            );
 
-            let ty = if fy == 0.0 {
-                None
-            } else {
-                Some((p0.p.1 - p1.p.1) / fy)
-            };
+            let rz = Roots::solve_quadratic(
+                p0.a.2 - p1.a.2,
+                2 * (p0.v.2 - p1.v.2) + (p0.a.2 - p1.a.2),
+                2 * (p0.p.2 - p1.p.2),
+            );
 
-            let tz = if fz == 0.0 {
-                None
-            } else {
-                Some((p0.p.2 - p1.p.2) / fz)
-            };
-
-            match (tx, ty, tz) {
-                (Some(tx), Some(ty), Some(tz)) if tx == ty && ty == tz => Some((tx, n0, n1)),
-                (Some(tx), Some(ty), None) if tx == ty => Some((tx, n0, n1)),
-                (Some(tx), None, Some(tz)) if tx == tz => Some((tx, n0, n1)),
-                (None, Some(ty), Some(tz)) if ty == tz => Some((ty, n0, n1)),
-                (Some(tx), None, None) => Some((tx, n0, n1)),
-                (None, Some(ty), None) => Some((ty, n0, n1)),
-                (None, None, Some(tz)) => Some((tz, n0, n1)),
-                _ => None,
+            match combine_roots(rx, combine_roots(ry, rz)) {
+                Roots::None => None,
+                Roots::One(n) => Some((n, n0, n1)),
+                Roots::Two(a, b) => Some((min(a,b), n0, n1)),
+                Roots::Any => Some((0, n0, n1))
             }
         })
-        .filter(|&(t, _, _)| t >= 0.0)
         .collect::<Vec<_>>();
 
-    w.sort_by(|&(t0, _, _), &(t1, _, _)| t0.partial_cmp(&t1).unwrap());
-
-    println!("{:?}", w);
+    collisions.sort_by_key(|&(t, _, _)| t);
 
     let mut alive_particles = (0..particles.len())
         .collect::<HashSet<_>>();
 
-    for (k, group) in &w.into_iter().group_by(|elt| elt.0) {
+    for (_, group) in &collisions.iter().group_by(|elt| elt.0) {
         let alive_particles_copy = alive_particles.clone();
 
-        println!("{:?}", k);
-
-        for (_, n0, n1) in group {
+        for &(_, n0, n1) in group {
             if alive_particles_copy.contains(&n0) && alive_particles_copy.contains(&n1) {
-                println!("{} {} crashed", n0, n1);
-
                 alive_particles.remove(&n0);
                 alive_particles.remove(&n1);
             }
@@ -243,4 +301,4 @@ pub fn parse_input(input: &str) -> Vec<Particle> {
         .expect("Error parsing particles")
 }
 
-test_day!("20", 300, 0);
+test_day!("20", 300, 502);

@@ -34,7 +34,7 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 
 - Add panics to docs
 - Document advent lib
-- Solve 20, 21, 23, 24, 25
+- Solve 21, 23, 24, 25
 - Older Advent of Code
 - Use lines! in list_from_bytes (20, 21)
 - Ensure all doccomments are on pub types
@@ -43,3 +43,4 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 - Async download (limit # to avoid many requests)
 - Do not return result strings, but a result type
 - If any job panics, it's not handled properly (should be like cargo test)
+- Day 20 part 1 will break if min accelerations match (compare also pos/v)
