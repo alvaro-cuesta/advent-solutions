@@ -103,17 +103,45 @@ named!{ parse_particles (&[u8]) -> Vec<Particle>,
 ///   [z-buffering]: https://en.wikipedia.org/wiki/Z-buffering
 ///   [Manhattan distance]: https://en.wikipedia.org/wiki/Taxicab_geometry
 pub fn part1(particles: &Vec<Particle>) -> usize {
-    let mut by_accel = particles.iter()
+    if particles.len() == 0 {
+        return 0;
+    }
+
+    let mut particles = particles.iter()
         .enumerate()
+        .map(|(n, particle)| {
+            let &Particle { p, v, a } = particle;
+
+            (
+                n,
+                particle,
+                a.0 * a.0 + a.1 * a.1 + a.2 * a.2,
+                v.0 * v.0 + v.1 * v.1 + v.2 * v.2,
+                p.0 * p.0 + p.1 * p.1 + p.2 * p.2,
+            )
+
+        })
         .collect::<Vec<_>>();
 
-    by_accel.sort_by_key(|&(_, p)|
-          (p.a.0 * p.a.0
-        + p.a.1 * p.a.1
-        + p.a.2 * p.a.2) as u32
-    );
+    particles.sort_by_key(|&(_, _, a, _, _)| a);
 
-    by_accel[0].0
+    if particles[0].2 != particles[1].2 {
+        return particles[0].0;
+    }
+
+    particles.sort_by_key(|&(_, _, _, v, _)| v);
+
+    if particles[0].3 != particles[1].3 {
+        return particles[0].0;
+    }
+
+    particles.sort_by_key(|&(_, _, _, _, p)| p);
+
+    if particles[0].4 != particles[1].4 {
+        return particles[0].0;
+    }
+
+    panic!("Two particles are the same?")
 }
 
 
