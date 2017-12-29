@@ -27,7 +27,7 @@ named!{ parse_rule (&[u8]) -> Rule,
 }
 
 named!{ parse_rules (&[u8]) -> Vec<Rule>,
-    separated_list_complete!(char!('\n'), parse_rule)
+    lines!(parse_rule)
 }
 
 fn and_rotations(shape: &Grid) -> Vec<Grid> {
