@@ -179,18 +179,35 @@ pub fn part1(instructions: &[Instruction]) -> isize {
     }
 }
 
-pub fn part2(instructions: &[Instruction]) -> isize {
-    let mut computer = Computer::new(1, instructions);
+pub fn is_prime(x: usize) -> bool {
+    if x <= 1 { return false; }
 
-    return *computer.registers.entry('h').or_insert(0)
+    if x % 2 == 0 { return false; }
 
-    /*loop {
-        match computer.step() {
-            State::Mul => {},
-            State::Continue => {},
-            State::Terminate => return computer.registers[&'h'],
-        }
-    }*/
+    for _ in (1..)
+        .map(|n| 2*n+1)
+        .take_while(|n| n*n < x)
+        .filter(|n| x % n == 0)
+    {
+        return false;
+    }
+
+    true
+}
+
+pub fn part2(instructions: &[Instruction]) -> usize {
+    if let Set('b', Literal(x)) = instructions[0] {
+        if x < 0 { panic!("Unexpected negative number") }
+
+        let x = x as usize;
+
+        (0..1001)
+            .map(|i| 100000 + x * 100 + i * 17)
+            .filter(|&x| !is_prime(x))
+            .count()
+    } else {
+        panic!("Expected first instruction to set b to a literal");
+    }
 }
 
 pub fn parse_input(input: &str) -> Vec<Instruction> {
@@ -199,4 +216,4 @@ pub fn parse_input(input: &str) -> Vec<Instruction> {
         .expect("Error parsing instructions")
 }
 
-test_day!("23", 6241, 0);
+test_day!("23", 6241, 909);
