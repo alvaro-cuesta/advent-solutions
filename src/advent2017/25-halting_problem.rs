@@ -92,7 +92,59 @@ Perform a diagnostic checksum after ") >>
 }
 
 pub fn part1(input: &Blueprint) -> usize {
-    0
+    use std::collections::VecDeque;
+
+    let mut tape = VecDeque::new();
+    tape.push_back(false);
+
+    let mut ip = 0;
+    let mut state = input.begin;
+
+    for _ in 0..input.checksum_after {
+        if tape[ip] == false {
+            let State { false_write, false_right, false_next, .. } = input.states[&state];
+
+            tape[ip] = false_write;
+
+            if false_right {
+                ip += 1;
+
+                if ip == tape.len() {
+                    tape.push_back(false);
+                }
+            } else {
+                if ip == 0 {
+                    tape.push_front(false);
+                } else {
+                    ip -= 1;
+                }
+            };
+
+            state = false_next;
+        } else {
+            let State { true_write, true_right, true_next, .. } = input.states[&state];
+
+            tape[ip] = true_write;
+
+            if true_right {
+                ip += 1;
+
+                if ip == tape.len() {
+                    tape.push_back(false);
+                }
+            } else {
+                if ip == 0 {
+                    tape.push_front(false);
+                } else {
+                    ip -= 1;
+                }
+            };
+
+            state = true_next;
+        }
+    }
+
+    tape.into_iter().filter(|&x| x).count()
 }
 
 pub fn part2(_: &Blueprint) -> usize {
@@ -105,4 +157,4 @@ pub fn parse_input(input: &str) -> Blueprint {
         .expect("Error parsing blueprint")
 }
 
-test_day!("25", 0, 0);
+test_day!("25", 2846, 0);
