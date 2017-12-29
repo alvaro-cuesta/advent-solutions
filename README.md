@@ -32,15 +32,19 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 
 ## TODO
 
+- 2017
+    - Solve 21, 23, 24, 25
+    - Document 21, 23, 24, 25
+    - I'm not sure just comparing by velocity solves day 20 (might be accelerating against v)
+
+- main.rs
+    - If any job panics, it's not handled properly (should be like cargo test)
+    - Thread each part separately
+    - Async download (limit # to avoid many requests)
+
 - Add panics to docs
 - Document advent lib
-- Solve 21, 23, 24, 25
 - Older Advent of Code
-- Use lines! in separated_list_complete (21)
 - Ensure all doccomments are on pub types
 - Move test_inputs to src year?
-- Thread each part separately
-- Async download (limit # to avoid many requests)
 - Do not return result strings, but a result type
-- If any job panics, it's not handled properly (should be like cargo test)
-- I'm not sure just comparing by velocity solves day 20 (might be accelerating against v)
