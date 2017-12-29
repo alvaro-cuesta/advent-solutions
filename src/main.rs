@@ -103,12 +103,7 @@ fn main() {
     run_day!(day18, args, downloader, pool, tx);
     run_day_both!(day19, args, downloader, pool, tx);
     run_day!(day20, args, downloader, pool, tx);
-
-    if args.contains(&"day21") {
-        let input = downloader.input(2017, 21);
-        day21::main(&input);
-    }
-
+    run_day!(day21, args, downloader, pool, tx);
     run_day!(day22, args, downloader, pool, tx);
     run_day!(day23, args, downloader, pool, tx);
 

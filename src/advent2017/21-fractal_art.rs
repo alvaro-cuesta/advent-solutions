@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 type Grid = Vec<Vec<bool>>;
 type Rule = (Grid, Grid);
 
@@ -148,35 +150,45 @@ fn merge_grid(tiles: Vec<Vec<Grid>>) -> Grid {
     tiles.into_iter().flat_map(|y| y.into_iter().flat_map(|x| x).collect::<Vec<_>>()).collect()
 }
 
-pub fn main(input: &str) {
-    use std::collections::HashMap;
+pub fn part1(input: &HashMap<Grid, Grid>) -> usize {
+    // println!("{:?}", input);
 
-    let rules: HashMap<_, _> = parse_rules(/*input.as_bytes()*/b"#..#/..../..../#..# => ././.
-")
+    {
+        /*let test_grid = parse_grid(b".#./..#/###")
+            .to_full_result()
+            .unwrap();*/
+
+        let test_grid = input.iter().next().unwrap().0;
+
+        print_grid(&test_grid);
+        println!("");
+
+        /*for rotation in and_rotations(test_grid) {
+            print_grid(&rotation);
+            println!("");
+        }*/
+
+        print_grid(&grid_region(&test_grid, 0, 0, 2, 2));
+        println!("");
+
+        print_grid(&merge_grid(split_grid(&test_grid)));
+        println!("");
+    }
+
+    0
+}
+
+pub fn part2(input: &HashMap<Grid, Grid>) -> usize {
+    0
+}
+
+pub fn parse_input(input: &str) -> HashMap<Grid, Grid> {
+    parse_rules(input.as_bytes())/*/b"#..#/..../..../#..# => ././.
+")*/
         .to_full_result()
         .expect("Error parsing rules")
         .into_iter()
-        .collect();
-
-    /*let test_grid = parse_grid(b".#./..#/###")
-        .to_full_result()
-        .unwrap();*/
-
-    let test_grid = rules.iter().next().unwrap().0;
-
-    print_grid(&test_grid);
-    println!("");
-
-    /*for rotation in and_rotations(test_grid) {
-        print_grid(&rotation);
-        println!("");
-    }*/
-
-    print_grid(&grid_region(test_grid, 0, 0, 2, 2));
-    println!("");
-
-    print_grid(&merge_grid(split_grid(&test_grid)));
-    println!("");
-
-    //println!("{:?}", rules);
+        .collect()
 }
+
+test_day!("21", 0, 0);
