@@ -32,6 +32,7 @@ named!{ parse_rules (&[u8]) -> Vec<Rule>,
     lines!(parse_rule)
 }
 
+// TODO: make unique
 fn and_rotations(shape: &Grid) -> Vec<Grid> {
     let mut result = vec![shape.clone()];
 
@@ -189,7 +190,9 @@ pub fn part1(input: &HashMap<Grid, Grid>) -> usize {
 
         println!("\nSplit");
 
-        for y in &split_grid(&test_grid) {
+        let split = &split_grid(&test_grid);
+
+        for y in split {
             for x in y {
                 print_grid(x);
                 println!("");
@@ -202,6 +205,22 @@ pub fn part1(input: &HashMap<Grid, Grid>) -> usize {
         println!("");
     }
 
+    let mut grid = vec![
+        vec![false, true, false],
+        vec![false, false, true],
+        vec![true, true, true],
+    ];
+
+    for _ in 0..5 {
+        let split = split_grid(&grid);
+
+        // TODO: rotate and replace if match
+
+        grid = merge_grid(split);
+    }
+
+    print_grid(&grid);
+
     0
 }
 
@@ -210,7 +229,7 @@ pub fn part2(input: &HashMap<Grid, Grid>) -> usize {
 }
 
 pub fn parse_input(input: &str) -> HashMap<Grid, Grid> {
-    parse_rules(/*input.as_bytes())*/b"###../.#.../....#/#...#/..... => ././.
+    parse_rules(/*input.as_bytes())*/b"###.../.#..../.....#/#....#/....../...... => ././.
 ")
         .to_full_result()
         .expect("Error parsing rules")
