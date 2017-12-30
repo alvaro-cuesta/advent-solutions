@@ -151,31 +151,7 @@ fn merge_grid(tiles: Vec<Vec<Grid>>) -> Grid {
     Grid(result)
 }
 
-pub fn part1(input: &HashMap<Grid, Grid>) -> usize {
-    println!("{:?}", input);
-
-    {
-        let test_grid = input.iter().next().unwrap().0;
-        println!("{}", test_grid);
-
-        println!("\nRotations:\n");
-        for rotation in test_grid.flips_and_rotations() {
-            println!("{}", rotation);
-        }
-
-        println!("\n0,0 to 2,2:{}", test_grid.region(0, 0, 2, 2));
-
-        println!("\nSplit");
-        let split = test_grid.split();
-        for y in split {
-            for x in y {
-                println!("{}", x);
-            }
-        }
-
-        println!("Merged:\n{}\n", &merge_grid(test_grid.split()));
-    }
-
+pub fn solve(input: &HashMap<Grid, Grid>, iterations: usize) -> usize {
     let mut grid = Grid(
         vec![
             vec![false, true, false],
@@ -184,30 +160,45 @@ pub fn part1(input: &HashMap<Grid, Grid>) -> usize {
         ]
     );
 
-    for _ in 0..5 {
-        let split = grid.split();
+    for _ in 0..iterations {
+        let mut split = grid.split();
+
+        for y in &mut split {
+            for x in y {
+                if input.contains_key(x) {
+                    *x = input[x].clone()
+                }
+            }
+        }
 
         // TODO: rotate and replace if match
 
         grid = merge_grid(split);
     }
 
-    println!("{}", grid);
+    grid.0.into_iter()
+        .map(|row| row.into_iter().filter(|&x| x).count())
+        .sum::<usize>()
+}
 
-    0
+pub fn part1(input: &HashMap<Grid, Grid>) -> usize {
+    solve(input, 5)
 }
 
 pub fn part2(input: &HashMap<Grid, Grid>) -> usize {
-    0
+    solve(input, 18)
 }
 
 pub fn parse_input(input: &str) -> HashMap<Grid, Grid> {
-    parse_rules(/*input.as_bytes())*/b"###.../.#..../.....#/#....#/....../...... => ././.
-")
+    parse_rules(input.as_bytes())
         .to_full_result()
         .expect("Error parsing rules")
         .into_iter()
+        .flat_map(|(k, v)| k.flips_and_rotations().into_iter()
+            .map(|rot| (rot, v.clone()))
+            .collect::<Vec<_>>()
+        )
         .collect()
 }
 
-test_day!("21", 0, 0);
+test_day!("21", 150, 2606275);
