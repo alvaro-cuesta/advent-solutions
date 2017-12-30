@@ -1,7 +1,8 @@
+use std::fmt;
 use std::collections::HashMap;
 
-type Grid = Vec<Vec<bool>>;
-type Rule = (Grid, Grid);
+#[derive(Clone, PartialEq, Eq, Debug, Hash)]
+pub struct Grid(Vec<Vec<bool>>);
 
 fn char_to_bool(x: char) -> bool { x == '#' }
 
@@ -14,15 +15,110 @@ named!{ parse_cell (&[u8]) -> Vec<bool>,
     )
 }
 
-named!{ parse_grid (&[u8]) -> Grid,
-    separated_list!(char!('/'), parse_cell)
+impl Grid {
+    fn region(&self, x: usize, y: usize, w: usize, h: usize) -> Grid {
+        Grid(
+            (0..h)
+            .map(|yy| (0..w)
+                .map(|xx| self.0[y + yy][x + xx])
+                .collect()
+            )
+            .collect()
+        )
+    }
+
+    fn split(&self) -> Vec<Vec<Grid>> {
+        let size = self.0.len();
+
+        if size % 2 == 0 {
+            let tiles = size / 2;
+
+            (0..tiles)
+            .map(|y| (0..tiles)
+                .map(|x| self.region(x * 2, y * 2, 2, 2))
+                .collect()
+            )
+            .collect()
+        } else {
+            let tiles = size / 3;
+
+            (0..tiles)
+            .map(|y| (0..tiles)
+                .map(|x| self.region(x * 3, y * 3, 3, 3))
+                .collect()
+            )
+            .collect()
+        }
+    }
+
+    // TODO: make unique
+    fn flips_and_rotations(&self) -> Vec<Grid> {
+        let mut result = vec![self.clone()];
+
+        let size = self.0.len();
+
+        let mut swap = self.clone();
+        let mut flip_y = self.clone();
+        let mut flip_y_swap = self.clone();
+        let mut flip_x = self.clone();
+        let mut flip_x_swap = self.clone();
+        let mut flip_both = self.clone();
+        let mut flip_both_swap = self.clone();
+
+        for y in 0..size {
+            for x in 0..size {
+                swap.0[y][x] = self.0[x][y];
+                flip_y.0[y][x] = self.0[size - y - 1][x];
+                flip_y_swap.0[y][x] = self.0[x][size - y - 1];
+                flip_x.0[y][x] = self.0[y][size - x - 1];
+                flip_x_swap.0[y][x] = self.0[size - x - 1][y];
+                flip_both.0[y][x] = self.0[size - y - 1][size - x - 1];
+                flip_both_swap.0[y][x] = self.0[size - x - 1][size - y - 1];
+            }
+        }
+
+        result.push(swap);
+        result.push(flip_y);
+        result.push(flip_y_swap);
+        result.push(flip_x);
+        result.push(flip_x_swap);
+        result.push(flip_both);
+        result.push(flip_both_swap);
+
+        result
+    }
+
+    named!{ from_bytes (&[u8]) -> Grid,
+        map!(
+            separated_list!(char!('/'), parse_cell),
+            |x| Grid(x)
+        )
+    }
 }
+
+impl fmt::Display for Grid {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let size = self.0.len();
+
+        for y in 0..size {
+            for x in 0..size {
+                write!(f, "{}", if self.0[y][x] { '#' } else { '.' })?
+            }
+
+            write!(f, "\n")?
+        }
+
+        Ok(())
+    }
+}
+
+type Rule = (Grid, Grid);
 
 named!{ parse_rule (&[u8]) -> Rule,
     do_parse!(
-        l: parse_grid >>
+        l: call!(Grid::from_bytes) >>
         tag!(" => ") >>
-        r: parse_grid >>
+        r: call!(Grid::from_bytes) >>
 
         (l, r)
     )
@@ -32,121 +128,9 @@ named!{ parse_rules (&[u8]) -> Vec<Rule>,
     lines!(parse_rule)
 }
 
-// TODO: make unique
-fn and_rotations(shape: &Grid) -> Vec<Grid> {
-    let mut result = vec![shape.clone()];
-
-    let size = shape.len();
-
-    let mut swap = shape.clone();
-    let mut flip_y = shape.clone();
-    let mut flip_y_swap = shape.clone();
-    let mut flip_x = shape.clone();
-    let mut flip_x_swap = shape.clone();
-    let mut flip_both = shape.clone();
-    let mut flip_both_swap = shape.clone();
-
-    for y in 0..size {
-        for x in 0..size {
-            swap[y][x] = shape[x][y];
-        }
-    }
-
-    for y in 0..size {
-        for x in 0..size {
-            flip_y[y][x] = shape[size - y - 1][x];
-        }
-    }
-
-    for y in 0..size {
-        for x in 0..size {
-            flip_y_swap[y][x] = shape[x][size - y - 1];
-        }
-    }
-
-    for y in 0..size {
-        for x in 0..size {
-            flip_x[y][x] = shape[y][size - x - 1];
-        }
-    }
-
-    for y in 0..size {
-        for x in 0..size {
-            flip_x_swap[y][x] = shape[size - x - 1][y];
-        }
-    }
-
-    for y in 0..size {
-        for x in 0..size {
-            flip_both[y][x] = shape[size - y - 1][size - x - 1];
-        }
-    }
-
-    for y in 0..size {
-        for x in 0..size {
-            flip_both_swap[y][x] = shape[size - x - 1][size - y - 1];
-        }
-    }
-
-    result.push(swap);
-    result.push(flip_y);
-    result.push(flip_y_swap);
-    result.push(flip_x);
-    result.push(flip_x_swap);
-    result.push(flip_both);
-    result.push(flip_both_swap);
-
-    result
-}
-
-fn print_grid(grid: &Grid) {
-    let size = grid.len();
-
-    for y in 0..size {
-        for x in 0..size {
-            print!("{}", if grid[y][x] { '#' } else { '.' });
-        }
-
-        println!("");
-    }
-}
-
-fn grid_region(grid: &Grid, x: usize, y: usize, w: usize, h: usize) -> Grid {
-    (0..h)
-    .map(|yy| (0..w)
-        .map(|xx| grid[y + yy][x + xx])
-        .collect()
-    )
-    .collect()
-}
-
-fn split_grid(grid: &Grid) -> Vec<Vec<Grid>> {
-    let size = grid.len();
-
-    if size % 2 == 0 {
-        let tiles = size / 2;
-
-        (0..tiles)
-        .map(|y| (0..tiles)
-            .map(|x| grid_region(grid, x * 2, y * 2, 2, 2))
-            .collect()
-        )
-        .collect()
-    } else {
-        let tiles = size / 3;
-
-        (0..tiles)
-        .map(|y| (0..tiles)
-            .map(|x| grid_region(grid, x * 3, y * 3, 3, 3))
-            .collect()
-        )
-        .collect()
-    }
-}
-
 fn merge_grid(tiles: Vec<Vec<Grid>>) -> Grid {
     let num_tiles = tiles.len();
-    let size = tiles[0][0].len();
+    let size = tiles[0][0].0.len();
 
     let mut result = vec![];
 
@@ -156,7 +140,7 @@ fn merge_grid(tiles: Vec<Vec<Grid>>) -> Grid {
 
             for x_tile in 0..num_tiles {
                 for x in 0..size {
-                    row.push(tiles[y_tile][x_tile][y][x]);
+                    row.push(tiles[y_tile][x_tile].0[y][x]);
                 }
             }
 
@@ -164,62 +148,51 @@ fn merge_grid(tiles: Vec<Vec<Grid>>) -> Grid {
         }
     }
 
-    result
+    Grid(result)
 }
 
 pub fn part1(input: &HashMap<Grid, Grid>) -> usize {
     println!("{:?}", input);
 
     {
-        /*let test_grid = parse_grid(b".#./..#/###")
-            .to_full_result()
-            .unwrap();*/
-
         let test_grid = input.iter().next().unwrap().0;
-
-        print_grid(&test_grid);
+        println!("{}", test_grid);
 
         println!("\nRotations:\n");
-        for rotation in and_rotations(test_grid) {
-            print_grid(&rotation);
-            println!("");
+        for rotation in test_grid.flips_and_rotations() {
+            println!("{}", rotation);
         }
 
-        println!("\n0,0 to 2,2:");
-        print_grid(&grid_region(&test_grid, 0, 0, 2, 2));
+        println!("\n0,0 to 2,2:{}", test_grid.region(0, 0, 2, 2));
 
         println!("\nSplit");
-
-        let split = &split_grid(&test_grid);
-
+        let split = test_grid.split();
         for y in split {
             for x in y {
-                print_grid(x);
-                println!("");
+                println!("{}", x);
             }
         }
 
-        println!("Merged:");
-
-        print_grid(&merge_grid(split_grid(&test_grid)));
-        println!("");
+        println!("Merged:\n{}\n", &merge_grid(test_grid.split()));
     }
 
-    let mut grid = vec![
-        vec![false, true, false],
-        vec![false, false, true],
-        vec![true, true, true],
-    ];
+    let mut grid = Grid(
+        vec![
+            vec![false, true, false],
+            vec![false, false, true],
+            vec![true, true, true],
+        ]
+    );
 
     for _ in 0..5 {
-        let split = split_grid(&grid);
+        let split = grid.split();
 
         // TODO: rotate and replace if match
 
         grid = merge_grid(split);
     }
 
-    print_grid(&grid);
+    println!("{}", grid);
 
     0
 }
