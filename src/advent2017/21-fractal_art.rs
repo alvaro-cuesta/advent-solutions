@@ -147,11 +147,27 @@ fn merge_grid(tiles: Vec<Vec<Grid>>) -> Grid {
     let num_tiles = tiles.len();
     let size = tiles[0][0].len();
 
-    tiles.into_iter().flat_map(|y| y.into_iter().flat_map(|x| x).collect::<Vec<_>>()).collect()
+    let mut result = vec![];
+
+    for y_tile in 0..num_tiles {
+        for y in 0..size {
+            let mut row = vec![];
+
+            for x_tile in 0..num_tiles {
+                for x in 0..size {
+                    row.push(tiles[y_tile][x_tile][y][x]);
+                }
+            }
+
+            result.push(row);
+        }
+    }
+
+    result
 }
 
 pub fn part1(input: &HashMap<Grid, Grid>) -> usize {
-    // println!("{:?}", input);
+    println!("{:?}", input);
 
     {
         /*let test_grid = parse_grid(b".#./..#/###")
@@ -161,15 +177,26 @@ pub fn part1(input: &HashMap<Grid, Grid>) -> usize {
         let test_grid = input.iter().next().unwrap().0;
 
         print_grid(&test_grid);
-        println!("");
 
-        /*for rotation in and_rotations(test_grid) {
+        println!("\nRotations:\n");
+        for rotation in and_rotations(test_grid) {
             print_grid(&rotation);
             println!("");
-        }*/
+        }
 
+        println!("\n0,0 to 2,2:");
         print_grid(&grid_region(&test_grid, 0, 0, 2, 2));
-        println!("");
+
+        println!("\nSplit");
+
+        for y in &split_grid(&test_grid) {
+            for x in y {
+                print_grid(x);
+                println!("");
+            }
+        }
+
+        println!("Merged:");
 
         print_grid(&merge_grid(split_grid(&test_grid)));
         println!("");
@@ -183,8 +210,8 @@ pub fn part2(input: &HashMap<Grid, Grid>) -> usize {
 }
 
 pub fn parse_input(input: &str) -> HashMap<Grid, Grid> {
-    parse_rules(input.as_bytes())/*/b"#..#/..../..../#..# => ././.
-")*/
+    parse_rules(/*input.as_bytes())*/b"###../.#.../....#/#...#/..... => ././.
+")
         .to_full_result()
         .expect("Error parsing rules")
         .into_iter()
