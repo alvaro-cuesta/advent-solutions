@@ -32,8 +32,9 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 
 ## TODO
 
-- 2017
-    - I'm not sure just comparing by velocity solves day 20 (might be accelerating against v)
+- 2017-day20-part1: I'm not sure just comparing by velocity solves it (might
+  be two same-length accelerations, one of them accelerating against
+  same-length v)
 
 - main.rs
     - If any job panics, it's not handled properly (should be like cargo test)
