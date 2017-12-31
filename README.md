@@ -48,4 +48,3 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 - Ensure all doccomments are on pub types
 - Move test_inputs to src year?
 - Do not return result strings, but a result type
-- Day 24 do not depend on petgraph
