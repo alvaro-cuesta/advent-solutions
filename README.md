@@ -1,4 +1,4 @@
-# Advent of Code Solutions
+# Advent of Code Solutions ([docs](https://alvaro-cuesta.github.io/advent-solutions/advent_solutions/index.html))
 
 Solutions for [Advent of Code](http://adventofcode.com/about).
 
@@ -28,6 +28,25 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
     $ cargo test dayNN       # NN = 01, 02, ..., 25
     $ cargo test YYYY        # YYYY = Year
     $ cargo test YYYY::dayNN
+    ```
+
+- View docs:
+
+    ```sh
+    $ cargo doc --open
+    ```
+
+- Upload docs to GitHub:
+
+    ```sh
+    $ git worktree add gh-pages gh-pages  # if `gh-pages` worktree is missing
+    $ rm -rf target/doc
+    $ cargo doc --no-deps
+    $ cp -rf target/doc/* gh-pages/
+    $ cd gh-pages
+    $ git add .
+    $ git commit -m "Update gh-pages"
+    $ git push
     ```
 
 ## TODO
