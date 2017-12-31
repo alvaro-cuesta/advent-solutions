@@ -24,5 +24,6 @@ pub mod knot_hash;
 #[path="18-duet.rs"] pub mod day18;
 #[path="19-tubes.rs"] pub mod day19;
 #[path="20-particle_swarm.rs"] pub mod day20;
+#[path="21-fractal_art.rs"] pub mod day21;
 #[path="22-sporifica_virus.rs"] pub mod day22;
 #[path="23-coprocessor_conflagration.rs"] pub mod day23;
