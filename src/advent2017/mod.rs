@@ -28,3 +28,4 @@ pub mod knot_hash;
 #[path="22-sporifica_virus.rs"] pub mod day22;
 #[path="23-coprocessor_conflagration.rs"] pub mod day23;
 #[path="24-electromagnetic_moat.rs"] pub mod day24;
+#[path="25-halting_problem.rs"] pub mod day25;
