@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `part2_with_bursts` fn in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, part2_with_bursts">
+
+    <title>advent_solutions::advent2017::day22::part2_with_bursts - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc fn">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'><a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day22</a></p><script>window.sidebarCurrent = {name: 'part2_with_bursts', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day22</a>::<wbr><a class="fn" href=''>part2_with_bursts</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/advent_solutions/advent2017/22-sporifica_virus.rs.html#546-555' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn part2_with_bursts(input: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, bursts: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></pre><div class='docblock'><p>Start with the same map (still using <code>.</code> for <em>clean</em> and <code>#</code> for
+infected) and still with the virus carrier starting in the middle and
+facing <em>up</em>.</p>
+
+<p>Using the same initial state as the previous example, and drawing
+<em>weakened</em> as <code>W</code> and <em>flagged</em> as <code>F</code>, the middle of the infinite grid
+looks like this, with the virus carrier&#39;s position again marked with
+<code>[ ]</code>:</p>
+
+<pre><code class="language-text">. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . # . . .
+. . . #[.]. . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+</code></pre>
+
+<p>This is the same as before, since no initial nodes are <em>weakened</em> or
+<em>flagged</em>. The virus carrier is on a clean node, so it still turns left,
+instead <em>weakens</em> the node, and moves left:</p>
+
+<pre><code class="language-text">. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . # . . .
+. . .[#]W . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+</code></pre>
+
+<p>The virus carrier is on an infected node, so it still turns right,
+instead <em>flags</em> the node, and moves up:</p>
+
+<pre><code class="language-text">. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . .[.]. # . . .
+. . . F W . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+</code></pre>
+
+<p>This process repeats three more times, ending on the previously-flagged
+node and facing right:</p>
+
+<pre><code class="language-text">. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . W W . # . . .
+. . W[F]W . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+</code></pre>
+
+<p>Finding a flagged node, it reverses direction and <em>cleans</em> the node:</p>
+
+<pre><code class="language-text">. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . W W . # . . .
+. .[W]. W . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+</code></pre>
+
+<p>The <em>weakened</em> node becomes infected, and it continues in the same
+direction:</p>
+
+<pre><code class="language-text">. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . W W . # . . .
+.[.]# . W . . . .
+. . . . . . . . .
+. . . . . . . . .
+. . . . . . . . .
+</code></pre>
+
+<p>Of the first <code>100</code> bursts, <code>26</code> will result in <em>infection</em>.
+Unfortunately, another feature of this evolved virus is <em>speed</em>; of the
+first <code>10000000</code> bursts, <code>2511944</code> will result in <em>infection</em>.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="string">&quot;..#
+#..
+...
+&quot;</span>;
+
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2_with_bursts</span>(<span class="ident">input</span>, <span class="number">100</span>), <span class="number">26</span>);
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2_with_bursts</span>(<span class="ident">input</span>, <span class="number">10000000</span>), <span class="number">2511944</span>);</pre>
+
+<p>Given your actual map, after <code>10000000</code> bursts of activity, <em>how many
+bursts cause a node to become infected</em>? (Do not count nodes that begin
+infected.)</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

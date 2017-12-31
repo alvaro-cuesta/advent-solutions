@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `part2` fn in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, part2">
+
+    <title>advent_solutions::advent2017::day01::part2 - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc fn">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'><a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day01</a></p><script>window.sidebarCurrent = {name: 'part2', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day01</a>::<wbr><a class="fn" href=''>part2</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/advent_solutions/advent2017/01-inverse_captcha.rs.html#146-148' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn part2(input: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a></pre><div class='docblock'><p>You notice a progress bar that jumps to 50% completion. Apparently, the
+door isn&#39;t yet satisfied, but it did emit a <strong>star</strong> as encouragement. The
+instructions change:</p>
+
+<p>Now, instead of considering the <em>next</em> digit, it wants you to consider
+the digit <em>halfway around</em> the circular list. That is, if your list
+contains <code>10</code> items, only include a digit in your sum if the digit
+<code>10/2 = 5</code> steps forward matches it. Fortunately, your list has an even
+number of elements.</p>
+
+<p>For example:</p>
+
+<ul>
+<li><p><code>1212</code> produces <code>6</code>: the list contains <code>4</code> items, and all four
+digits match the digit <code>2</code> items ahead.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2</span>(<span class="string">&quot;1212&quot;</span>), <span class="number">6</span>);</pre></li>
+<li><p><code>1221</code> produces <code>0</code>, because every comparison is between a <code>1</code> and a
+<code>2</code>.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2</span>(<span class="string">&quot;1221&quot;</span>), <span class="number">0</span>);</pre></li>
+<li><p><code>123425</code> produces <code>4</code>, because both <code>2</code>s match each other, but no
+other digit has a match.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2</span>(<span class="string">&quot;123425&quot;</span>), <span class="number">4</span>);</pre></li>
+<li><p><code>123123</code> produces <code>12</code>.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2</span>(<span class="string">&quot;123123&quot;</span>), <span class="number">12</span>);</pre></li>
+<li><p><code>12131415</code> produces <code>4</code>.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2</span>(<span class="string">&quot;12131415&quot;</span>), <span class="number">4</span>);</pre></li>
+</ul>
+
+<p><em>What is the solution</em> to your new captcha?</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `day03` mod in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, day03">
+
+    <title>advent_solutions::advent2017::day03 - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Module day03</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a></p><script>window.sidebarCurrent = {name: 'day03', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a class="mod" href=''>day03</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/advent_solutions/advent2017/03-spiral_memory.rs.html#1-168' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'>
+<h1 id='a-hrefhttpadventofcodecom2017day3day-3-spiral-memorya' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day3day-3-spiral-memorya'><a href="http://adventofcode.com/2017/day/3">Day 3: Spiral Memory</a></a></h1>
+<p>You come across an experimental new kind of memory stored on an <span
+title="Good thing we have all these infinite two-dimensional grids lying
+around!">infinite two-dimensional grid</span>.</p>
+
+<p>Each square on the grid is allocated in a spiral pattern starting at a
+location marked <code>1</code> and then counting up while spiraling outward. For
+example, the first few squares are allocated like this:</p>
+
+<pre><code class="language-text">17  16  15  14  13
+18   5   4   3  12
+19   6   1   2  11
+20   7   8   9  10
+21  22  23---&gt; ...
+</code></pre>
+</div><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.parse_input.html"
+                                  title='fn advent_solutions::advent2017::day03::parse_input'>parse_input</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.part1.html"
+                                  title='fn advent_solutions::advent2017::day03::part1'>part1</a></td>
+                           <td class='docblock-short'>
+                                <p>While this is very space-efficient (no squares are skipped), requested
+data must be carried back to square <code>1</code> (the location of the only access
+port for this memory system) by programs that can only move up, down,
+left, or right. They always take the shortest path: the <a href="https://en.wikipedia.org/wiki/Taxicab_geometry">Manhattan
+Distance</a> between the location of the data and square <code>1</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.part2.html"
+                                  title='fn advent_solutions::advent2017::day03::part2'>part2</a></td>
+                           <td class='docblock-short'>
+                                <p>What is the <em>first value written</em> that is <em>larger</em> than your puzzle
+input?</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.stress_test.html"
+                                  title='fn advent_solutions::advent2017::day03::stress_test'>stress_test</a></td>
+                           <td class='docblock-short'>
+                                <p>As a stress test on the system, the programs here clear the grid and
+then store the value <code>1</code> in square <code>1</code>. Then, in the same allocation
+order as shown above, they store the sum of the values in all adjacent
+squares, including diagonals.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

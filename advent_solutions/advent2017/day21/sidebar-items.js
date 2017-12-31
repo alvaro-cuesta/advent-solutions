@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["parse_input",""],["part1","How many pixels stay on after `5` iterations?"],["part2","How many pixels stay on after `18` iterations?"],["solve","The program always begins with this pattern:"]],"struct":[["Grid","The image consists of a two-dimensional square grid of pixels that are either on (`#`) or off (`.`)."]]});

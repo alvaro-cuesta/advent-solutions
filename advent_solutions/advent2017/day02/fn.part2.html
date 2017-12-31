@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `part2` fn in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, part2">
+
+    <title>advent_solutions::advent2017::day02::part2 - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc fn">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'><a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day02</a></p><script>window.sidebarCurrent = {name: 'part2', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day02</a>::<wbr><a class="fn" href=''>part2</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/advent_solutions/advent2017/02-corruption_checksum.rs.html#93-114' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn part2&lt;'a, I, J&gt;(lines: I) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;I: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = J&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;J: <a class="trait" href="https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html" title="trait core::iter::traits::IntoIterator">IntoIterator</a>&lt;Item = &amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a>,&nbsp;</span></pre><div class='docblock'><p>&quot;Great work; looks like we&#39;re on the right track after all. Here&#39;s a
+<strong>star</strong> for your effort.&quot; However, the program seems a little worried.
+Can programs <em>be</em> worried?</p>
+
+<p>&quot;Based on what we&#39;re seeing, it looks like all the User wanted is some
+information about the <em>evenly divisible values</em> in the spreadsheet.
+Unfortunately, none of us are equipped for that kind of calculation -
+most of us specialize in <span title="Bonus points if you solve this part
+using only bitwise operations.">bitwise operations</span>.&quot;</p>
+
+<p>It sounds like the goal is to find the only two numbers in each row
+where one evenly divides the other - that is, where the result of the
+division operation is a whole number. They would like you to find those
+numbers on each line, divide them, and add up each line&#39;s result.</p>
+
+<p>For example, given the following spreadsheet:</p>
+
+<pre><code class="language-text">5 9 2 8
+9 4 7 3
+3 8 6 5
+</code></pre>
+
+<ul>
+<li>  In the first row, the only two numbers that evenly divide are <code>8</code>
+and <code>2</code>; the result of this division is <code>4</code>.</li>
+<li>  In the second row, the two numbers are <code>9</code> and <code>3</code>; the result is <code>3</code>.</li>
+<li>  In the third row, the result is <code>2</code>.</li>
+</ul>
+
+<p>In this example, the sum of the results would be <code>4 + 3 + 2 = 9</code>.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2</span>(<span class="kw-2">&amp;</span><span class="ident">parse_input</span>(<span class="ident">input</span>)), <span class="number">9</span>);</pre>
+
+<p>What is the <em>sum of each row&#39;s result</em> in your puzzle input?</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

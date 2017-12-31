@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `part2` fn in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, part2">
+
+    <title>advent_solutions::advent2017::day18::part2 - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc fn">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'><a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day18</a></p><script>window.sidebarCurrent = {name: 'part2', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day18</a>::<wbr><a class="fn" href=''>part2</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/advent_solutions/advent2017/18-duet.rs.html#408-456' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn part2(instructions: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="enum" href="../../../advent_solutions/advent2017/day18/enum.Instruction.html" title="enum advent_solutions::advent2017::day18::Instruction">Instruction</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></pre><div class='docblock'><p>As you congratulate yourself for a job well done, you notice that the
+documentation has been on the back of the tablet this entire time. While
+you actually got most of the instructions correct, there are a few key
+differences. This assembly code isn&#39;t about sound at all - it&#39;s meant to
+be run <em>twice at the same time</em>.</p>
+
+<p>Each running copy of the program has its own set of registers and
+follows the code independently - in fact, the programs don&#39;t even
+necessarily run at the same speed. To coordinate, they use the <em>send</em>
+(<code>snd</code>) and <em>receive</em> (<code>rcv</code>) instructions:</p>
+
+<ul>
+<li>  <code>snd X</code> <em>sends</em> the value of <code>X</code> to the other program. These values
+wait in a queue until that program is ready to receive them. Each
+program has its own message queue, so a program can never receive a
+message it sent.</li>
+<li>  <code>rcv X</code> <em>receives</em> the next value and stores it in register <code>X</code>. If
+no values are in the queue, the program <em>waits for a value to be
+sent to it</em>. Programs do not continue to the next instruction until
+they have received a value. Values are received in the order they
+are sent.</li>
+</ul>
+
+<p>Each program also has its own <em>program ID</em> (one <code>0</code> and the other <code>1</code>);
+the register <code>p</code> should begin with this value.</p>
+
+<p>For example:</p>
+
+<pre><code class="language-text">snd 1
+snd 2
+snd p
+rcv a
+rcv b
+rcv c
+rcv d
+</code></pre>
+
+<p>Both programs begin by sending three values to the other. Program <code>0</code>
+sends <code>1, 2, 0</code>; program <code>1</code> sends <code>1, 2, 1</code>. Then, each program
+receives a value (both <code>1</code>) and stores it in <code>a</code>, receives another value
+(both <code>2</code>) and stores it in <code>b</code>, and then each receives the program ID
+of the other program (program <code>0</code> receives <code>1</code>; program <code>1</code> receives
+<code>0</code>) and stores it in <code>c</code>. Each program now sees a different value in
+its own copy of register <code>c</code>.</p>
+
+<p>Finally, both programs try to <code>rcv</code> a <em>fourth</em> time, but no data is
+waiting for either of them, and they reach a <em>deadlock</em>. When this
+happens, both programs terminate.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">instructions</span> <span class="op">=</span> <span class="ident">Instruction</span>::<span class="ident">list_from_bytes</span>(<span class="ident">input</span>.<span class="ident">as_bytes</span>())
+    .<span class="ident">to_full_result</span>()
+    .<span class="ident">expect</span>(<span class="string">&quot;Error parsing instructions&quot;</span>);
+
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2</span>(<span class="kw-2">&amp;</span><span class="ident">instructions</span>), <span class="number">3</span>);</pre>
+
+<p>It should be noted that it would be equally valid for the programs to
+run at different speeds; for example, program <code>0</code> might have sent all
+three values and then stopped at the first <code>rcv</code> before program <code>1</code>
+executed even its first instruction.</p>
+
+<p>Once both of your programs have terminated (regardless of what caused
+them to do so), <em>how many times did program <code>1</code> send a value</em>?</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

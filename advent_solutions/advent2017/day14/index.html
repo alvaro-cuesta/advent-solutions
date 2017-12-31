@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `day14` mod in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, day14">
+
+    <title>advent_solutions::advent2017::day14 - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Module day14</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a></p><script>window.sidebarCurrent = {name: 'day14', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a class="mod" href=''>day14</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/advent_solutions/advent2017/14-disk_defragmentation.rs.html#1-193' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'>
+<h1 id='a-hrefhttpadventofcodecom2017day14day-14-disk-defragmentationa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day14day-14-disk-defragmentationa'><a href="http://adventofcode.com/2017/day/14">Day 14: Disk Defragmentation</a></a></h1>
+<p>Suddenly, a scheduled job activates the system&#39;s <a href="https://en.wikipedia.org/wiki/Defragmentation">disk defragmenter</a>.
+Were the situation different, you might <a href="https://www.youtube.com/watch?v=kPv1gQ5Rs8A&amp;t=37">sit and watch it for a while</a>,
+but today, you just don&#39;t have that kind of time. It&#39;s soaking up
+valuable system resources that are needed elsewhere, and so the only
+option is to help it finish its task as soon as possible.</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Grid.html"
+                                  title='struct advent_solutions::advent2017::day14::Grid'>Grid</a></td>
+                           <td class='docblock-short'>
+                                <p>The disk in question consists of a 128x128 grid; each square of the grid
+is either <em>free</em> or <em>used</em>. On this disk, the state of the grid is
+tracked by the bits in a sequence of <a href="../day10/index.html">knot hashes</a>.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.make_hashes.html"
+                                  title='fn advent_solutions::advent2017::day14::make_hashes'>make_hashes</a></td>
+                           <td class='docblock-short'>
+                                <p>A total of 128 knot hashes are calculated, each corresponding to a
+single row in the grid; each hash contains 128 bits which correspond to
+individual grid squares. Each bit of a hash indicates whether that
+square is <em>free</em> (<code>0</code>) or <em>used</em> (<code>1</code>).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.parse_input.html"
+                                  title='fn advent_solutions::advent2017::day14::parse_input'>parse_input</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.part1.html"
+                                  title='fn advent_solutions::advent2017::day14::part1'>part1</a></td>
+                           <td class='docblock-short'>
+                                <p>The output of a knot hash is traditionally represented by 32 hexadecimal
+digits; each of these digits correspond to 4 bits, for a total of
+<code>4 * 32 = 128</code> bits. To convert to bits, turn each hexadecimal digit to
+its equivalent binary value, high-bit first: <code>0</code> becomes <code>0000</code>, <code>1</code>
+becomes <code>0001</code>, <code>e</code> becomes <code>1110</code>, <code>f</code> becomes <code>1111</code>, and so on; a
+hash that begins with <code>a0c2017...</code> in hexadecimal would begin with
+<code>10100000110000100000000101110000...</code> in binary.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.part2.html"
+                                  title='fn advent_solutions::advent2017::day14::part2'>part2</a></td>
+                           <td class='docblock-short'>
+                                <p>Now, <span title="This is exactly how it works in real life.">all the
+defragmenter needs to know</span> is the number of <em>regions</em>. A region
+is a group of <em>used</em> squares that are all <em>adjacent</em>, not including
+diagonals. Every used square is in exactly one region: lone used squares
+form their own isolated regions, while several adjacent squares all
+count as a single region.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `advent2017` mod in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, advent2017">
+
+    <title>advent_solutions::advent2017 - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Module advent2017</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li></ul></div><p class='location'><a href='../index.html'>advent_solutions</a></p><script>window.sidebarCurrent = {name: 'advent2017', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>advent_solutions</a>::<wbr><a class="mod" href=''>advent2017</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/advent_solutions/advent2017/mod.rs.html#1-31' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Solutions for <a href="http://adventofcode.com/2017">Advent of Code 2017</a>.</p>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day01/index.html"
+                                  title='mod advent_solutions::advent2017::day01'>day01</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day1day-1-inverse-captchaa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day1day-1-inverse-captchaa'><a href="http://adventofcode.com/2017/day/1">Day 1: Inverse Captcha</a></a></h1>
+<p>The night before Christmas, one of Santa&#39;s Elves calls you in a panic.
+&quot;The printer&#39;s broken! We can&#39;t print the <em>Naughty or Nice List</em>!&quot; By
+the time you make it to <span title="Floor 17: cafeteria, printing
+department, and experimental organic digitization equipment.">sub-basement
+17</span>, there are only a few minutes until midnight. &quot;We have a big
+problem,&quot; she says; &quot;there must be almost <em>fifty</em> bugs in this system,
+but nothing else can print The List. Stand in this square, quick!
+There&#39;s no time to explain; if you can convince them to pay you in
+<strong>stars</strong>, you&#39;ll be able to--&quot; She pulls a lever and the world goes
+blurry.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day02/index.html"
+                                  title='mod advent_solutions::advent2017::day02'>day02</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day2day-2-corruption-checksuma' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day2day-2-corruption-checksuma'><a href="http://adventofcode.com/2017/day/2">Day 2: Corruption Checksum</a></a></h1>
+<p>As you walk through the door, a glowing humanoid shape yells in your
+direction. &quot;You there! Your state appears to be idle. Come help us
+repair the corruption in this spreadsheet - if we take another
+millisecond, we&#39;ll have to display an hourglass cursor!&quot;</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day03/index.html"
+                                  title='mod advent_solutions::advent2017::day03'>day03</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day3day-3-spiral-memorya' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day3day-3-spiral-memorya'><a href="http://adventofcode.com/2017/day/3">Day 3: Spiral Memory</a></a></h1>
+<p>You come across an experimental new kind of memory stored on an <span
+title="Good thing we have all these infinite two-dimensional grids lying
+around!">infinite two-dimensional grid</span>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day04/index.html"
+                                  title='mod advent_solutions::advent2017::day04'>day04</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day4day-4-high-entropy-passphrasesa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day4day-4-high-entropy-passphrasesa'><a href="http://adventofcode.com/2017/day/4">Day 4: High-Entropy Passphrases</a></a></h1>
+<p>A new system policy has been put in place that requires all accounts to
+use a <em>passphrase</em> instead of simply a pass*word*. A passphrase consists
+of a series of words (lowercase letters) separated by spaces.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day05/index.html"
+                                  title='mod advent_solutions::advent2017::day05'>day05</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day5day-5-a-maze-of-twisty-trampolines-all-alikea' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day5day-5-a-maze-of-twisty-trampolines-all-alikea'><a href="http://adventofcode.com/2017/day/5">Day 5: A Maze of Twisty Trampolines, All Alike</a></a></h1>
+<p>An urgent <span title="Later, on its turn, it sends you a sorcery.">
+interrupt</span> arrives from the CPU: it&#39;s trapped in a maze of jump
+instructions, and it would like assistance from any programs with spare
+cycles to help find the exit.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day06/index.html"
+                                  title='mod advent_solutions::advent2017::day06'>day06</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day6day-6-memory-reallocationa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day6day-6-memory-reallocationa'><a href="http://adventofcode.com/2017/day/6">Day 6: Memory Reallocation</a></a></h1>
+<p>A debugger program here is having an issue: it is trying to repair a
+memory reallocation routine, but it keeps getting stuck in an infinite
+loop.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day07/index.html"
+                                  title='mod advent_solutions::advent2017::day07'>day07</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day7day-7-recursive-circusa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day7day-7-recursive-circusa'><a href="http://adventofcode.com/2017/day/7">Day 7: Recursive Circus</a></a></h1>
+<p>Wandering further through the circuits of the computer, you come upon a
+tower of <span title="Turtles, all the way down.">programs</span> that
+have gotten themselves into a bit of trouble. A recursive algorithm has
+gotten out of hand, and now they&#39;re balanced precariously in a large
+tower.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day08/index.html"
+                                  title='mod advent_solutions::advent2017::day08'>day08</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day8day-8-i-heard-you-like-registersa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day8day-8-i-heard-you-like-registersa'><a href="http://adventofcode.com/2017/day/8">Day 8: I Heard You Like Registers</a></a></h1>
+<p>You receive a <span title="There's that sorcery I told you about.">signal
+</span> directly from the CPU. Because of your recent assistance with <a href="../day5/index.html">jump
+instructions</a>, it would like you to compute the result of a series of
+unusual register instructions.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day09/index.html"
+                                  title='mod advent_solutions::advent2017::day09'>day09</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day9day-9-stream-processinga' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day9day-9-stream-processinga'><a href="http://adventofcode.com/2017/day/9">Day 9: Stream Processing</a></a></h1>
+<p>A large stream blocks your path. According to the locals, it&#39;s not safe
+to <span title="&quot;Don't cross the streams!&quot;, they yell, even though
+there's only one. They seem to think they're hilarious.">cross the
+stream</span> at the moment because it&#39;s full of <em>garbage</em>. You look
+down at the stream; rather than water, you discover that it&#39;s a <em>stream
+of characters</em>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day10/index.html"
+                                  title='mod advent_solutions::advent2017::day10'>day10</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day10day-10-knot-hasha' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day10day-10-knot-hasha'><a href="http://adventofcode.com/2017/day/10">Day 10: Knot Hash</a></a></h1>
+<p>You come across some programs that are trying to implement a software
+emulation of a hash based on knot-tying. The hash these programs are
+implementing isn&#39;t very strong, but you decide to help them anyway. You
+make a mental note to remind the Elves later not to <span
+title="NEW CRYPTOSYSTEM WHO DIS">invent their own cryptographic
+functions</span>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day11/index.html"
+                                  title='mod advent_solutions::advent2017::day11'>day11</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day11day-11-hex-eda' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day11day-11-hex-eda'><a href="http://adventofcode.com/2017/day/11">Day 11: Hex Ed</a></a></h1>
+<p>Crossing the bridge, you&#39;ve barely reached the other side of the stream
+when a program comes up to you, clearly in distress. &quot;It&#39;s my child
+process,&quot; she says, &quot;he&#39;s gotten lost in an infinite grid!&quot;</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day12/index.html"
+                                  title='mod advent_solutions::advent2017::day12'>day12</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day12day-12-digital-plumbera' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day12day-12-digital-plumbera'><a href="http://adventofcode.com/2017/day/12">Day 12: Digital Plumber</a></a></h1>
+<p>Walking along the memory banks of the stream, you find a small village
+that is experiencing a little confusion: some programs can&#39;t communicate
+with each other.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day13/index.html"
+                                  title='mod advent_solutions::advent2017::day13'>day13</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day13day-13-packet-scannersa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day13day-13-packet-scannersa'><a href="http://adventofcode.com/2017/day/13">Day 13: Packet Scanners</a></a></h1>
+<p>You need to cross a vast <em>firewall</em>. The firewall consists of several
+layers, each with a <em>security scanner</em> that moves back and forth across
+the layer. To succeed, you must not be detected by a scanner.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day14/index.html"
+                                  title='mod advent_solutions::advent2017::day14'>day14</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day14day-14-disk-defragmentationa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day14day-14-disk-defragmentationa'><a href="http://adventofcode.com/2017/day/14">Day 14: Disk Defragmentation</a></a></h1>
+<p>Suddenly, a scheduled job activates the system&#39;s <a href="https://en.wikipedia.org/wiki/Defragmentation">disk defragmenter</a>.
+Were the situation different, you might <a href="https://www.youtube.com/watch?v=kPv1gQ5Rs8A&amp;t=37">sit and watch it for a while</a>,
+but today, you just don&#39;t have that kind of time. It&#39;s soaking up
+valuable system resources that are needed elsewhere, and so the only
+option is to help it finish its task as soon as possible.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day15/index.html"
+                                  title='mod advent_solutions::advent2017::day15'>day15</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day15day-15-dueling-generatorsa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day15day-15-dueling-generatorsa'><a href="http://adventofcode.com/2017/day/15">Day 15: Dueling Generators</a></a></h1>
+<p>Here, you encounter a pair of dueling <span title="I guess they *are* a little
+banjo-shaped. Why do you ask?">generators</span>. The generators, called
+<em>generator A</em> and <em>generator B</em>, are trying to agree on a sequence of numbers.
+However, one of them is malfunctioning, and so the sequences don&#39;t always
+match.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day16/index.html"
+                                  title='mod advent_solutions::advent2017::day16'>day16</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day16day-16-permutation-promenadea' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day16day-16-permutation-promenadea'><a href="http://adventofcode.com/2017/day/16">Day 16: Permutation Promenade</a></a></h1>
+<p>You come upon a very unusual sight; a group of programs here appear to
+be <a href="https://www.youtube.com/watch?v=lyZQPjUT5B4&amp;t=53">dancing</a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day17/index.html"
+                                  title='mod advent_solutions::advent2017::day17'>day17</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day17day-17-spinlocka' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day17day-17-spinlocka'><a href="http://adventofcode.com/2017/day/17">Day 17: Spinlock</a></a></h1>
+<p>Suddenly, whirling in the distance, you notice what looks like a
+massive, <span title="You know, as opposed to all those non-pixelated
+hurricanes you see on TV.">pixelated hurricane</span>: a deadly <a href="https://en.wikipedia.org/wiki/Spinlock">spinlock</a>.
+This spinlock isn&#39;t just consuming computing power, but memory, too; vast,
+digital mountains are being ripped from the ground and consumed by the
+vortex.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day18/index.html"
+                                  title='mod advent_solutions::advent2017::day18'>day18</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day18day-18-dueta' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day18day-18-dueta'><a href="http://adventofcode.com/2017/day/18">Day 18: Duet</a></a></h1>
+<p>You discover a tablet containing some strange assembly code labeled
+simply &quot;<a href="https://en.wikipedia.org/wiki/Duet">Duet</a>&quot;. Rather than bother the sound card with it, you decide
+to run the code yourself. Unfortunately, you don&#39;t see any
+documentation, so you&#39;re left to figure out what the instructions mean
+on your own.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day19/index.html"
+                                  title='mod advent_solutions::advent2017::day19'>day19</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day19day-19-a-series-of-tubesa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day19day-19-a-series-of-tubesa'><a href="http://adventofcode.com/2017/day/19">Day 19: A Series of Tubes</a></a></h1>
+<p>Somehow, a network packet got <span title="I know how fast it's going, but I
+don't know where it is.">lost</span> and ended up here. It&#39;s trying to follow
+a routing diagram (your puzzle input), but it&#39;s confused about where to go.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day20/index.html"
+                                  title='mod advent_solutions::advent2017::day20'>day20</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day20day-20-particle-swarma' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day20day-20-particle-swarma'><a href="http://adventofcode.com/2017/day/20">Day 20: Particle Swarm</a></a></h1>
+<p>Suddenly, the GPU contacts you, asking for <span title="...as if millions
+of graphics pipelines suddenly cried out for help, but suddenly started
+working on something else instead because they all have to do the same
+thing at the same time and can't spend very long asking for help.">help
+</span>. Someone has asked it to simulate <em>too many particles</em>, and it
+won&#39;t be able to finish them all in time to render the next frame at this
+rate.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day21/index.html"
+                                  title='mod advent_solutions::advent2017::day21'>day21</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day21day-21-fractal-arta' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day21day-21-fractal-arta'><a href="http://adventofcode.com/2017/day/21">Day 21: Fractal Art</a></a></h1>
+<p>You find a program trying to generate some art. It uses a strange
+process that involves <span title="This technique is also often used on
+TV.">repeatedly enhancing</span> the detail of an image through a set of
+rules.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day22/index.html"
+                                  title='mod advent_solutions::advent2017::day22'>day22</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day22day-22-sporifica-virusa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day22day-22-sporifica-virusa'><a href="http://adventofcode.com/2017/day/22">Day 22: Sporifica Virus</a></a></h1>
+<p>Diagnostics indicate that the local <em>grid computing cluster</em> has been
+contaminated with the <em>Sporifica Virus</em>. The grid computing cluster is a
+seemingly-<span title="The infinite is possible at AdventOfCodeCom.">
+infinite</span> two-dimensional grid of compute nodes. Each node is either
+<em>clean</em> or <em>infected</em> by the virus.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day23/index.html"
+                                  title='mod advent_solutions::advent2017::day23'>day23</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day23day-23-coprocessor-conflagrationa' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day23day-23-coprocessor-conflagrationa'><a href="http://adventofcode.com/2017/day/23">Day 23: Coprocessor Conflagration</a></a></h1>
+<p>You decide to head directly to the CPU and fix the printer from there.
+As you get close, you find an <em>experimental coprocessor</em> doing so much
+work that the local programs are afraid it will <a href="https://en.wikipedia.org/wiki/Halt_and_Catch_Fire">halt and catch fire</a>.
+This would cause serious issues for the rest of the computer, so you
+head in and see what you can do.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day24/index.html"
+                                  title='mod advent_solutions::advent2017::day24'>day24</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day24day-24-electromagnetic-moata' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day24day-24-electromagnetic-moata'><a href="http://adventofcode.com/2017/day/24">Day 24: Electromagnetic Moat</a></a></h1>
+<p>The CPU itself is a large, black building surrounded by a bottomless
+pit. Enormous metal tubes extend outward from the side of the building
+at regular intervals and descend down into the void. There&#39;s no way to
+cross, but you need to get inside.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="day25/index.html"
+                                  title='mod advent_solutions::advent2017::day25'>day25</a></td>
+                           <td class='docblock-short'>
+                                <h1 id='a-hrefhttpadventofcodecom2017day25day-25-the-halting-problema' class='section-header'><a href='#a-hrefhttpadventofcodecom2017day25day-25-the-halting-problema'><a href="http://adventofcode.com/2017/day/25">Day 25: The Halting Problem</a></a></h1>
+<p>Following the twisty passageways deeper and deeper into the CPU, you
+finally reach the <span title="Get it? CPU core?">core</span> of the
+computer. Here, in the expansive central chamber, you find a grand
+apparatus that fills the entire room, suspended nanometers above your
+head.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="knot_hash/index.html"
+                                  title='mod advent_solutions::advent2017::knot_hash'>knot_hash</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

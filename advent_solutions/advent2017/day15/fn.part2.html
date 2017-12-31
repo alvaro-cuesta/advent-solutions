@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `part2` fn in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, part2">
+
+    <title>advent_solutions::advent2017::day15::part2 - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc fn">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'><a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day15</a></p><script>window.sidebarCurrent = {name: 'part2', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>day15</a>::<wbr><a class="fn" href=''>part2</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/advent_solutions/advent2017/15-dueling_generators.rs.html#195-204' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn part2(((a_f, a_s), (b_f, b_s)): &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></pre><div class='docblock'><p>In the interest of trying to align a little better, the generators get
+more picky about the numbers they actually give to the judge.</p>
+
+<p>They still generate values in the same way, but now they only hand a
+value to the judge when it meets their <em>criteria</em>:</p>
+
+<ul>
+<li>  Generator A looks for values that are multiples of <code>4</code>.</li>
+<li>  Generator B looks for values that are multiples of <code>8</code>.</li>
+</ul>
+
+<p>Each generator functions completely <em>independently</em>: they both go
+through values entirely on their own, only occasionally handing an
+acceptable value to the judge, and otherwise working through the same
+sequence of values as before until they find one.</p>
+
+<p>The judge still waits for each generator to provide it with a value
+before comparing them (using the same comparison method as before). It
+keeps track of the order it receives values; the first values from each
+generator are compared, then the second values from each generator, then
+the third values, and so on.</p>
+
+<p>Using the example starting values given above, the generators now
+produce the following first five values each:</p>
+
+<p>--Gen. A--  --Gen. B--
+1352636452  1233683848
+1992081072   862516352
+ 530830436  1159784568
+1980017072  1616057672
+ 740335192   412269392</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Generator</span>::<span class="ident">new</span>(<span class="number">16807</span>, <span class="number">65</span>)
+    .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span> <span class="op">%</span> <span class="number">4</span> <span class="op">==</span> <span class="number">0</span>)
+    .<span class="ident">take</span>(<span class="number">5</span>)
+    .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>();
+<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Generator</span>::<span class="ident">new</span>(<span class="number">48271</span>, <span class="number">8921</span>)
+    .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span> <span class="op">%</span> <span class="number">8</span> <span class="op">==</span> <span class="number">0</span>)
+    .<span class="ident">take</span>(<span class="number">5</span>)
+    .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>();
+
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>, [<span class="number">1352636452</span>, <span class="number">1992081072</span>, <span class="number">530830436</span>, <span class="number">1980017072</span>, <span class="number">740335192</span>]);
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">b</span>, [<span class="number">1233683848</span>, <span class="number">862516352</span>, <span class="number">1159784568</span>, <span class="number">1616057672</span>, <span class="number">412269392</span>]);</pre>
+
+<p>These values have the following corresponding binary values:</p>
+
+<p>01010000100111111001100000100100
+01001001100010001000010110001000</p>
+
+<p>01110110101111001011111010110000
+00110011011010001111010010000000</p>
+
+<p>00011111101000111101010001100100
+01000101001000001110100001111000</p>
+
+<p>01110110000001001010100110110000
+01100000010100110001010101001000</p>
+
+<p>00101100001000001001111001011000
+00011000100100101011101101010000</p>
+
+<p>Unfortunately, even though this change makes more bits similar on
+average, none of these values&#39; lowest 16 bits match. Now, it&#39;s not until
+the 1056th pair that the judge finds the first match:</p>
+
+<p>--Gen. A--  --Gen. B--
+1023762912   896885216</p>
+
+<p>00111101000001010110000111100000
+00110101011101010110000111100000</p>
+
+<p>This change makes the generators much slower, and the judge is getting
+impatient; it is now only willing to consider <em>5 million</em> pairs. (Using
+the values from the example above, after five million pairs, the judge
+would eventually find a total of <code>309</code> pairs that match in their lowest
+16 bits.)</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">part2</span>(<span class="kw-2">&amp;</span>((<span class="number">16807</span>, <span class="number">65</span>), (<span class="number">48271</span>, <span class="number">8921</span>))), <span class="number">309</span>);</pre>
+
+<p>After 5 million pairs, but using this new generator logic, <em>what is the
+judge&#39;s final count</em>?</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

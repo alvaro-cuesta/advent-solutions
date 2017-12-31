@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["parse_input",""],["solve","You have the path the child process took. Starting where he started, you need to determine the fewest number of steps required to reach him. (A \"step\" means to move from the hex you are in to any adjacent hex.)"]]});

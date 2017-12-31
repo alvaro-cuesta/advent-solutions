@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `hash` fn in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, hash">
+
+    <title>advent_solutions::advent2017::knot_hash::hash - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc fn">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'><a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>knot_hash</a></p><script>window.sidebarCurrent = {name: 'hash', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>knot_hash</a>::<wbr><a class="fn" href=''>hash</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/advent_solutions/advent2017/knot_hash.rs.html#69-89' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn hash(nums: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, lengths: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, rounds: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</pre><div class='docblock'><p>To achieve this, begin with a <em>list</em> of numbers from <code>0</code> to <code>255</code>, a
+<em>current position</em> which begins at <code>0</code> (the first element in the list),
+a <em>skip size</em> (which starts at <code>0</code>), and a sequence of <em>lengths</em> (your
+puzzle input). Then, for each length:</p>
+
+<ul>
+<li>  <em>Reverse</em> the order of that <em>length</em> of elements in the <em>list</em>,
+starting with the element at the <em>current position</em>.</li>
+<li>  <em>Move</em> the <em>current position</em> forward by that <em>length</em> plus the
+<em>skip size</em>.</li>
+<li>  <em>Increase</em> the <em>skip size</em> by one.</li>
+</ul>
+
+<p>The <em>list</em> is circular; if the <em>current position</em> and the <em>length</em> try
+to reverse elements beyond the end of the list, the operation reverses
+using as many extra elements as it needs from the front of the list. If
+the <em>current position</em> moves past the end of the list, it wraps around
+to the front. <em>Lengths</em> larger than the size of the <em>list</em> are invalid.</p>
+
+<p>Here&#39;s an example using a smaller list:</p>
+
+<p>Suppose we instead only had a circular list containing five elements,
+<code>0, 1, 2, 3, 4</code>, and were given input lengths of <code>3, 4, 1, 5</code>.</p>
+
+<ul>
+<li>  The list begins as <code>[0] 1 2 3 4</code> (where square brackets indicate the
+<em>current position</em>).</li>
+<li>  The first length, <code>3</code>, selects <code>([0] 1 2) 3 4</code> (where parentheses
+indicate the sublist to be reversed).</li>
+<li>  After reversing that section (<code>0 1 2</code> into <code>2 1 0</code>), we get
+<code>([2] 1 0) 3 4</code>.</li>
+<li>  Then, the <em>current position</em> moves forward by the <em>length</em>, <code>3</code>,
+plus the <em>skip size</em>, 0: <code>2 1 0 [3] 4</code>. Finally, the <em>skip size</em>
+increases to <code>1</code>.</li>
+</ul>
+
+<!-- -->
+
+<ul>
+<li>  The second length, <code>4</code>, selects a section which wraps:
+<code>2 1) 0 ([3] 4</code>.</li>
+<li>  The sublist <code>3 4 2 1</code> is reversed to form <code>1 2 4 3</code>:
+<code>4 3) 0 ([1] 2</code>.</li>
+<li>  The <em>current position</em> moves forward by the <em>length</em> plus the <em>skip
+size</em>, a total of <code>5</code>, causing it not to move because it wraps
+around: <code>4 3 0 [1] 2</code>. The <em>skip size</em> increases to <code>2</code>.</li>
+</ul>
+
+<!-- -->
+
+<ul>
+<li>  The third length, <code>1</code>, selects a sublist of a single element, and so
+reversing it has no effect.</li>
+<li>  The <em>current position</em> moves forward by the <em>length</em> (<code>1</code>) plus the
+<em>skip size</em> (<code>2</code>): <code>4 [3] 0 1 2</code>. The <em>skip size</em> increases to <code>3</code>.</li>
+</ul>
+
+<!-- -->
+
+<ul>
+<li>  The fourth length, <code>5</code>, selects every element starting with the
+second: <code>4) ([3] 0 1 2</code>. Reversing this sublist (<code>3 0 1 2 4</code> into
+<code>4 2 1 0 3</code>) produces: <code>3) ([4] 2 1 0</code>.</li>
+<li>  Finally, the <em>current position</em> moves forward by <code>8</code>: <code>3 4 2 1 [0]</code>.
+The <em>skip size</em> increases to <code>4</code>.</li>
+</ul>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">nums</span> <span class="op">=</span> <span class="ident">knot_hash</span>::<span class="ident">new_nums</span>(<span class="number">4</span>);
+
+<span class="ident">knot_hash</span>::<span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nums</span>, <span class="kw-2">&amp;</span>[<span class="number">3</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">5</span>], <span class="number">1</span>);
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">nums</span>, <span class="kw-2">&amp;</span>[<span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>]);</pre>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

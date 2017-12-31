@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `src\advent2017\knot_hash.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>knot_hash.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc source">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
+<span id="2">  2</span>
+<span id="3">  3</span>
+<span id="4">  4</span>
+<span id="5">  5</span>
+<span id="6">  6</span>
+<span id="7">  7</span>
+<span id="8">  8</span>
+<span id="9">  9</span>
+<span id="10"> 10</span>
+<span id="11"> 11</span>
+<span id="12"> 12</span>
+<span id="13"> 13</span>
+<span id="14"> 14</span>
+<span id="15"> 15</span>
+<span id="16"> 16</span>
+<span id="17"> 17</span>
+<span id="18"> 18</span>
+<span id="19"> 19</span>
+<span id="20"> 20</span>
+<span id="21"> 21</span>
+<span id="22"> 22</span>
+<span id="23"> 23</span>
+<span id="24"> 24</span>
+<span id="25"> 25</span>
+<span id="26"> 26</span>
+<span id="27"> 27</span>
+<span id="28"> 28</span>
+<span id="29"> 29</span>
+<span id="30"> 30</span>
+<span id="31"> 31</span>
+<span id="32"> 32</span>
+<span id="33"> 33</span>
+<span id="34"> 34</span>
+<span id="35"> 35</span>
+<span id="36"> 36</span>
+<span id="37"> 37</span>
+<span id="38"> 38</span>
+<span id="39"> 39</span>
+<span id="40"> 40</span>
+<span id="41"> 41</span>
+<span id="42"> 42</span>
+<span id="43"> 43</span>
+<span id="44"> 44</span>
+<span id="45"> 45</span>
+<span id="46"> 46</span>
+<span id="47"> 47</span>
+<span id="48"> 48</span>
+<span id="49"> 49</span>
+<span id="50"> 50</span>
+<span id="51"> 51</span>
+<span id="52"> 52</span>
+<span id="53"> 53</span>
+<span id="54"> 54</span>
+<span id="55"> 55</span>
+<span id="56"> 56</span>
+<span id="57"> 57</span>
+<span id="58"> 58</span>
+<span id="59"> 59</span>
+<span id="60"> 60</span>
+<span id="61"> 61</span>
+<span id="62"> 62</span>
+<span id="63"> 63</span>
+<span id="64"> 64</span>
+<span id="65"> 65</span>
+<span id="66"> 66</span>
+<span id="67"> 67</span>
+<span id="68"> 68</span>
+<span id="69"> 69</span>
+<span id="70"> 70</span>
+<span id="71"> 71</span>
+<span id="72"> 72</span>
+<span id="73"> 73</span>
+<span id="74"> 74</span>
+<span id="75"> 75</span>
+<span id="76"> 76</span>
+<span id="77"> 77</span>
+<span id="78"> 78</span>
+<span id="79"> 79</span>
+<span id="80"> 80</span>
+<span id="81"> 81</span>
+<span id="82"> 82</span>
+<span id="83"> 83</span>
+<span id="84"> 84</span>
+<span id="85"> 85</span>
+<span id="86"> 86</span>
+<span id="87"> 87</span>
+<span id="88"> 88</span>
+<span id="89"> 89</span>
+<span id="90"> 90</span>
+<span id="91"> 91</span>
+<span id="92"> 92</span>
+<span id="93"> 93</span>
+<span id="94"> 94</span>
+<span id="95"> 95</span>
+<span id="96"> 96</span>
+<span id="97"> 97</span>
+<span id="98"> 98</span>
+<span id="99"> 99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+</pre><pre class="rust ">
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_nums</span>(<span class="ident">max_n</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+    (<span class="number">0</span>..(<span class="ident">max_n</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">+</span> <span class="number">1</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span> <span class="kw">as</span> <span class="ident">u8</span>).<span class="ident">collect</span>()
+}
+
+<span class="doccomment">/// To achieve this, begin with a *list* of numbers from `0` to `255`, a</span>
+<span class="doccomment">/// *current position* which begins at `0` (the first element in the list),</span>
+<span class="doccomment">/// a *skip size* (which starts at `0`), and a sequence of *lengths* (your</span>
+<span class="doccomment">/// puzzle input). Then, for each length:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// -   *Reverse* the order of that *length* of elements in the *list*,</span>
+<span class="doccomment">///     starting with the element at the *current position*.</span>
+<span class="doccomment">/// -   *Move* the *current position* forward by that *length* plus the</span>
+<span class="doccomment">///     *skip size*.</span>
+<span class="doccomment">/// -   *Increase* the *skip size* by one.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The *list* is circular; if the *current position* and the *length* try</span>
+<span class="doccomment">/// to reverse elements beyond the end of the list, the operation reverses</span>
+<span class="doccomment">/// using as many extra elements as it needs from the front of the list. If</span>
+<span class="doccomment">/// the *current position* moves past the end of the list, it wraps around</span>
+<span class="doccomment">/// to the front. *Lengths* larger than the size of the *list* are invalid.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Here&#39;s an example using a smaller list:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Suppose we instead only had a circular list containing five elements,</span>
+<span class="doccomment">/// `0, 1, 2, 3, 4`, and were given input lengths of `3, 4, 1, 5`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// -   The list begins as `[0] 1 2 3 4` (where square brackets indicate the</span>
+<span class="doccomment">///     *current position*).</span>
+<span class="doccomment">/// -   The first length, `3`, selects `([0] 1 2) 3 4` (where parentheses</span>
+<span class="doccomment">///     indicate the sublist to be reversed).</span>
+<span class="doccomment">/// -   After reversing that section (`0 1 2` into `2 1 0`), we get</span>
+<span class="doccomment">///     `([2] 1 0) 3 4`.</span>
+<span class="doccomment">/// -   Then, the *current position* moves forward by the *length*, `3`,</span>
+<span class="doccomment">///     plus the *skip size*, 0: `2 1 0 [3] 4`. Finally, the *skip size*</span>
+<span class="doccomment">///     increases to `1`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// &lt;!-- --&gt;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// -   The second length, `4`, selects a section which wraps:</span>
+<span class="doccomment">///     `2 1) 0 ([3] 4`.</span>
+<span class="doccomment">/// -   The sublist `3 4 2 1` is reversed to form `1 2 4 3`:</span>
+<span class="doccomment">///     `4 3) 0 ([1] 2`.</span>
+<span class="doccomment">/// -   The *current position* moves forward by the *length* plus the *skip</span>
+<span class="doccomment">///     size*, a total of `5`, causing it not to move because it wraps</span>
+<span class="doccomment">///     around: `4 3 0 [1] 2`. The *skip size* increases to `2`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// &lt;!-- --&gt;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// -   The third length, `1`, selects a sublist of a single element, and so</span>
+<span class="doccomment">///     reversing it has no effect.</span>
+<span class="doccomment">/// -   The *current position* moves forward by the *length* (`1`) plus the</span>
+<span class="doccomment">///     *skip size* (`2`): `4 [3] 0 1 2`. The *skip size* increases to `3`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// &lt;!-- --&gt;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// -   The fourth length, `5`, selects every element starting with the</span>
+<span class="doccomment">///     second: `4) ([3] 0 1 2`. Reversing this sublist (`3 0 1 2 4` into</span>
+<span class="doccomment">///     `4 2 1 0 3`) produces: `3) ([4] 2 1 0`.</span>
+<span class="doccomment">/// -   Finally, the *current position* moves forward by `8`: `3 4 2 1 [0]`.</span>
+<span class="doccomment">///     The *skip size* increases to `4`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use advent_solutions::advent2017::knot_hash;</span>
+<span class="doccomment">/// let mut nums = knot_hash::new_nums(4);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// knot_hash::hash(&amp;mut nums, &amp;[3, 4, 1, 5], 1);</span>
+<span class="doccomment">/// assert_eq!(nums, &amp;[3, 4, 2, 1, 0]);</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash</span>(<span class="ident">nums</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>], <span class="ident">lengths</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">rounds</span>: <span class="ident">usize</span>) {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current_pos</span> <span class="op">=</span> <span class="number">0</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">skip_size</span> <span class="op">=</span> <span class="number">0</span>;
+
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="number">0</span>..<span class="ident">rounds</span> {
+        <span class="kw">for</span> <span class="ident">length</span> <span class="kw">in</span> <span class="ident">lengths</span> {
+            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">length</span><span class="op">/</span><span class="number">2</span> {
+                <span class="kw">let</span> <span class="ident">ia</span> <span class="op">=</span> (<span class="ident">current_pos</span> <span class="op">+</span> <span class="ident">i</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">%</span> <span class="ident">nums</span>.<span class="ident">len</span>();
+                <span class="kw">let</span> <span class="ident">ib</span> <span class="op">=</span> (<span class="ident">current_pos</span> <span class="op">+</span> (<span class="ident">length</span> <span class="op">-</span> <span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">%</span> <span class="ident">nums</span>.<span class="ident">len</span>();
+
+                <span class="ident">nums</span>.<span class="ident">swap</span>(<span class="ident">ia</span>, <span class="ident">ib</span>);
+            }
+
+            <span class="ident">current_pos</span> <span class="op">+=</span> (<span class="kw-2">*</span><span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">+</span> <span class="ident">skip_size</span>;
+            <span class="ident">current_pos</span> <span class="op">%=</span> <span class="ident">nums</span>.<span class="ident">len</span>();
+
+            <span class="ident">skip_size</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="ident">skip_size</span> <span class="op">%=</span> <span class="ident">nums</span>.<span class="ident">len</span>();
+        }
+    }
+}
+
+<span class="doccomment">/// In this example, the first two numbers in the list end up being `3` and</span>
+<span class="doccomment">/// `4`; to check the process, you can multiply them together to produce</span>
+<span class="doccomment">/// `12`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # use advent_solutions::advent2017::knot_hash;</span>
+<span class="doccomment">/// let hashed = knot_hash::hash_lengths(4, &amp;[3, 4, 1, 5], 1);</span>
+<span class="doccomment">/// assert_eq!(hashed[0], 3);</span>
+<span class="doccomment">/// assert_eq!(hashed[1], 4);</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_lengths</span>(<span class="ident">max_num</span>: <span class="ident">u8</span>, <span class="ident">lengths</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">rounds</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">nums</span> <span class="op">=</span> <span class="ident">new_nums</span>(<span class="ident">max_num</span>);
+    <span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nums</span>, <span class="kw-2">&amp;</span><span class="ident">lengths</span>, <span class="ident">rounds</span>);
+
+    <span class="ident">nums</span>
+}
+
+<span class="doccomment">/// The logic you&#39;ve constructed forms a single *round* of the *Knot Hash*</span>
+<span class="doccomment">/// algorithm; running the full thing requires many of these rounds. Some</span>
+<span class="doccomment">/// input and output processing is also required.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// First, from now on, your input should be taken not as a list of numbers,</span>
+<span class="doccomment">/// but as a string of bytes instead. Unless otherwise specified, convert</span>
+<span class="doccomment">/// characters to bytes using their [ASCII codes]. This will allow you to</span>
+<span class="doccomment">/// handle arbitrary ASCII strings, and it also ensures that your input</span>
+<span class="doccomment">/// lengths are never larger than `255`. For example, if you are given</span>
+<span class="doccomment">/// `1,2,3`, you should convert it to the ASCII codes for each character:</span>
+<span class="doccomment">/// `49,44,50,44,51`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Once you have determined the sequence of lengths to use, add the</span>
+<span class="doccomment">/// following lengths to the end of the sequence: `17, 31, 73, 47, 23`. For</span>
+<span class="doccomment">/// example, if you are given `1,2,3`, your final sequence of lengths should</span>
+<span class="doccomment">/// be `49,44,50,44,51,17,31,73,47,23` (the ASCII codes from the input</span>
+<span class="doccomment">/// string combined with the standard length suffix values).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Second, instead of merely running one *round* like you did above, run a</span>
+<span class="doccomment">/// total of `64` rounds, using the same *length* sequence in each round.</span>
+<span class="doccomment">/// The *current position* and *skip size* should be preserved between</span>
+<span class="doccomment">/// rounds. For example, if the previous example was your first round, you</span>
+<span class="doccomment">/// would start your second round with the same *length* sequence</span>
+<span class="doccomment">/// (`3, 4, 1, 5, 17, 31, 73, 47, 23`, now assuming they came from ASCII</span>
+<span class="doccomment">/// codes and include the suffix), but start with the previous round&#39;s</span>
+<span class="doccomment">/// *current position* (`4`) and *skip size* (`4`).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Once the rounds are complete, you will be left with the numbers from `0`</span>
+<span class="doccomment">/// to `255` in some order, called the *sparse hash*. Your next task is to</span>
+<span class="doccomment">/// reduce these to a list of only `16` numbers called the *dense hash*. To</span>
+<span class="doccomment">/// do this, use numeric bitwise [XOR] to combine each consecutive block of</span>
+<span class="doccomment">/// `16` numbers in the sparse hash (there are `16` such blocks in a list of</span>
+<span class="doccomment">/// `256` numbers). So, the first element in the dense hash is the first</span>
+<span class="doccomment">/// sixteen elements of the sparse hash XOR&#39;d together, the second element</span>
+<span class="doccomment">/// in the dense hash is the second sixteen elements of the sparse hash</span>
+<span class="doccomment">/// XOR&#39;d together, etc.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For example, if the first sixteen elements of your sparse hash are as</span>
+<span class="doccomment">/// shown below, and the XOR operator is `^`, you would calculate the first</span>
+<span class="doccomment">/// output number like this:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```text</span>
+<span class="doccomment">/// 65 ^ 27 ^ 9 ^ 1 ^ 4 ^ 3 ^ 40 ^ 50 ^ 91 ^ 7 ^ 6 ^ 0 ^ 2 ^ 5 ^ 68 ^ 22 = 64</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Perform this operation on each of the sixteen blocks of sixteen numbers</span>
+<span class="doccomment">/// in your sparse hash to determine the sixteen numbers in your dense hash.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///   [ASCII codes]: https://en.wikipedia.org/wiki/ASCII#Printable_characters</span>
+<span class="doccomment">///   [XOR]: https://en.wikipedia.org/wiki/Bitwise_operation#XOR</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_str</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">rounds</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lengths</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">as_bytes</span>().<span class="ident">to_vec</span>();
+    <span class="ident">lengths</span>.<span class="ident">extend</span>([<span class="number">17</span>, <span class="number">31</span>, <span class="number">73</span>, <span class="number">47</span>, <span class="number">23</span>].<span class="ident">iter</span>());
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">nums</span> <span class="op">=</span> <span class="ident">new_nums</span>(<span class="number">255</span>);
+    <span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">nums</span>, <span class="kw-2">&amp;</span><span class="ident">lengths</span>, <span class="ident">rounds</span>);
+
+    <span class="ident">nums</span>.<span class="ident">chunks</span>(<span class="number">16</span>)
+        .<span class="ident">map</span>(<span class="op">|</span><span class="ident">chunk</span><span class="op">|</span> <span class="ident">chunk</span>.<span class="ident">iter</span>().<span class="ident">fold</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">state</span>, <span class="ident">x</span><span class="op">|</span> <span class="ident">state</span> <span class="op">^</span> <span class="ident">x</span>))
+        .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()
+}
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

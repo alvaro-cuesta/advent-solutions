@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["parse_connections",""],["parse_input",""],["part1","You need to figure out how many programs are in the group that contains program ID `0`."],["part2","There are more programs than just the ones in the group containing program ID `0`. The rest of them have no way of reaching that group, and still might have no way of reaching each other."]]});

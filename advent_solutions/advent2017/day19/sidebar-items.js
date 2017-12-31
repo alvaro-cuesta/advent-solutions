@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["parse_input",""],["solve","The little packet looks up at you, hoping you can help it find the way. What letters will it see (in the order it would see them) if it follows the path? (The routing diagram is very wide; make sure you view it without line wrapping.)"]]});

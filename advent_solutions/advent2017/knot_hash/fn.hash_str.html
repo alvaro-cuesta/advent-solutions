@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `hash_str` fn in crate `advent_solutions`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, hash_str">
+
+    <title>advent_solutions::advent2017::knot_hash::hash_str - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc fn">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'><a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>knot_hash</a></p><script>window.sidebarCurrent = {name: 'hash_str', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>advent_solutions</a>::<wbr><a href='../index.html'>advent2017</a>::<wbr><a href='index.html'>knot_hash</a>::<wbr><a class="fn" href=''>hash_str</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/advent_solutions/advent2017/knot_hash.rs.html#159-169' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn hash_str(input: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, rounds: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</pre><div class='docblock'><p>The logic you&#39;ve constructed forms a single <em>round</em> of the <em>Knot Hash</em>
+algorithm; running the full thing requires many of these rounds. Some
+input and output processing is also required.</p>
+
+<p>First, from now on, your input should be taken not as a list of numbers,
+but as a string of bytes instead. Unless otherwise specified, convert
+characters to bytes using their <a href="https://en.wikipedia.org/wiki/ASCII#Printable_characters">ASCII codes</a>. This will allow you to
+handle arbitrary ASCII strings, and it also ensures that your input
+lengths are never larger than <code>255</code>. For example, if you are given
+<code>1,2,3</code>, you should convert it to the ASCII codes for each character:
+<code>49,44,50,44,51</code>.</p>
+
+<p>Once you have determined the sequence of lengths to use, add the
+following lengths to the end of the sequence: <code>17, 31, 73, 47, 23</code>. For
+example, if you are given <code>1,2,3</code>, your final sequence of lengths should
+be <code>49,44,50,44,51,17,31,73,47,23</code> (the ASCII codes from the input
+string combined with the standard length suffix values).</p>
+
+<p>Second, instead of merely running one <em>round</em> like you did above, run a
+total of <code>64</code> rounds, using the same <em>length</em> sequence in each round.
+The <em>current position</em> and <em>skip size</em> should be preserved between
+rounds. For example, if the previous example was your first round, you
+would start your second round with the same <em>length</em> sequence
+(<code>3, 4, 1, 5, 17, 31, 73, 47, 23</code>, now assuming they came from ASCII
+codes and include the suffix), but start with the previous round&#39;s
+<em>current position</em> (<code>4</code>) and <em>skip size</em> (<code>4</code>).</p>
+
+<p>Once the rounds are complete, you will be left with the numbers from <code>0</code>
+to <code>255</code> in some order, called the <em>sparse hash</em>. Your next task is to
+reduce these to a list of only <code>16</code> numbers called the <em>dense hash</em>. To
+do this, use numeric bitwise <a href="https://en.wikipedia.org/wiki/Bitwise_operation#XOR">XOR</a> to combine each consecutive block of
+<code>16</code> numbers in the sparse hash (there are <code>16</code> such blocks in a list of
+<code>256</code> numbers). So, the first element in the dense hash is the first
+sixteen elements of the sparse hash XOR&#39;d together, the second element
+in the dense hash is the second sixteen elements of the sparse hash
+XOR&#39;d together, etc.</p>
+
+<p>For example, if the first sixteen elements of your sparse hash are as
+shown below, and the XOR operator is <code>^</code>, you would calculate the first
+output number like this:</p>
+
+<pre><code class="language-text">65 ^ 27 ^ 9 ^ 1 ^ 4 ^ 3 ^ 40 ^ 50 ^ 91 ^ 7 ^ 6 ^ 0 ^ 2 ^ 5 ^ 68 ^ 22 = 64
+</code></pre>
+
+<p>Perform this operation on each of the sixteen blocks of sixteen numbers
+in your sparse hash to determine the sixteen numbers in your dense hash.</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "advent_solutions";
+    </script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>
