@@ -1,6 +1,6 @@
 # Advent of Code Solutions ([docs](https://alvaro-cuesta.github.io/advent-solutions/advent_solutions/index.html))
 
-Solutions for [Advent of Code](http://adventofcode.com/about).
+Solutions for [Advent of Code](http://adventofcode.com/about) in Rust.
 
 ## Running
 
