@@ -33,7 +33,7 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 ## TODO
 
 - 2017
-    - Solve 24, 25
+    - Solve 25
     - Document 24, 25
     - I'm not sure just comparing by velocity solves day 20 (might be accelerating against v)
 
@@ -48,3 +48,4 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 - Ensure all doccomments are on pub types
 - Move test_inputs to src year?
 - Do not return result strings, but a result type
+- Day 24 do not depend on petgraph

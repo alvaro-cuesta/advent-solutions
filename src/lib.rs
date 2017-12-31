@@ -8,6 +8,7 @@
 extern crate itertools;
 extern crate reqwest;
 #[macro_use] extern crate nom;
+extern crate petgraph;
 
 mod download;
 pub use download::Downloader;
