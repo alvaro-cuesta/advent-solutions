@@ -147,8 +147,8 @@ pub fn part1(input: &Blueprint) -> usize {
     tape.into_iter().filter(|&x| x).count()
 }
 
-pub fn part2(_: &Blueprint) -> usize {
-    0
+pub fn part2(_: &Blueprint) -> &str {
+    ""
 }
 
 pub fn parse_input(input: &str) -> Blueprint {
@@ -157,4 +157,4 @@ pub fn parse_input(input: &str) -> Blueprint {
         .expect("Error parsing blueprint")
 }
 
-test_day!("25", 2846, 0);
+test_day!("25", 2846, "");
