@@ -34,7 +34,7 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 
 - 2017
     - Solve 24, 25
-    - Document 21, 24, 25
+    - Document 24, 25
     - I'm not sure just comparing by velocity solves day 20 (might be accelerating against v)
 
 - main.rs
