@@ -1,4 +1,5 @@
 extern crate threadpool;
+extern crate pbr;
 extern crate advent_solutions;
 
 use advent_solutions::advent2017::*;
@@ -108,13 +109,21 @@ fn main() {
 
     drop(tx);
 
+    let count = args.len() * 2;
+    let mut pb = pbr::ProgressBar::new(count as u64);
+    pb.format("╢▌▌░╟");
+
     let mut results = vec![];
 
     for result in rx.iter().take(args.len() * 2) {
+        pb.inc();
         results.push(result);
     }
 
     results.sort();
+
+    pb.finish_print("Results:");
+    println!("");
 
     for (day, part, result) in results {
         println!("Day {}/{}: {}", day, part, result);
