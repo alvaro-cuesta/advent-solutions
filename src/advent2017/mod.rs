@@ -27,3 +27,4 @@ pub mod knot_hash;
 #[path="21-fractal_art.rs"] pub mod day21;
 #[path="22-sporifica_virus.rs"] pub mod day22;
 #[path="23-coprocessor_conflagration.rs"] pub mod day23;
+#[path="24-electromagnetic_moat.rs"] pub mod day24;

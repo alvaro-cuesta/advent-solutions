@@ -33,8 +33,8 @@ Solutions for [Advent of Code](http://adventofcode.com/about).
 ## TODO
 
 - 2017
-    - Solve 24, 25
-    - Document 24, 25
+    - Solve 25
+    - Document 25
     - I'm not sure just comparing by velocity solves day 20 (might be accelerating against v)
 
 - main.rs
