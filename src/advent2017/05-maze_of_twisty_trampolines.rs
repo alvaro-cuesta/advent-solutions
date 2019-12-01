@@ -101,7 +101,7 @@ pub fn count_steps<F: Fn(isize) -> isize>(mut memory: Vec<isize>, mut_fn: F) -> 
 
     let length = memory.len();
 
-    ::itertools::repeat_call(|| {
+    std::iter::repeat_with(|| {
         let old_ip = ip;
         ip = (ip as isize + memory[ip]) as usize;
         memory[old_ip] = mut_fn(memory[old_ip]);

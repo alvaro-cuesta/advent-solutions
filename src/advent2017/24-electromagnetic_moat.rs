@@ -44,7 +44,7 @@ fn dfs_step(
     path: &mut Vec<usize>,
     last_index: usize,
     graph: &Vec<Component>,
-    cmp_f: &Fn((usize, usize), (usize, usize)) -> bool,
+    cmp_f: &dyn Fn((usize, usize), (usize, usize)) -> bool,
 ) -> (usize, usize)
 {
     let edges = graph.iter()
@@ -91,7 +91,7 @@ fn dfs_step(
 /// goal is just to make the bridge as strong as possible.
 fn dfs(
     graph: &Vec<Component>,
-    cmp_f: &Fn((usize, usize), (usize, usize)) -> bool,
+    cmp_f: &dyn Fn((usize, usize), (usize, usize)) -> bool,
 ) -> usize
 {
     dfs_step(&mut vec![], 0, graph, cmp_f).1
